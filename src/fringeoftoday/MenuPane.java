@@ -10,12 +10,13 @@ public class MenuPane extends GraphicsPane {
 										// all of the GraphicsProgram calls
 	private GButton playButton;
 	private GButton shopButton;
+	private GButton exitButton;
 	private GParagraph title;
 	public MenuPane(MainApplication app) {
 		super();
 		program = app;
 		
-		//Title banner
+		//Title banner - maybe use glabel instead?
 		title = new GParagraph("Fringe of Today", 150, 300);
 		
 		//Play button
@@ -25,6 +26,10 @@ public class MenuPane extends GraphicsPane {
 		//Shop button
 		shopButton = new GButton("Shop", 600, 400, 200, 100);
 		shopButton.setFillColor(Color.RED);
+		
+		//Exit button
+		exitButton = new GButton("Exit", 600, 600, 200, 100);
+		shopButton.setFillColor(Color.RED);
 	}
 
 	@Override
@@ -32,6 +37,7 @@ public class MenuPane extends GraphicsPane {
 		program.add(title);
 		program.add(playButton);
 		program.add(shopButton);
+		program.add(exitButton);
 	}
 
 	@Override
