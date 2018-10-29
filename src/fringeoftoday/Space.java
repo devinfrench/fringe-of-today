@@ -22,5 +22,28 @@ public class Space {
 		this.numCol = numCol;
 		this.type = type;
 	}
-	
+
+	public int getNumRow() {
+		return numRow;
+	}
+
+	public int getNumCol() {
+		return numCol;
+	}
+
+	public SpaceType getType() {
+		return type;
+	}
+
+	public void setNumRow(int numRow) {
+		this.numRow = numRow;
+	}
+
+	public void setNumCol(int numCol) {
+		this.numCol = numCol;
+	}
+
+	public void setType(SpaceType type) {
+		this.type = type;
+	}
 }
