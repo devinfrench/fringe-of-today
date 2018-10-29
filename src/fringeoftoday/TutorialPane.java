@@ -14,6 +14,8 @@ public class TutorialPane extends GraphicsPane {
 	private GParagraph moveInstructions;	//Instructions of the keys to use to move
 	private GParagraph attackInstructions;	//Instructions of the keys to use to attack
 	private GLabel pressToContinue;			//Label instructing the user how to progress
+	private GImage moveKeys;				//Keys to show which to click to move
+	private GImage attackKeys;				//Keys to show which to click to attack
 
 	public TutorialPane(MainApplication app) {
 		this.program = app;
@@ -25,6 +27,11 @@ public class TutorialPane extends GraphicsPane {
 		attackInstructions.setFont("Arial-24");	
 		pressToContinue = new GLabel("Press any key to continue...", MainApplication.WINDOW_WIDTH/2 - 200, 5*MainApplication.WINDOW_HEIGHT/6);
 		pressToContinue.setFont("Arial-24");	
+		
+		moveKeys = new GImage("WASD.png", MainApplication.WINDOW_WIDTH/6, 2*MainApplication.WINDOW_HEIGHT/3);
+		moveKeys.move(0,  -1*moveKeys.getHeight() - 100);
+		attackKeys = new GImage("JK.png", 4*MainApplication.WINDOW_WIDTH/6, 2*MainApplication.WINDOW_HEIGHT/3);
+		attackKeys.move(0,  -1*attackKeys.getHeight() - 100);
 	}
 
 	@Override
@@ -33,6 +40,8 @@ public class TutorialPane extends GraphicsPane {
 		program.add(moveInstructions);
 		program.add(attackInstructions);
 		program.add(pressToContinue);
+		program.add(moveKeys);
+		program.add(attackKeys);
 	}
 
 	@Override
@@ -41,7 +50,8 @@ public class TutorialPane extends GraphicsPane {
 		program.remove(moveInstructions);
 		program.remove(attackInstructions);
 		program.remove(pressToContinue);
-		
+		program.remove(moveKeys);
+		program.remove(attackKeys);
 	}
 	
 	@Override
