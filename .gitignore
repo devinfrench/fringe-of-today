@@ -32,5 +32,10 @@ target/
 # OS Files #
 .DS_Store
 
+# IntelliJ IDEA Project Files #
+.idea/
+COMP55GroupProject.eml
+COMP55GroupProject.iml
+
 
 
