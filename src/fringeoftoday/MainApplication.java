@@ -1,11 +1,11 @@
 package fringeoftoday;
 public class MainApplication extends GraphicsApplication {
-	public static final int WINDOW_WIDTH = 800;
-	public static final int WINDOW_HEIGHT = 600;
+	public static final int WINDOW_WIDTH = 1600;
+	public static final int WINDOW_HEIGHT = 900;
 	public static final String MUSIC_FOLDER = "sounds";
 	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
-	private SomePane somePane;
+	private ShopPane shopPane;
 	private MenuPane menu;
 	private int count;
 
@@ -15,7 +15,7 @@ public class MainApplication extends GraphicsApplication {
 
 	public void run() {
 		System.out.println("Hello, world!");
-		somePane = new SomePane(this);
+		shopPane = new ShopPane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
 	}
@@ -26,9 +26,9 @@ public class MainApplication extends GraphicsApplication {
 		switchToScreen(menu);
 	}
 
-	public void switchToSome() {
+	public void switchToShop() {
 		playRandomSound();
-		switchToScreen(somePane);
+		switchToScreen(shopPane);
 	}
 
 	private void playRandomSound() {
