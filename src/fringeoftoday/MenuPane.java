@@ -42,7 +42,10 @@ public class MenuPane extends GraphicsPane {
 
 	@Override
 	public void hideContents() {
+		program.remove(title);
 		program.remove(playButton);
+		program.remove(shopButton);
+		program.remove(exitButton);
 	}
 
 	@Override
