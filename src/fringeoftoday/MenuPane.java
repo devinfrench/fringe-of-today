@@ -19,23 +19,21 @@ public class MenuPane extends GraphicsPane {
 	public MenuPane(MainApplication app) {
 		super();
 		program = app;
-		int window_width = program.getWindowWidth();
-		int window_height = program.getWindowHeight();
 		
 		//Title banner - maybe use GImage instead?
-		title = new GImage("logo_transparent.png", (window_width - 600)/2,30);
+		title = new GImage("logo_transparent.png", (MainApplication.WINDOW_WIDTH - 600)/2, 30);
 		title.setSize(600, 300);
 		
 		//Play button
-		btnPlay = new GButton("Play", (window_width - BUTTON_WIDTH)/2, 400, BUTTON_WIDTH, BUTTON_HEIGHT);
+		btnPlay = new GButton("Play", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH)/2, 400, BUTTON_WIDTH, BUTTON_HEIGHT);
 		btnPlay.setFillColor(Color.BLUE);
 		
 		//Shop button
-		btnShop = new GButton("Shop", (window_width - BUTTON_WIDTH)/2, 550, BUTTON_WIDTH, BUTTON_HEIGHT);
+		btnShop = new GButton("Shop", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH)/2, 550, BUTTON_WIDTH, BUTTON_HEIGHT);
 		btnShop.setFillColor(Color.RED);
 		
 		//Exit button
-		btnExit = new GButton("Exit", (window_width - BUTTON_WIDTH)/2, 700, BUTTON_WIDTH, BUTTON_HEIGHT);
+		btnExit = new GButton("Exit", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH)/2, 700, BUTTON_WIDTH, BUTTON_HEIGHT);
 		btnExit.setFillColor(Color.RED);
 	}
 
