@@ -4,32 +4,38 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GObject;
+import acm.graphics.GLabel;
 
 public class MenuPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
+	public static final int BUTTON_WIDTH = 200;
+	public static final int BUTTON_HEIGHT = 100;
+	
 	private GButton btnPlay;
 	private GButton btnShop;
 	private GButton btnExit;
-	private GParagraph title;
+	private GLabel title;
 	public MenuPane(MainApplication app) {
 		super();
 		program = app;
+		int window_width = program.getWindowWidth();
+		int window_height = program.getWindowHeight();
 		
-		//Title banner - maybe use glabel instead?
-		title = new GParagraph("Fringe of Today", 150, 300);
+		//Title banner - maybe use GImage instead?
+		title = new GLabel("Fringe of Today", 600, 100);
 		
 		//Play button
-		btnPlay = new GButton("Play", 600, 200, 200, 100);
-		btnPlay.setFillColor(Color.RED);
+		btnPlay = new GButton("Play", (window_width - BUTTON_WIDTH)/2, 200, BUTTON_WIDTH, BUTTON_HEIGHT);
+		btnPlay.setFillColor(Color.BLUE);
 		
 		//Shop button
-		btnShop = new GButton("Shop", 600, 400, 200, 100);
+		btnShop = new GButton("Shop", (window_width - BUTTON_WIDTH)/2, 400, BUTTON_WIDTH, BUTTON_HEIGHT);
 		btnShop.setFillColor(Color.RED);
 		
 		//Exit button
-		btnExit = new GButton("Exit", 600, 600, 200, 100);
-		btnShop.setFillColor(Color.RED);
+		btnExit = new GButton("Exit", (window_width - BUTTON_WIDTH)/2, 600, BUTTON_WIDTH, BUTTON_HEIGHT);
+		btnExit.setFillColor(Color.RED);
 	}
 
 	@Override
@@ -56,6 +62,9 @@ public class MenuPane extends GraphicsPane {
 		}
 		else if (obj == btnShop) {
 			program.switchToShop();
+		}
+		else {
+			//close program
 		}
 	}
 }

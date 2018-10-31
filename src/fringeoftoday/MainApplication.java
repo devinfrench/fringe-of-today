@@ -15,7 +15,6 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void run() {
-		System.out.println("Hello, world!");
 		tutorial = new TutorialPane(this);
 		shopPane = new ShopPane(this);
 		menu = new MenuPane(this);
@@ -23,13 +22,13 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToMenu() {
-		playRandomSound();
+		//playRandomSound();
 		count++;
 		switchToScreen(menu);
 	}
 
 	public void switchToShop() {
-		playRandomSound();
+		//playRandomSound();
 		switchToScreen(shopPane);
 	}
 	
@@ -41,4 +40,14 @@ public class MainApplication extends GraphicsApplication {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
+
+	public static int getWindowWidth() {
+		return WINDOW_WIDTH;
+	}
+
+	public static int getWindowHeight() {
+		return WINDOW_HEIGHT;
+	}
+	
+	
 }
