@@ -13,4 +13,16 @@ public class FloorManager {
 	private ArrayList<char[][]> floorLayouts;
 	private ArrayList<char[][]> roomLayouts;
 	private Floor currentFloor;
+	
+	public Floor getFloor() {
+		return currentFloor;
+	}
+	
+	public void addFloorLayout(char layout[][]) {
+		floorLayouts.add(layout);
+	}
+	
+	public void addRoomLayout(char layout[][]) {
+		roomLayouts.add(layout);
+	}
 }
