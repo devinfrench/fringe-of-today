@@ -17,7 +17,6 @@ public class Space {
 	 * @param type - The type of space; controls behavior
 	 */
 	public Space(int numRow, int numCol, SpaceType type) {
-		super();
 		this.numRow = numRow;
 		this.numCol = numCol;
 		this.type = type;
