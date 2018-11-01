@@ -1,10 +1,11 @@
-package fringeoftoday;
+package fringeoftoday.graphics;
 
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import acm.program.GraphicsProgram;
+import fringeoftoday.graphics.panes.GraphicsPane;
 
 public abstract class GraphicsApplication extends GraphicsProgram {
 	private GraphicsPane curScreen;

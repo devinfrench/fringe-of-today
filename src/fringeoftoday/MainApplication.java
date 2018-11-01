@@ -1,4 +1,11 @@
 package fringeoftoday;
+
+import fringeoftoday.audio.AudioPlayer;
+import fringeoftoday.graphics.GraphicsApplication;
+import fringeoftoday.graphics.panes.MenuPane;
+import fringeoftoday.graphics.panes.ShopPane;
+import fringeoftoday.graphics.panes.TutorialPane;
+
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 1600;
 	public static final int WINDOW_HEIGHT = 900;

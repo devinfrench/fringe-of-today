@@ -1,4 +1,4 @@
-package fringeoftoday;
+package fringeoftoday.graphics.panes;
 
 
 /* File: GraphicsPane.java
@@ -11,6 +11,8 @@ package fringeoftoday;
  * Make sure to distinguish between your constructor
  * and using showContents and hideContents
  */
+
+import fringeoftoday.graphics.Interfaceable;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

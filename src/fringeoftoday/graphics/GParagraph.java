@@ -1,4 +1,4 @@
-package fringeoftoday;
+package fringeoftoday.graphics;
 
 
 import java.awt.Color;

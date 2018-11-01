@@ -1,10 +1,13 @@
-package fringeoftoday;
+package fringeoftoday.graphics.panes;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GObject;
 import acm.graphics.GImage;
+import fringeoftoday.MainApplication;
+import fringeoftoday.graphics.GButton;
+import fringeoftoday.graphics.panes.GraphicsPane;
 
 public class MenuPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to

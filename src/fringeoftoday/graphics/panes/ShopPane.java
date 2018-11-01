@@ -1,9 +1,10 @@
-package fringeoftoday;
+package fringeoftoday.graphics.panes;
 import java.awt.event.MouseEvent;
 
-import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GObject;
+import fringeoftoday.MainApplication;
+import fringeoftoday.graphics.GButton;
 
 public class ShopPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to

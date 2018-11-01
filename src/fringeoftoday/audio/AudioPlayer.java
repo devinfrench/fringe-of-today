@@ -1,4 +1,4 @@
-package fringeoftoday;
+package fringeoftoday.audio;
 
 
 /*
