@@ -4,6 +4,9 @@ package fringeoftoday.graphics.panes;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import acm.graphics.GObject;
 import acm.graphics.GImage;
@@ -24,6 +27,9 @@ public class MenuPane extends GraphicsPane {
 	public MenuPane(MainApplication app) {
 		super();
 		program = app;
+		
+
+		playerFileSetup();
 		
 		//Title banner - maybe use GImage instead?
 		title = new GImage("logo_transparent.png", (MainApplication.WINDOW_WIDTH - 600)/2, 30);
@@ -70,5 +76,33 @@ public class MenuPane extends GraphicsPane {
 		else if (obj == btnExit) {
 			program.exitProgram();
 		}
+	}
+
+	private void playerFileSetup() {
+		File playerF = new File("player.txt");
+			if (!playerF.exists()) {
+				try {
+					playerF.createNewFile();
+				} catch (IOException e1) {
+					System.out.println("couldn't create file");
+					e1.printStackTrace();
+				}
+				
+				try {
+					FileWriter fw = new FileWriter("player.txt");
+					fw.write("coin:0"+System.getProperty("line.separator"));
+					fw.write("HP up:0"+System.getProperty("line.separator"));
+					fw.write("Melee up:0"+System.getProperty("line.separator"));
+					fw.write("Ranged up:0"+System.getProperty("line.separator"));
+					fw.write("Speed up:0"+System.getProperty("line.separator"));
+					fw.write("previous:0"+System.getProperty("line.separator"));
+					fw.write("goat:0");
+					fw.close();
+				} catch (IOException e2) {
+					System.out.println("No write");
+					e2.printStackTrace();
+				}
+				
+			}
 	}
 }
