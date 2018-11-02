@@ -1,5 +1,9 @@
 package fringeoftoday;
 
+
+import java.util.*; 
+import java.lang.*; 
+
 import fringeoftoday.audio.AudioPlayer;
 import fringeoftoday.graphics.GraphicsApplication;
 import fringeoftoday.graphics.panes.MenuPane;
@@ -41,6 +45,10 @@ public class MainApplication extends GraphicsApplication {
 	
 	public void switchToTutorial() {
 		switchToScreen(tutorial);
+	}
+	
+	public void exitProgram() {
+		System.exit(0); 
 	}
 
 	private void playRandomSound() {

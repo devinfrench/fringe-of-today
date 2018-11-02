@@ -1,5 +1,7 @@
 package fringeoftoday.graphics.panes;
 
+
+
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
@@ -65,8 +67,8 @@ public class MenuPane extends GraphicsPane {
 		else if (obj == btnShop) {
 			program.switchToShop();
 		}
-		else {
-			//close program
+		else if (obj == btnExit) {
+			program.exitProgram();
 		}
 	}
 }
