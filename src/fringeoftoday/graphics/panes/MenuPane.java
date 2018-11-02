@@ -28,7 +28,6 @@ public class MenuPane extends GraphicsPane {
 		super();
 		program = app;
 		
-
 		playerFileSetup();
 		
 		//Title banner - maybe use GImage instead?
@@ -84,7 +83,7 @@ public class MenuPane extends GraphicsPane {
 				try {
 					playerF.createNewFile();
 				} catch (IOException e1) {
-					System.out.println("couldn't create file");
+					System.out.println("Couldn't create file");
 					e1.printStackTrace();
 				}
 				
