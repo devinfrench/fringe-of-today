@@ -7,10 +7,14 @@ package fringeoftoday.floor;
  *
  */
 public class Floor {
+	public static final int NUM_FLOOR_ROWS = 5;
+	public static final int NUM_FLOOR_COLS = 7;
+	
 	private Room floorLayout[][];
 	private int levelCount;
 	
 	public Floor(int levelCount) {
+		floorLayout = new Room[NUM_FLOOR_ROWS][NUM_FLOOR_COLS];
 		this.levelCount = levelCount;
 	}
 	
