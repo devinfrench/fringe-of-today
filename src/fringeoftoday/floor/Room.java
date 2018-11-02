@@ -20,8 +20,8 @@ public class Room {
 		return exits;
 	}
 	
-	public void setSpace(Space s) {
-		roomLayout[s.getNumRow()][s.getNumCol()] = s;
+	public void setSpace(int row, int col, SpaceType type) {
+		roomLayout[row][col] = new Space(row, col, type);
 	}
 	
 	public void addExit(Exit e) {
