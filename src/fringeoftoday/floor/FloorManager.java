@@ -17,6 +17,11 @@ public class FloorManager {
 	private ArrayList<char[][]> roomLayouts;
 	private Floor currentFloor;
 	
+	public FloorManager() {
+		floorLayouts = new ArrayList<char[][]>();
+		roomLayouts = new ArrayList<char[][]>();
+	}
+	
 	public Floor getFloor() {
 		return currentFloor;
 	}
