@@ -1,7 +1,11 @@
 package fringeoftoday.graphics.panes;
+
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 import acm.graphics.GLabel;
+import acm.graphics.GLine;
 import acm.graphics.GObject;
 import fringeoftoday.MainApplication;
 import fringeoftoday.graphics.GButton;
@@ -11,24 +15,36 @@ public class ShopPane extends GraphicsPane {
 										// all of the GraphicsProgram calls
 	private GLabel title;
 	private GButton btnBack;
+	private GLine headerSeperator;
+	private GLabel coinCtr;
 
+		
 	public ShopPane(MainApplication app) {
 		this.program = app;
-		title = new GLabel("Shop", MainApplication.WINDOW_WIDTH/2 - 50, 50);
+
+		title = new GLabel("Shop", MainApplication.WINDOW_WIDTH / 2 - 50, MainApplication.WINDOW_HEIGHT / 18);
 		title.setFont("Arial-46");
-		btnBack = new GButton("Back", 0, 0, 125, 75);
+		btnBack = new GButton("Back", 0, 0, MainApplication.WINDOW_WIDTH / 13, MainApplication.WINDOW_HEIGHT / 12);
+		headerSeperator = new GLine(0, MainApplication.WINDOW_HEIGHT / 11, MainApplication.WINDOW_WIDTH,
+				MainApplication.WINDOW_HEIGHT / 11);
+		coinCtr = new GLabel("Coin: " + MainApplication.getMap().get("Coin"), MainApplication.WINDOW_WIDTH-300, MainApplication.WINDOW_HEIGHT / 18);
+		coinCtr.setFont("Arial-46");
 	}
 
 	@Override
 	public void showContents() {
 		program.add(title);
 		program.add(btnBack);
+		program.add(headerSeperator);
+		program.add(coinCtr);
 	}
 
 	@Override
-	public void hideContents() {		
+	public void hideContents() {
 		program.remove(title);
 		program.remove(btnBack);
+		program.remove(headerSeperator);
+		program.remove(coinCtr);
 	}
 
 	@Override

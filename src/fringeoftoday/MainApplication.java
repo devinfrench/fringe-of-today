@@ -17,16 +17,17 @@ public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 1600;
 	public static final int WINDOW_HEIGHT = 900;
 	public static final String MUSIC_FOLDER = "sounds";
-	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
+	private final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
 	private ShopPane shopPane;
 	private MenuPane menu;
 	private TutorialPane tutorial;
 	private int count;
-	private Map<String, String> playerInfo = new HashMap<String, String>();
+	private static Map<String, String> playerInfo = new HashMap<String, String>();
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		playerFileSetup();
 	}
 
 	public void run() {
@@ -34,7 +35,6 @@ public class MainApplication extends GraphicsApplication {
 		shopPane = new ShopPane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
-		playerFileSetup();
 	}
 
 	public void switchToMenu() {
@@ -44,6 +44,7 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToShop() {
+		
 		// playRandomSound();
 		switchToScreen(shopPane);
 	}
@@ -69,7 +70,7 @@ public class MainApplication extends GraphicsApplication {
 		return WINDOW_HEIGHT;
 	}
 
-	private void playerFileSetup() {
+	public static void playerFileSetup() {
 		File playerF = new File("player.txt");
 		if (!playerF.exists()) {
 			try {
@@ -96,6 +97,10 @@ public class MainApplication extends GraphicsApplication {
 				e2.printStackTrace();
 			}
 		}
+		readPlayerFile();
+	}
+
+	public static void readPlayerFile() {
 		String text = null;
 		try {
 			Scanner sc = new Scanner(new File("player.txt"));
@@ -114,11 +119,11 @@ public class MainApplication extends GraphicsApplication {
 		playerInfo.put(key, value);
 	}
 	
-	public Map<String, String> getMap() {
+	public static Map<String, String> getMap() {
 		return playerInfo;
 	}
 	
-	private void initalizeMap(String text) {
+	private static void initalizeMap(String text) {
 		String[] infoArr = text.split(":|,");
 		for (int i = 0; i < infoArr.length; i = i + 2) {
 			playerInfo.put(infoArr[i], infoArr[i + 1]);
