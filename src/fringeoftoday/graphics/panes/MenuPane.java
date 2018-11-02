@@ -19,8 +19,6 @@ public class MenuPane extends GraphicsPane {
 	private GButton btnShop;
 	private GButton btnExit;
 	private GImage title;
-	private int lastRun;
-	private int bestRun;
 
 	public MenuPane(MainApplication app) {
 		super();
