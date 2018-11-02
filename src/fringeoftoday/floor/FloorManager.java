@@ -34,13 +34,56 @@ public class FloorManager {
 		return;
 	}
 	
+	/**
+	 * Generates a room from a layout array
+	 * 
+	 * @param layout - The char array that determines the layout of a room
+	 * @return - A new room to be inserted into a floor
+	 */
 	public Room generateRoom(char layout[][]) {
 		Room r = new Room();
 		
 		for (int i = 0; i < NUM_ROOM_ROWS; i++) {
 			for (int j = 0; j < NUM_ROOM_COLS; j++) {
 				switch(layout[i][j]) {
-					//TODO Add switch cases
+				case '*':
+					r.setSpace(i, j, SpaceType.STANDARD);
+					break;
+					
+				case 'I':
+					r.setSpace(i, j, SpaceType.IMPASSIBLE);
+					break;
+					
+				case 'C':
+					r.setSpace(i, j, SpaceType.COLLIDABLE);
+					break;
+					
+				case 'B':
+					r.setSpace(i, j, SpaceType.BASIC_SPAWN);
+					break;
+					
+				case 'N':
+					r.setSpace(i, j, SpaceType.SNIPER_SPAWN);
+					break;
+					
+				case 'H':
+					r.setSpace(i, j, SpaceType.SHOTGUN_SPAWN);
+					break;
+					
+				case 'S':
+					r.setSpace(i, j, SpaceType.STAIRS);
+					break;
+					
+				case 'D':
+					r.setSpace(i, j, SpaceType.DOOR);
+					break;
+					
+				case 'W':
+					r.setSpace(i, j, SpaceType.WALL);
+					break;
+					
+				default:
+					break;
 				}
 			}
 		}
