@@ -114,8 +114,8 @@ public class MainApplication extends GraphicsApplication {
 		playerInfo.put(key, value);
 	}
 	
-	public String getMapInfo(String key) {
-		return playerInfo.get(key);
+	public Map<String, String> getMap() {
+		return playerInfo;
 	}
 	
 	private void initalizeMap(String text) {
