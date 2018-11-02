@@ -110,11 +110,11 @@ public class MainApplication extends GraphicsApplication {
 		initalizeMap(text);
 	}
 
-	private void updateMap(String key, String value) {
+	public void updateMap(String key, String value) {
 		playerInfo.put(key, value);
 	}
 	
-	private Map<String, String> getMap() {
+	public Map<String, String> getMap() {
 		return playerInfo;
 	}
 	
