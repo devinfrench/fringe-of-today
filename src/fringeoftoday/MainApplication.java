@@ -1,7 +1,11 @@
 package fringeoftoday;
 
 
-import java.util.*; 
+import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.*; 
 
 import fringeoftoday.audio.AudioPlayer;
@@ -30,6 +34,7 @@ public class MainApplication extends GraphicsApplication {
 		shopPane = new ShopPane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
+		playerFileSetup();
 	}
 
 	public void switchToMenu() {
@@ -64,5 +69,43 @@ public class MainApplication extends GraphicsApplication {
 		return WINDOW_HEIGHT;
 	}
 	
-	
+
+	private void playerFileSetup() {
+		File playerF = new File("player.txt");
+		if (!playerF.exists()) {
+			try {
+				// Make new file if one doesn't exist
+				playerF.createNewFile();
+			} catch (IOException e1) {
+				System.out.println("Couldn't create file");
+				e1.printStackTrace();
+			}
+
+			try {
+				// Fill it in with default values of 0
+				FileWriter fw = new FileWriter("player.txt");
+				fw.write("Coin:0" + System.getProperty("line.separator"));
+				fw.write("HP up:0" + System.getProperty("line.separator"));
+				fw.write("Melee up:0" + System.getProperty("line.separator"));
+				fw.write("Ranged up:0" + System.getProperty("line.separator"));
+				fw.write("Speed up:0" + System.getProperty("line.separator"));
+				fw.write("Previous:0" + System.getProperty("line.separator"));
+				fw.write("GOAT:0");
+				fw.close();
+			} catch (IOException e2) {
+				System.out.println("No write");
+				e2.printStackTrace();
+			}
+		}
+		String text = null;
+		try {
+			Scanner sc = new Scanner(new File("player.txt"));
+			text = sc.useDelimiter("\\A").next();
+			sc.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Can't find the file");
+			e.printStackTrace();
+		}
+		//System.out.println(text);
+	}
 }
