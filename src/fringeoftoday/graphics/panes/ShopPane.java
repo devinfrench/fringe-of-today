@@ -1,9 +1,8 @@
 package fringeoftoday.graphics.panes;
 
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
-import java.util.Map;
 
+import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GLine;
 import acm.graphics.GObject;
@@ -16,6 +15,7 @@ public class ShopPane extends GraphicsPane {
 	public static final int BUTTON_WIDTH = 200;
 	public static final int BUTTON_HEIGHT = 100;
 	public static final int MAX_UPGRADES = 10;
+	public static final int IMAGE_SIZE = 250;
 
 	private GLabel title;
 	private GButton btnBack;
@@ -28,6 +28,11 @@ public class ShopPane extends GraphicsPane {
 	private GButton meleeBtn;
 	private GButton rangedBtn;
 	private GButton speedBtn;
+
+	private GImage hpImg;
+	private GImage meleeImg;
+	private GImage rangedImg;
+	private GImage speedImg;
 
 	public ShopPane(MainApplication app) {
 		this.program = app;
@@ -75,6 +80,22 @@ public class ShopPane extends GraphicsPane {
 		int speedCost = (Integer.parseInt(MainApplication.getMap().get("SpeedUpgrades")) + 1) * 10;
 		speedBtn = new GButton("Cost: " + speedCost, 3 * MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
 				MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+
+		// HP Image
+		hpImg = new GImage("hp_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
+
+		// Melee Image
+		meleeImg = new GImage("melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
+
+		// Ranged Image
+		rangedImg = new GImage("ranged_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
+
+		// Speed Image
+		speedImg = new GImage("movement_speed_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
 	}
 
 	@Override
@@ -89,6 +110,10 @@ public class ShopPane extends GraphicsPane {
 		program.add(meleeBtn);
 		program.add(rangedBtn);
 		program.add(speedBtn);
+		program.add(hpImg);
+		program.add(meleeImg);
+		program.add(rangedImg);
+		program.add(speedImg);
 	}
 
 	@Override
@@ -103,6 +128,10 @@ public class ShopPane extends GraphicsPane {
 		program.remove(meleeBtn);
 		program.remove(rangedBtn);
 		program.remove(speedBtn);
+		program.remove(hpImg);
+		program.remove(meleeImg);
+		program.remove(rangedImg);
+		program.remove(speedImg);
 	}
 
 	@Override
