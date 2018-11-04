@@ -15,18 +15,25 @@ public class ShopPane extends GraphicsPane {
 										// all of the GraphicsProgram calls
 	private GLabel title;
 	private GButton btnBack;
-	private GLine headerSeperator;
+	private GLine headerSeparator;
 	private GLabel coinCtr;
 
 		
 	public ShopPane(MainApplication app) {
 		this.program = app;
-
+		
+		// Title for the shop
 		title = new GLabel("Shop", MainApplication.WINDOW_WIDTH / 2 - 50, MainApplication.WINDOW_HEIGHT / 18);
 		title.setFont("Arial-46");
+		
+		// Back button
 		btnBack = new GButton("Back", 0, 0, MainApplication.WINDOW_WIDTH / 13, MainApplication.WINDOW_HEIGHT / 12);
-		headerSeperator = new GLine(0, MainApplication.WINDOW_HEIGHT / 11, MainApplication.WINDOW_WIDTH,
+		
+		// Header separator
+		headerSeparator = new GLine(0, MainApplication.WINDOW_HEIGHT / 11, MainApplication.WINDOW_WIDTH,
 				MainApplication.WINDOW_HEIGHT / 11);
+		
+		// Coin counter at the top left
 		coinCtr = new GLabel("Coin: " + MainApplication.getMap().get("Coin"), MainApplication.WINDOW_WIDTH-300, MainApplication.WINDOW_HEIGHT / 18);
 		coinCtr.setFont("Arial-46");
 	}
@@ -35,7 +42,7 @@ public class ShopPane extends GraphicsPane {
 	public void showContents() {
 		program.add(title);
 		program.add(btnBack);
-		program.add(headerSeperator);
+		program.add(headerSeparator);
 		program.add(coinCtr);
 	}
 
@@ -43,7 +50,7 @@ public class ShopPane extends GraphicsPane {
 	public void hideContents() {
 		program.remove(title);
 		program.remove(btnBack);
-		program.remove(headerSeperator);
+		program.remove(headerSeparator);
 		program.remove(coinCtr);
 	}
 
