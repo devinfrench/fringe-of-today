@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 
 import acm.graphics.GObject;
 import acm.graphics.GImage;
+import acm.graphics.GLabel;
 import fringeoftoday.MainApplication;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.panes.GraphicsPane;
@@ -19,6 +20,8 @@ public class MenuPane extends GraphicsPane {
 	private GButton btnShop;
 	private GButton btnExit;
 	private GImage title;
+	private GLabel lastRun;
+	private GLabel bestRun;
 
 	public MenuPane(MainApplication app) {
 		super();
@@ -42,6 +45,16 @@ public class MenuPane extends GraphicsPane {
 		btnExit = new GButton("Exit", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 700, BUTTON_WIDTH,
 				BUTTON_HEIGHT);
 		btnExit.setFillColor(Color.RED);
+
+		// Latest Score
+		lastRun = new GLabel("On your last run, you got to floor: " + MainApplication.getMap().get("PreviousRun"),
+				MainApplication.WINDOW_WIDTH - 310, MainApplication.WINDOW_HEIGHT - 40);
+		lastRun.setFont("Arial-18");
+		
+		// Best Score
+		bestRun = new GLabel("On your best run, you got to floor: " + MainApplication.getMap().get("GOAT"),
+				MainApplication.WINDOW_WIDTH - 310, MainApplication.WINDOW_HEIGHT - 15);
+		bestRun.setFont("Arial-18");
 	}
 
 	@Override
@@ -50,6 +63,8 @@ public class MenuPane extends GraphicsPane {
 		program.add(btnPlay);
 		program.add(btnShop);
 		program.add(btnExit);
+		program.add(lastRun);
+		program.add(bestRun);
 	}
 
 	@Override
@@ -58,6 +73,8 @@ public class MenuPane extends GraphicsPane {
 		program.remove(btnPlay);
 		program.remove(btnShop);
 		program.remove(btnExit);
+		program.remove(lastRun);
+		program.remove(bestRun);
 	}
 
 	@Override
