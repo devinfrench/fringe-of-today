@@ -42,7 +42,7 @@ public class ShopPane extends GraphicsPane {
 		title.setFont("Arial-46");
 
 		// Back button
-		btnBack = new GButton("Back", 0, 0, MainApplication.WINDOW_WIDTH / 13, MainApplication.WINDOW_HEIGHT / 12);
+		btnBack = new GButton("Back", 0, 0, BUTTON_WIDTH, BUTTON_HEIGHT*.75);
 
 		// Header separator
 		headerSeparator = new GLine(0, MainApplication.WINDOW_HEIGHT / 11, MainApplication.WINDOW_WIDTH,
@@ -134,11 +134,19 @@ public class ShopPane extends GraphicsPane {
 		program.remove(speedImg);
 	}
 
+	private boolean purchaseAble(GObject obj) {
+		//Add checkers for the amount of objects purchased and the coins available
+		return false;
+	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == btnBack) {
 			program.switchToMenu();
+		}
+		else if(obj.getHeight()== BUTTON_HEIGHT){
+			purchaseAble(obj);
 		}
 	}
 }
