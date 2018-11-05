@@ -34,6 +34,7 @@ public class MainApplication extends GraphicsApplication {
 		tutorial = new TutorialPane(this);
 		shopPane = new ShopPane(this);
 		menu = new MenuPane(this);
+		game = new GamePane(this);
 		switchToMenu();
 	}
 
@@ -50,7 +51,17 @@ public class MainApplication extends GraphicsApplication {
 	public void switchToTutorial() {
 		switchToScreen(tutorial);
 	}
-
+	
+	public void switchToGame() {
+		if (PlayerData.getMap().get("GOAT") == "0") {
+			switchToTutorial();
+		}
+		else {
+			switchToScreen(game);
+		}
+				
+	}
+	
 	public void exitProgram() {
 		System.exit(0);
 	}
