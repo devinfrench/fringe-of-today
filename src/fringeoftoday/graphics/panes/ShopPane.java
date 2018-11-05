@@ -9,6 +9,7 @@ import acm.graphics.GLine;
 import acm.graphics.GObject;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
+import fringeoftoday.entities.Player;
 import fringeoftoday.graphics.GButton;
 
 public class ShopPane extends GraphicsPane {
@@ -151,7 +152,25 @@ public class ShopPane extends GraphicsPane {
 	}
 
 	private boolean purchaseAble(GObject obj) {
-
+		String type = "";
+		if (obj == hpBtn) {
+			type = "HPUpgrades";
+		} else if (obj == meleeBtn) {
+			type = "MeleeUpgrades";
+		} else if (obj == rangedBtn) {
+			type = "RangedUpgrades";
+		} else if (obj == speedBtn) {
+			type = "SpeedUpgrades";
+		}
+		int cost = (Integer.parseInt(PlayerData.getMap().get(type)) + 1) * 10;
+		if (cost <= Integer.parseInt(PlayerData.getMap().get("Coin"))) {
+			hideContents();
+			PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) - cost);
+			PlayerData.updateMap(type, (Integer.parseInt(PlayerData.getMap().get(type)) + 1));
+			initObjs();
+			showContents();
+		} else {System.out.println("Too Expensive");}
+		
 		return false;
 	}
 
