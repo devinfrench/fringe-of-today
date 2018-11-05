@@ -8,6 +8,8 @@ import acm.graphics.GLabel;
 import acm.graphics.GLine;
 import acm.graphics.GObject;
 import fringeoftoday.MainApplication;
+import fringeoftoday.PlayerData;
+import fringeoftoday.entities.Player;
 import fringeoftoday.graphics.GButton;
 
 public class ShopPane extends GraphicsPane {
@@ -17,6 +19,11 @@ public class ShopPane extends GraphicsPane {
 	public static final int BUTTON_HEIGHT = 100;
 	public static final int MAX_UPGRADES = 10;
 	public static final int IMAGE_SIZE = 250;
+	public static final int LEFT_BTN = MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2;
+	public static final int RIGHT_BTN = 3 * MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2;
+	public static final int UP_BTN = 12 * MainApplication.WINDOW_HEIGHT / 22 - BUTTON_HEIGHT - 10;
+	public static final int DOWN_BTN = MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10;
+	
 
 	private GLabel title;
 	private GButton btnBack;
@@ -84,29 +91,25 @@ public class ShopPane extends GraphicsPane {
 				MainApplication.WINDOW_HEIGHT / 2 - BUTTON_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Coin counter at the top left
-		coinCtr = new GLabel("Coin: " + MainApplication.getMap().get("Coin"), MainApplication.WINDOW_WIDTH - 300,
+		coinCtr = new GLabel("Coin: " + PlayerData.getMap().get("Coin"), MainApplication.WINDOW_WIDTH - 300,
 				MainApplication.WINDOW_HEIGHT / 18);
 		coinCtr.setFont("Arial-46");
 
 		// HP Upgrade Button
-		int hpCost = (Integer.parseInt(MainApplication.getMap().get("HPUpgrades")) + 1) * 10;
-		hpBtn = new GButton("Cost: " + hpCost, MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
-				12 * MainApplication.WINDOW_HEIGHT / 22 - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+		int hpCost = (Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 1) * 10;
+		hpBtn = new GButton("Cost: " + hpCost, LEFT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Melee Damage Upgrade Button
-		int meleeCost = (Integer.parseInt(MainApplication.getMap().get("MeleeUpgrades")) + 1) * 10;
-		meleeBtn = new GButton("Cost: " + meleeCost, 3 * MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
-				12 * MainApplication.WINDOW_HEIGHT / 22 - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+		int meleeCost = (Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")) + 1) * 10;
+		meleeBtn = new GButton("Cost: " + meleeCost, RIGHT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Ranged Damage Upgrade Button
-		int rangedCost = (Integer.parseInt(MainApplication.getMap().get("RangedUpgrades")) + 1) * 10;
-		rangedBtn = new GButton("Cost: " + rangedCost, MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
-				MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+		int rangedCost = (Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")) + 1) * 10;
+		rangedBtn = new GButton("Cost: " + rangedCost, LEFT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Speed Movement Upgrade Button
-		int speedCost = (Integer.parseInt(MainApplication.getMap().get("SpeedUpgrades")) + 1) * 10;
-		speedBtn = new GButton("Cost: " + speedCost, 3 * MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
-				MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+		int speedCost = (Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")) + 1) * 10;
+		speedBtn = new GButton("Cost: " + speedCost, RIGHT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 	}
 
 	@Override
@@ -149,26 +152,41 @@ public class ShopPane extends GraphicsPane {
 	}
 
 	private boolean purchaseAble(GObject obj) {
-			
+		String type = "";
+		if (obj == hpBtn) {
+			type = "HPUpgrades";
+		} else if (obj == meleeBtn) {
+			type = "MeleeUpgrades";
+		} else if (obj == rangedBtn) {
+			type = "RangedUpgrades";
+		} else if (obj == speedBtn) {
+			type = "SpeedUpgrades";
+		}
+		int cost = (Integer.parseInt(PlayerData.getMap().get(type)) + 1) * 10;
+		if (cost <= Integer.parseInt(PlayerData.getMap().get("Coin"))) {
+			hideContents();
+			PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) - cost);
+			PlayerData.updateMap(type, (Integer.parseInt(PlayerData.getMap().get(type)) + 1));
+			initObjs();
+			showContents();
+		} else {System.out.println("Too Expensive");}
+		
 		return false;
 	}
-	
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == btnBack) {
 			program.switchToMenu();
-		}
-		else if (obj == coinCheat) {
+		} else if (obj == coinCheat) {
 			hideContents();
-			MainApplication.updateMap("Coin", Integer.parseInt(MainApplication.getMap().get("Coin")) + 10);
+			PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) + 10);
 			initObjs();
 			showContents();
-		}
-		else if (obj == coinCtr) {
+		} else if (obj == coinCtr) {
 			coinCheat.setVisible(!coinCheat.isVisible());
-			}
-		else if (obj instanceof GButton) {
+		} else if (obj instanceof GButton) {
 			purchaseAble(obj);
 		}
 	}
