@@ -8,6 +8,7 @@ import acm.graphics.GLabel;
 import acm.graphics.GLine;
 import acm.graphics.GObject;
 import fringeoftoday.MainApplication;
+import fringeoftoday.PlayerData;
 import fringeoftoday.graphics.GButton;
 
 public class ShopPane extends GraphicsPane {
@@ -89,24 +90,24 @@ public class ShopPane extends GraphicsPane {
 				MainApplication.WINDOW_HEIGHT / 2 - BUTTON_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Coin counter at the top left
-		coinCtr = new GLabel("Coin: " + MainApplication.getMap().get("Coin"), MainApplication.WINDOW_WIDTH - 300,
+		coinCtr = new GLabel("Coin: " + PlayerData.getMap().get("Coin"), MainApplication.WINDOW_WIDTH - 300,
 				MainApplication.WINDOW_HEIGHT / 18);
 		coinCtr.setFont("Arial-46");
 
 		// HP Upgrade Button
-		int hpCost = (Integer.parseInt(MainApplication.getMap().get("HPUpgrades")) + 1) * 10;
+		int hpCost = (Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 1) * 10;
 		hpBtn = new GButton("Cost: " + hpCost, LEFT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Melee Damage Upgrade Button
-		int meleeCost = (Integer.parseInt(MainApplication.getMap().get("MeleeUpgrades")) + 1) * 10;
+		int meleeCost = (Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")) + 1) * 10;
 		meleeBtn = new GButton("Cost: " + meleeCost, RIGHT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Ranged Damage Upgrade Button
-		int rangedCost = (Integer.parseInt(MainApplication.getMap().get("RangedUpgrades")) + 1) * 10;
+		int rangedCost = (Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")) + 1) * 10;
 		rangedBtn = new GButton("Cost: " + rangedCost, LEFT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Speed Movement Upgrade Button
-		int speedCost = (Integer.parseInt(MainApplication.getMap().get("SpeedUpgrades")) + 1) * 10;
+		int speedCost = (Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")) + 1) * 10;
 		speedBtn = new GButton("Cost: " + speedCost, RIGHT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 	}
 
@@ -161,7 +162,7 @@ public class ShopPane extends GraphicsPane {
 			program.switchToMenu();
 		} else if (obj == coinCheat) {
 			hideContents();
-			MainApplication.updateMap("Coin", Integer.parseInt(MainApplication.getMap().get("Coin")) + 10);
+			PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) + 10);
 			initObjs();
 			showContents();
 		} else if (obj == coinCtr) {

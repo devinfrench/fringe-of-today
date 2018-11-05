@@ -7,6 +7,7 @@ import acm.graphics.GObject;
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import fringeoftoday.MainApplication;
+import fringeoftoday.PlayerData;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.panes.GraphicsPane;
 
@@ -47,12 +48,12 @@ public class MenuPane extends GraphicsPane {
 		btnExit.setFillColor(Color.RED);
 
 		// Latest Score
-		lastRun = new GLabel("On your last run, you got to floor: " + MainApplication.getMap().get("PreviousRun"),
+		lastRun = new GLabel("On your last run, you got to floor: " + PlayerData.getMap().get("PreviousRun"),
 				MainApplication.WINDOW_WIDTH - 310, MainApplication.WINDOW_HEIGHT - 40);
 		lastRun.setFont("Arial-18");
 		
 		// Best Score
-		bestRun = new GLabel("On your best run, you got to floor: " + MainApplication.getMap().get("GOAT"),
+		bestRun = new GLabel("On your best run, you got to floor: " + PlayerData.getMap().get("GOAT"),
 				MainApplication.WINDOW_WIDTH - 310, MainApplication.WINDOW_HEIGHT - 15);
 		bestRun.setFont("Arial-18");
 	}
