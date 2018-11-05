@@ -33,6 +33,7 @@ public class MainApplication extends GraphicsApplication {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		PlayerData.playerFileSetup();
 		floorManager = new FloorManager();
+		//importAllLayouts();
 	}
 
 	public void run() {
@@ -56,17 +57,16 @@ public class MainApplication extends GraphicsApplication {
 	public void switchToTutorial() {
 		switchToScreen(tutorial);
 	}
-	
+
 	public void switchToGame() {
-		if (PlayerData.getMap().get("GOAT") == "0") {
+		if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) == 0) {
 			switchToTutorial();
-		}
-		else {
+		} else {
 			switchToScreen(game);
 		}
-				
+
 	}
-	
+
 	public void exitProgram() {
 		System.exit(0);
 	}
