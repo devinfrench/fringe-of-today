@@ -39,12 +39,10 @@ public class MainApplication extends GraphicsApplication {
 
 	public void switchToMenu() {
 		// playRandomSound();
-		count++;
 		switchToScreen(menu);
 	}
 
 	public void switchToShop() {
-		
 		// playRandomSound();
 		switchToScreen(shopPane);
 	}
