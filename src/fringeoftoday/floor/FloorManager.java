@@ -18,12 +18,14 @@ public class FloorManager {
 
 	private Room spawnRoom;
 	private ArrayList<char[][]> floorLayouts;
-	private ArrayList<char[][]> roomLayouts;
+	private ArrayList<Room> roomLayouts;
+	private ArrayList<Room> bossRoomLayouts;
 	private Floor currentFloor;
 
 	public FloorManager() {
 		floorLayouts = new ArrayList<char[][]>();
-		roomLayouts = new ArrayList<char[][]>();
+		roomLayouts = new ArrayList<Room>();
+		bossRoomLayouts = new ArrayList<Room>();
 	}
 
 	public Floor getFloor() {
@@ -34,14 +36,36 @@ public class FloorManager {
 		spawnRoom = generateRoom(layout);
 	}
 
+	/**
+	 * Adds floor layout to ArrayList of possible floors to use
+	 * 
+	 * @param layout - Layout to add
+	 */
 	public void addFloorLayout(char layout[][]) {
 		floorLayouts.add(layout);
 	}
 
+	/**
+	 * Adds room layout to ArrayList of possible rooms to use
+	 * 
+	 * @param layout - Layout to add
+	 */
 	public void addRoomLayout(char layout[][]) {
-		roomLayouts.add(layout);
+		roomLayouts.add(generateRoom(layout));
 	}
 
+	/**
+	 * Adds boss room layout to ArrayList of possible boss rooms to use
+	 * 
+	 * @param layout - Layout to add
+	 */
+	public void addBossRoomLayout(char layout[][]) {
+		bossRoomLayouts.add(generateRoom(layout));
+	}
+
+	/**
+	 * Generates a new floor that is automatically stored in currentFloor
+	 */
 	public void generateNewFloor() {
 		int levelCount = 1;
 		if (currentFloor != null)
@@ -54,11 +78,8 @@ public class FloorManager {
 			for (int j = 0; j < FLOOR_COLS; j++) {
 				switch (floorToGenerate[i][j]) {
 				case 'R':
-					ArrayList<char[][]> viableRooms = roomLayouts;
-					// TODO: Create viableRooms()
-					// ArrayList<char[][]> viableRooms = getViableRooms(i, j, floorToGenerate);
-					currentFloor.setRoom(i, j,
-							generateRoom(viableRooms.get((int) (Math.random() * (viableRooms.size() - 1)))));
+					ArrayList<Room> viableRooms = getViableRooms(i, j, floorToGenerate);
+					currentFloor.setRoom(i, j, viableRooms.get((int) (Math.random() * (viableRooms.size() - 1))));
 					break;
 
 				case 'S':
@@ -66,9 +87,8 @@ public class FloorManager {
 					break;
 
 				case 'B':
-					// TODO: Create bossRooms arrayList
-					// currentFloor.setRoom(i, j, generateRoom(bossRooms.get((int)(Math.random() *
-					// (bossRooms.size() - 1))))););
+					currentFloor.setRoom(i, j,
+							bossRoomLayouts.get((int) (Math.random() * (bossRoomLayouts.size() - 1))));
 					break;
 
 				default:
@@ -79,10 +99,10 @@ public class FloorManager {
 	}
 
 	/**
-	 * Generates a room from a layout array
+	 * Converts a room layout array into a room object
 	 * 
 	 * @param layout - The char array that determines the layout of a room
-	 * @return - A new room to be inserted into a floor
+	 * @return A new room generated from the layout
 	 */
 	public Room generateRoom(char layout[][]) {
 		Room r = new Room();
@@ -131,7 +151,46 @@ public class FloorManager {
 				}
 			}
 		}
+		
+		if (r.getSpace(0, (int)(Math.ceil(ROOM_COLS)/2) - 1).getType() == SpaceType.DOOR)
+			r.addExit(Exit.NORTH);
+		if (r.getSpace(ROOM_ROWS - 1, (int)(Math.ceil(ROOM_COLS)/2) - 1).getType() == SpaceType.DOOR)
+			r.addExit(Exit.SOUTH);
+		if (r.getSpace((int)(Math.ceil(FLOOR_ROWS)/2) - 1, ROOM_COLS - 1).getType() == SpaceType.DOOR)
+			r.addExit(Exit.EAST);
+		if (r.getSpace((int)(Math.ceil(FLOOR_ROWS)/2) - 1, 0).getType() == SpaceType.DOOR)
+			r.addExit(Exit.WEST);
 
 		return r;
+	}
+
+	/**
+	 * Takes a given empty room in a floor and finds the list of possible room
+	 * layouts it could use
+	 * 
+	 * @param row - X coordinate of the room being analyzed
+	 * @param col - Y coordinate of the room being analyzed
+	 * @param f   - floor that the room is in
+	 * @return ArrayList of viable room layouts
+	 */
+	public ArrayList<Room> getViableRooms(int row, int col, char f[][]) {
+		ArrayList<Exit> exits = new ArrayList<Exit>();
+		ArrayList<Room> viableRooms = new ArrayList<Room>();
+
+		if (row < FLOOR_ROWS - 1 && f[row + 1][col] != '*')
+			exits.add(Exit.NORTH);
+		if (row > 0 && f[row - 1][col] != '*')
+			exits.add(Exit.SOUTH);
+		if (col < FLOOR_COLS - 1 && f[row][col + 1] != '*')
+			exits.add(Exit.EAST);
+		if (col > 0 && f[row][col - 1] != '*')
+			exits.add(Exit.WEST);
+
+		for (Room r : roomLayouts) {
+			if (r.getExits().containsAll(exits))
+				viableRooms.add(r);
+		}
+
+		return viableRooms;
 	}
 }

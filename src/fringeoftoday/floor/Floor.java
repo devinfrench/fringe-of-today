@@ -26,6 +26,13 @@ public class Floor {
 		return levelCount;
 	}
 
+	/**
+	 * Sets the room at the given X/Y to the given room
+	 * 
+	 * @param row - X coordinate in the floor
+	 * @param col - Y coordinate in the floor
+	 * @param r   - Room to insert
+	 */
 	public void setRoom(int row, int col, Room r) {
 		floorLayout[row][col] = r;
 	}

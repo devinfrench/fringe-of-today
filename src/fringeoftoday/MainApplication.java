@@ -12,7 +12,7 @@ import fringeoftoday.graphics.GraphicsApplication;
 import fringeoftoday.graphics.panes.MenuPane;
 import fringeoftoday.graphics.panes.ShopPane;
 import fringeoftoday.graphics.panes.TutorialPane;
-
+import fringeoftoday.graphics.panes.GamePane;
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 1600;
 	public static final int WINDOW_HEIGHT = 900;
@@ -22,6 +22,7 @@ public class MainApplication extends GraphicsApplication {
 	private ShopPane shopPane;
 	private MenuPane menu;
 	private TutorialPane tutorial;
+	private GamePane game;
 	private int count;
 
 	public void init() {
@@ -33,6 +34,7 @@ public class MainApplication extends GraphicsApplication {
 		tutorial = new TutorialPane(this);
 		shopPane = new ShopPane(this);
 		menu = new MenuPane(this);
+		game = new GamePane(this);
 		switchToMenu();
 	}
 
@@ -49,7 +51,17 @@ public class MainApplication extends GraphicsApplication {
 	public void switchToTutorial() {
 		switchToScreen(tutorial);
 	}
-
+	
+	public void switchToGame() {
+		if (PlayerData.getMap().get("GOAT") == "0") {
+			switchToTutorial();
+		}
+		else {
+			switchToScreen(game);
+		}
+				
+	}
+	
 	public void exitProgram() {
 		System.exit(0);
 	}
