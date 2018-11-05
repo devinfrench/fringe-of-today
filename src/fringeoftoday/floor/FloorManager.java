@@ -19,11 +19,13 @@ public class FloorManager {
 	private Room spawnRoom;
 	private ArrayList<char[][]> floorLayouts;
 	private ArrayList<char[][]> roomLayouts;
+	private ArrayList<char[][]> bossRoomLayouts;
 	private Floor currentFloor;
 
 	public FloorManager() {
 		floorLayouts = new ArrayList<char[][]>();
 		roomLayouts = new ArrayList<char[][]>();
+		bossRoomLayouts = new ArrayList<char[][]>();
 	}
 
 	public Floor getFloor() {
@@ -41,7 +43,14 @@ public class FloorManager {
 	public void addRoomLayout(char layout[][]) {
 		roomLayouts.add(layout);
 	}
+	
+	public void addBossRoomLayout(char layout[][]) {
+		bossRoomLayouts.add(layout);
+	}
 
+	/**
+	 * Generates a new floor that is automatically stored in currentFloor
+	 */
 	public void generateNewFloor() {
 		int levelCount = 1;
 		if (currentFloor != null)
@@ -67,8 +76,8 @@ public class FloorManager {
 
 				case 'B':
 					// TODO: Create bossRooms arrayList
-					// currentFloor.setRoom(i, j, generateRoom(bossRooms.get((int)(Math.random() *
-					// (bossRooms.size() - 1))))););
+					currentFloor.setRoom(i, j,
+							generateRoom(bossRoomLayouts.get((int) (Math.random() * (bossRoomLayouts.size() - 1)))));
 					break;
 
 				default:
