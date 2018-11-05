@@ -17,6 +17,11 @@ public class ShopPane extends GraphicsPane {
 	public static final int BUTTON_HEIGHT = 100;
 	public static final int MAX_UPGRADES = 10;
 	public static final int IMAGE_SIZE = 250;
+	public static final int LEFT_BTN = MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2;
+	public static final int RIGHT_BTN = 3 * MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2;
+	public static final int UP_BTN = 12 * MainApplication.WINDOW_HEIGHT / 22 - BUTTON_HEIGHT - 10;
+	public static final int DOWN_BTN = MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10;
+	
 
 	private GLabel title;
 	private GButton btnBack;
@@ -90,23 +95,19 @@ public class ShopPane extends GraphicsPane {
 
 		// HP Upgrade Button
 		int hpCost = (Integer.parseInt(MainApplication.getMap().get("HPUpgrades")) + 1) * 10;
-		hpBtn = new GButton("Cost: " + hpCost, MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
-				12 * MainApplication.WINDOW_HEIGHT / 22 - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+		hpBtn = new GButton("Cost: " + hpCost, LEFT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Melee Damage Upgrade Button
 		int meleeCost = (Integer.parseInt(MainApplication.getMap().get("MeleeUpgrades")) + 1) * 10;
-		meleeBtn = new GButton("Cost: " + meleeCost, 3 * MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
-				12 * MainApplication.WINDOW_HEIGHT / 22 - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+		meleeBtn = new GButton("Cost: " + meleeCost, RIGHT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Ranged Damage Upgrade Button
 		int rangedCost = (Integer.parseInt(MainApplication.getMap().get("RangedUpgrades")) + 1) * 10;
-		rangedBtn = new GButton("Cost: " + rangedCost, MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
-				MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+		rangedBtn = new GButton("Cost: " + rangedCost, LEFT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Speed Movement Upgrade Button
 		int speedCost = (Integer.parseInt(MainApplication.getMap().get("SpeedUpgrades")) + 1) * 10;
-		speedBtn = new GButton("Cost: " + speedCost, 3 * MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
-				MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+		speedBtn = new GButton("Cost: " + speedCost, RIGHT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 	}
 
 	@Override
@@ -149,26 +150,23 @@ public class ShopPane extends GraphicsPane {
 	}
 
 	private boolean purchaseAble(GObject obj) {
-			
+
 		return false;
 	}
-	
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == btnBack) {
 			program.switchToMenu();
-		}
-		else if (obj == coinCheat) {
+		} else if (obj == coinCheat) {
 			hideContents();
 			MainApplication.updateMap("Coin", Integer.parseInt(MainApplication.getMap().get("Coin")) + 10);
 			initObjs();
 			showContents();
-		}
-		else if (obj == coinCtr) {
+		} else if (obj == coinCtr) {
 			coinCheat.setVisible(!coinCheat.isVisible());
-			}
-		else if (obj instanceof GButton) {
+		} else if (obj instanceof GButton) {
 			purchaseAble(obj);
 		}
 	}
