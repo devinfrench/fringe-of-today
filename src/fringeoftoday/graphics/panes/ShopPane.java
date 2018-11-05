@@ -1,5 +1,6 @@
 package fringeoftoday.graphics.panes;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
@@ -34,24 +35,25 @@ public class ShopPane extends GraphicsPane {
 	private GImage rangedImg;
 	private GImage speedImg;
 
+	private GButton coinCheat;
+
 	public ShopPane(MainApplication app) {
 		this.program = app;
+		initObjs();
+		coinCheat.setVisible(false);
+	}
 
+	private void initObjs() {
 		// Title for the shop
 		title = new GLabel("Shop", MainApplication.WINDOW_WIDTH / 2 - 50, MainApplication.WINDOW_HEIGHT / 18);
 		title.setFont("Arial-46");
 
 		// Back button
-		btnBack = new GButton("Back", 0, 0, BUTTON_WIDTH, BUTTON_HEIGHT*.75);
+		btnBack = new GButton("Back", 0, 0, BUTTON_WIDTH, BUTTON_HEIGHT * .75);
 
 		// Header separator
 		headerSeparator = new GLine(0, MainApplication.WINDOW_HEIGHT / 11, MainApplication.WINDOW_WIDTH,
 				MainApplication.WINDOW_HEIGHT / 11);
-
-		// Coin counter at the top left
-		coinCtr = new GLabel("Coin: " + MainApplication.getMap().get("Coin"), MainApplication.WINDOW_WIDTH - 300,
-				MainApplication.WINDOW_HEIGHT / 18);
-		coinCtr.setFont("Arial-46");
 
 		// Horizontal Separator
 		horizSeparator = new GLine(MainApplication.WINDOW_WIDTH / 2, MainApplication.WINDOW_HEIGHT / 11,
@@ -60,6 +62,31 @@ public class ShopPane extends GraphicsPane {
 		// Vertical Separator
 		vertSeperator = new GLine(0, 12 * MainApplication.WINDOW_HEIGHT / 22, MainApplication.WINDOW_WIDTH,
 				12 * MainApplication.WINDOW_HEIGHT / 22);
+
+		// HP Image
+		hpImg = new GImage("hp_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
+
+		// Melee Image
+		meleeImg = new GImage("melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
+
+		// Ranged Image
+		rangedImg = new GImage("ranged_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
+
+		// Speed Image
+		speedImg = new GImage("movement_speed_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
+
+		// Button to cheat and add coins
+		coinCheat = new GButton("Add 10 coin", MainApplication.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2,
+				MainApplication.WINDOW_HEIGHT / 2 - BUTTON_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
+
+		// Coin counter at the top left
+		coinCtr = new GLabel("Coin: " + MainApplication.getMap().get("Coin"), MainApplication.WINDOW_WIDTH - 300,
+				MainApplication.WINDOW_HEIGHT / 18);
+		coinCtr.setFont("Arial-46");
 
 		// HP Upgrade Button
 		int hpCost = (Integer.parseInt(MainApplication.getMap().get("HPUpgrades")) + 1) * 10;
@@ -80,22 +107,6 @@ public class ShopPane extends GraphicsPane {
 		int speedCost = (Integer.parseInt(MainApplication.getMap().get("SpeedUpgrades")) + 1) * 10;
 		speedBtn = new GButton("Cost: " + speedCost, 3 * MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2,
 				MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10, BUTTON_WIDTH, BUTTON_HEIGHT);
-
-		// HP Image
-		hpImg = new GImage("hp_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
-				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
-
-		// Melee Image
-		meleeImg = new GImage("melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
-				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
-
-		// Ranged Image
-		rangedImg = new GImage("ranged_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
-				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
-
-		// Speed Image
-		speedImg = new GImage("movement_speed_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
-				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
 	}
 
 	@Override
@@ -114,10 +125,12 @@ public class ShopPane extends GraphicsPane {
 		program.add(meleeImg);
 		program.add(rangedImg);
 		program.add(speedImg);
+		program.add(coinCheat);
 	}
 
 	@Override
 	public void hideContents() {
+		coinCheat.setVisible(false);
 		program.remove(title);
 		program.remove(btnBack);
 		program.remove(headerSeparator);
@@ -132,10 +145,11 @@ public class ShopPane extends GraphicsPane {
 		program.remove(meleeImg);
 		program.remove(rangedImg);
 		program.remove(speedImg);
+		program.remove(coinCheat);
 	}
 
 	private boolean purchaseAble(GObject obj) {
-		//Add checkers for the amount of objects purchased and the coins available
+			
 		return false;
 	}
 	
@@ -145,7 +159,16 @@ public class ShopPane extends GraphicsPane {
 		if (obj == btnBack) {
 			program.switchToMenu();
 		}
-		else if(obj.getHeight()== BUTTON_HEIGHT){
+		else if (obj == coinCheat) {
+			hideContents();
+			MainApplication.updateMap("Coin", Integer.parseInt(MainApplication.getMap().get("Coin")) + 10);
+			initObjs();
+			showContents();
+		}
+		else if (obj == coinCtr) {
+			coinCheat.setVisible(!coinCheat.isVisible());
+			}
+		else if (obj instanceof GButton) {
 			purchaseAble(obj);
 		}
 	}
