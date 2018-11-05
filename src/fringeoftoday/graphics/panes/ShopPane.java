@@ -56,7 +56,7 @@ public class ShopPane extends GraphicsPane {
 		title.setFont("Arial-46");
 
 		// Back button
-		btnBack = new GButton("Back", 0, 0, BUTTON_WIDTH, BUTTON_HEIGHT * .75);
+		btnBack = new GButton("Back", 1, 1, BUTTON_WIDTH, BUTTON_HEIGHT * .75);
 
 		// Header separator
 		headerSeparator = new GLine(0, MainApplication.WINDOW_HEIGHT / 11, MainApplication.WINDOW_WIDTH,
@@ -163,7 +163,7 @@ public class ShopPane extends GraphicsPane {
 		program.remove(coinCheat);
 	}
 
-	private boolean purchaseAble(GObject obj) {
+	private void purchase(GObject obj) {
 		String type = "";
 		if (obj == hpBtn) {
 			type = "HPUpgrades";
@@ -181,9 +181,7 @@ public class ShopPane extends GraphicsPane {
 			PlayerData.updateMap(type, (Integer.parseInt(PlayerData.getMap().get(type)) + 1));
 			initObjs();
 			showContents();
-		} else {System.out.println("Too Expensive");}
-		
-		return false;
+		}
 	}
 
 	@Override
@@ -199,7 +197,7 @@ public class ShopPane extends GraphicsPane {
 		} else if (obj == coinCtr) {
 			coinCheat.setVisible(!coinCheat.isVisible());
 		} else if (obj instanceof GButton) {
-			purchaseAble(obj);
+			purchase(obj);
 		}
 	}
 }
