@@ -34,6 +34,7 @@ public class PlayerData {
 				fw.write("SpeedUpgrades:0,");
 				fw.write("PreviousRun:0,");
 				fw.write("GOAT:0,");
+				fw.write("Tutorial:0,");
 				fw.close();
 			} catch (IOException e2) {
 				System.out.println("No write");
