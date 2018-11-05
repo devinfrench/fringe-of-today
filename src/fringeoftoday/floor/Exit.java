@@ -1,8 +1,7 @@
 package fringeoftoday.floor;
 
 /**
- * This enum denotes an exit that a given room can have.
- * Used in an ArrayList to store all possible exits a room has.
+ * Locations of exits a room can have
  * 
  * @author Jacob Shour
  *

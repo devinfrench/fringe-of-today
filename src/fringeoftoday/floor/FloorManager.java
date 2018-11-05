@@ -36,14 +36,29 @@ public class FloorManager {
 		spawnRoom = generateRoom(layout);
 	}
 
+	/**
+	 * Adds floor layout to ArrayList of possible floors to use
+	 * 
+	 * @param layout - Layout to add
+	 */
 	public void addFloorLayout(char layout[][]) {
 		floorLayouts.add(layout);
 	}
 
+	/**
+	 * Adds room layout to ArrayList of possible rooms to use
+	 * 
+	 * @param layout - Layout to add
+	 */
 	public void addRoomLayout(char layout[][]) {
 		roomLayouts.add(layout);
 	}
 	
+	/**
+	 * Adds boss room layout to ArrayList of possible boss rooms to use
+	 * 
+	 * @param layout - Layout to add
+	 */
 	public void addBossRoomLayout(char layout[][]) {
 		bossRoomLayouts.add(layout);
 	}
