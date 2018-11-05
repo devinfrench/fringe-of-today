@@ -112,10 +112,6 @@ public class MainApplication extends GraphicsApplication {
 		//System.out.println(text);
 		initalizeMap(text);
 	}
-
-	public void updateMap(String key, String value) {
-		playerInfo.put(key, value);
-	}
 	
 	public static Map<String, String> getMap() {
 		return playerInfo;
@@ -128,5 +124,10 @@ public class MainApplication extends GraphicsApplication {
 		}
 		//Print the array:
 		//playerInfo.forEach((key, value) -> System.out.println(key + ":" + value));
+	}
+
+	public static void updateMap(String key, int i) {
+		playerInfo.put(key, Integer.toString(i));
+		
 	}
 }
