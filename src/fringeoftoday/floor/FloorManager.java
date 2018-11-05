@@ -4,8 +4,8 @@ import java.util.*;
 import java.lang.Math;
 
 /**
- * Class responsible for handling the generation of rooms and floors, 
- * as well as storing the current floor
+ * Holds all floor templates and the current floor. Generates new floors from
+ * the templates stored
  * 
  * @author Jacob Shour
  *
@@ -15,67 +15,69 @@ public class FloorManager {
 	public static final int ROOM_COLS = 17;
 	public static final int FLOOR_ROWS = 4;
 	public static final int FLOOR_COLS = 5;
-	
+
 	private Room spawnRoom;
 	private ArrayList<char[][]> floorLayouts;
 	private ArrayList<char[][]> roomLayouts;
 	private Floor currentFloor;
-	
+
 	public FloorManager() {
 		floorLayouts = new ArrayList<char[][]>();
 		roomLayouts = new ArrayList<char[][]>();
 	}
-	
+
 	public Floor getFloor() {
 		return currentFloor;
 	}
-	
+
 	public void setSpawnRoom(char layout[][]) {
 		spawnRoom = generateRoom(layout);
 	}
-	
+
 	public void addFloorLayout(char layout[][]) {
 		floorLayouts.add(layout);
 	}
-	
+
 	public void addRoomLayout(char layout[][]) {
 		roomLayouts.add(layout);
 	}
-	
+
 	public void generateNewFloor() {
 		int levelCount = 1;
 		if (currentFloor != null)
 			levelCount = currentFloor.getLevel();
 		currentFloor = new Floor(levelCount);
-		
-		char floorToGenerate[][] = floorLayouts.get((int)(Math.random() * (floorLayouts.size() - 1)));
-		
+
+		char floorToGenerate[][] = floorLayouts.get((int) (Math.random() * (floorLayouts.size() - 1)));
+
 		for (int i = 0; i < FLOOR_ROWS; i++) {
 			for (int j = 0; j < FLOOR_COLS; j++) {
-				switch(floorToGenerate[i][j]) {
+				switch (floorToGenerate[i][j]) {
 				case 'R':
 					ArrayList<char[][]> viableRooms = roomLayouts;
-					//TODO: Create viableRooms()
-					//ArrayList<char[][]> viableRooms = getViableRooms(i, j, floorToGenerate);
-					currentFloor.setRoom(i, j, generateRoom(viableRooms.get((int)(Math.random() * (viableRooms.size() - 1)))));
+					// TODO: Create viableRooms()
+					// ArrayList<char[][]> viableRooms = getViableRooms(i, j, floorToGenerate);
+					currentFloor.setRoom(i, j,
+							generateRoom(viableRooms.get((int) (Math.random() * (viableRooms.size() - 1)))));
 					break;
-					
+
 				case 'S':
 					currentFloor.setRoom(i, j, spawnRoom);
 					break;
-					
+
 				case 'B':
-					//TODO: Create bossRooms arrayList
-					//currentFloor.setRoom(i, j, generateRoom(bossRooms.get((int)(Math.random() * (bossRooms.size() - 1))))););
+					// TODO: Create bossRooms arrayList
+					// currentFloor.setRoom(i, j, generateRoom(bossRooms.get((int)(Math.random() *
+					// (bossRooms.size() - 1))))););
 					break;
-				
+
 				default:
 					break;
 				}
 			}
 		}
 	}
-	
+
 	/**
 	 * Generates a room from a layout array
 	 * 
@@ -84,52 +86,52 @@ public class FloorManager {
 	 */
 	public Room generateRoom(char layout[][]) {
 		Room r = new Room();
-		
+
 		for (int i = 0; i < ROOM_ROWS; i++) {
 			for (int j = 0; j < ROOM_COLS; j++) {
-				switch(layout[i][j]) {
+				switch (layout[i][j]) {
 				case '*':
 					r.setSpace(i, j, SpaceType.STANDARD);
 					break;
-					
+
 				case 'I':
 					r.setSpace(i, j, SpaceType.IMPASSIBLE);
 					break;
-					
+
 				case 'C':
 					r.setSpace(i, j, SpaceType.COLLIDABLE);
 					break;
-					
+
 				case 'B':
 					r.setSpace(i, j, SpaceType.BASIC_SPAWN);
 					break;
-					
+
 				case 'N':
 					r.setSpace(i, j, SpaceType.SNIPER_SPAWN);
 					break;
-					
+
 				case 'H':
 					r.setSpace(i, j, SpaceType.SHOTGUN_SPAWN);
 					break;
-					
+
 				case 'S':
 					r.setSpace(i, j, SpaceType.STAIRS);
 					break;
-					
+
 				case 'D':
 					r.setSpace(i, j, SpaceType.DOOR);
 					break;
-					
+
 				case 'W':
 					r.setSpace(i, j, SpaceType.WALL);
 					break;
-					
+
 				default:
 					break;
 				}
 			}
 		}
-		
+
 		return r;
 	}
 }

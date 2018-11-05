@@ -1,7 +1,7 @@
 package fringeoftoday.floor;
 
 /**
- * Class responsible for data stored in each individual space / tile of a room
+ * Holds data on a single space of a room
  * 
  * @author Jacob Shour
  * 
@@ -10,11 +10,11 @@ public class Space {
 	private int numRow;
 	private int numCol;
 	private SpaceType type;
-	
+
 	/**
-	 * @param numRow - X position in room 
+	 * @param numRow - X position in room
 	 * @param numCol - Y position in room
-	 * @param type - The type of space; controls behavior
+	 * @param type   - The type of space; controls behavior
 	 */
 	public Space(int numRow, int numCol, SpaceType type) {
 		this.numRow = numRow;
