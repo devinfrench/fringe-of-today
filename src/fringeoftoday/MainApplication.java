@@ -18,7 +18,7 @@ public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_HEIGHT = 900;
 	public static final String MUSIC_FOLDER = "sounds";
 	private final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
-
+	
 	private ShopPane shopPane;
 	private MenuPane menu;
 	private TutorialPane tutorial;
