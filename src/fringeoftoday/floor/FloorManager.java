@@ -1,6 +1,7 @@
 package fringeoftoday.floor;
 
 import java.util.*;
+import java.lang.Math;
 
 /**
  * Class responsible for handling the generation of rooms and floors, 
@@ -15,6 +16,7 @@ public class FloorManager {
 	public static final int FLOOR_ROWS = 4;
 	public static final int FLOOR_COLS = 5;
 	
+	private Room spawnRoom;
 	private ArrayList<char[][]> floorLayouts;
 	private ArrayList<char[][]> roomLayouts;
 	private Floor currentFloor;
@@ -26,6 +28,10 @@ public class FloorManager {
 	
 	public Floor getFloor() {
 		return currentFloor;
+	}
+	
+	public void setSpawnRoom(char layout[][]) {
+		spawnRoom = generateRoom(layout);
 	}
 	
 	public void addFloorLayout(char layout[][]) {
@@ -40,10 +46,32 @@ public class FloorManager {
 		int levelCount = 1;
 		if (currentFloor != null)
 			levelCount = currentFloor.getLevel();
+		currentFloor = new Floor(levelCount);
+		
+		char floorToGenerate[][] = floorLayouts.get((int)(Math.random() * (floorLayouts.size() - 1)));
 		
 		for (int i = 0; i < FLOOR_ROWS; i++) {
 			for (int j = 0; j < FLOOR_COLS; j++) {
+				switch(floorToGenerate[i][j]) {
+				case 'R':
+					ArrayList<char[][]> viableRooms = roomLayouts;
+					//TODO: Create viableRooms()
+					//ArrayList<char[][]> viableRooms = getViableRooms(i, j, floorToGenerate);
+					currentFloor.setRoom(i, j, generateRoom(viableRooms.get((int)(Math.random() * (viableRooms.size() - 1)))));
+					break;
+					
+				case 'S':
+					currentFloor.setRoom(i, j, spawnRoom);
+					break;
+					
+				case 'B':
+					//TODO: Create bossRooms arrayList
+					//currentFloor.setRoom(i, j, generateRoom(bossRooms.get((int)(Math.random() * (bossRooms.size() - 1))))););
+					break;
 				
+				default:
+					break;
+				}
 			}
 		}
 	}
