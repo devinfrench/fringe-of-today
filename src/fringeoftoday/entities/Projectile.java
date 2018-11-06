@@ -3,9 +3,10 @@ package fringeoftoday.entities;
 public class Projectile extends Entity {
 
     private int damage;
+    private double angle;
 
-    public Projectile(int posX, int posY, String sprite) {
-        super(posX, posY, sprite);
+    public Projectile(int posX, int posY) {
+        super(posX, posY);
     }
 
     public Projectile(int posX, int posY, String sprite, int damage) {
@@ -21,4 +22,11 @@ public class Projectile extends Entity {
         this.damage = damage;
     }
 
+    public double getAngle() {
+        return angle;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
 }

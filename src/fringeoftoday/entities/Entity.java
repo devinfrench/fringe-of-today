@@ -10,6 +10,11 @@ public class Entity {
     private int deltaY;
     private GImage sprite;
 
+    public Entity(int posX, int posY) {
+        this.posX = posX;
+        this.posY = posY;
+    }
+
     public Entity(int posX, int posY, String sprite) {
         this.posX = posX;
         this.posY = posY;
