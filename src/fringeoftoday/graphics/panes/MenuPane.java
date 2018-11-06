@@ -20,6 +20,7 @@ public class MenuPane extends GraphicsPane {
 	private GButton btnPlay;
 	private GButton btnShop;
 	private GButton btnExit;
+	private GButton btnTutorial;
 	private GImage title;
 	private GLabel lastRun;
 	private GLabel bestRun;
@@ -46,7 +47,11 @@ public class MenuPane extends GraphicsPane {
 		btnExit = new GButton("Exit", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 700, BUTTON_WIDTH,
 				BUTTON_HEIGHT);
 		btnExit.setFillColor(Color.RED);
-
+		
+		//Tutorial button
+		btnTutorial = new GButton("?", 0, 0, 100, 100);
+		
+		
 		// Latest Score
 		lastRun = new GLabel("On your last run, you got to floor: " + PlayerData.getMap().get("PreviousRun"),
 				MainApplication.WINDOW_WIDTH - 310, MainApplication.WINDOW_HEIGHT - 40);
@@ -64,6 +69,7 @@ public class MenuPane extends GraphicsPane {
 		program.add(btnPlay);
 		program.add(btnShop);
 		program.add(btnExit);
+		program.add(btnTutorial);
 		program.add(lastRun);
 		program.add(bestRun);
 	}
@@ -74,6 +80,7 @@ public class MenuPane extends GraphicsPane {
 		program.remove(btnPlay);
 		program.remove(btnShop);
 		program.remove(btnExit);
+		program.remove(btnTutorial);
 		program.remove(lastRun);
 		program.remove(bestRun);
 	}
@@ -87,6 +94,9 @@ public class MenuPane extends GraphicsPane {
 			program.switchToShop();
 		} else if (obj == btnExit) {
 			program.exitProgram();
+		} else if (obj == btnTutorial) {
+			//program.switchToTutorial();
 		}
+		
 	}
 }
