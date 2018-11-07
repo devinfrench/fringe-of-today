@@ -14,7 +14,7 @@ public class PlayerData {
 	
 
 	public static void playerFileSetup() {
-		File playerF = new File("player.txt");
+		File playerF = new File("../media/player.txt");
 		if (!playerF.exists()) {
 			try {
 				// Make new file if one doesn't exist
@@ -26,7 +26,7 @@ public class PlayerData {
 
 			try {
 				// Fill it in with default values of 0
-				FileWriter fw = new FileWriter("player.txt");
+				FileWriter fw = new FileWriter("../media/player.txt");
 				fw.write("Coin:0,");
 				fw.write("HPUpgrades:0,");
 				fw.write("MeleeUpgrades:0,");
@@ -42,12 +42,12 @@ public class PlayerData {
 			}
 		}
 		readPlayerFile();
-	}
-
+	}	
+	
 	public static void readPlayerFile() {
 		String text = null;
 		try {
-			Scanner sc = new Scanner(new File("player.txt"));
+			Scanner sc = new Scanner(new File("../media/player.txt"));
 			text = sc.useDelimiter("\\A").next();
 			sc.close();
 		} catch (FileNotFoundException e) {
