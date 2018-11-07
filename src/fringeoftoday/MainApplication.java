@@ -70,6 +70,7 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void exitProgram() {
+		PlayerData.writeFile();
 		System.exit(0);
 	}
 

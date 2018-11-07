@@ -44,6 +44,25 @@ public class PlayerData {
 		readPlayerFile();
 	}	
 	
+	public static void writeFile() {
+		try {
+			// Fill it in with default values of 0
+			FileWriter fw = new FileWriter("../media/player.txt");
+			fw.write("Coin:"+ playerInfo.get("Coin") + ",");
+			fw.write("HPUpgrades:"+ playerInfo.get("HPUpgrades") +",");
+			fw.write("MeleeUpgrades:"+ playerInfo.get("MeleeUpgrades") +",");
+			fw.write("RangedUpgrades:"+ playerInfo.get("RangedUpgrades") +",");
+			fw.write("SpeedUpgrades:"+ playerInfo.get("SpeedUpgrades") +",");
+			fw.write("PreviousRun:"+playerInfo.get("PreviousRun")+",");
+			fw.write("GOAT:"+playerInfo.get("GOAT")+",");
+			fw.write("Tutorial:"+playerInfo.get("Tutorial")+",");
+			fw.close();
+		} catch (IOException e3) {
+			System.out.println("No overwrite");
+			e3.printStackTrace();
+		}
+	}
+	
 	public static void readPlayerFile() {
 		String text = null;
 		try {
