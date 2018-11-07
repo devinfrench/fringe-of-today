@@ -24,7 +24,8 @@ public class ShopPane extends GraphicsPane {
 	public static final int UP_BTN = 12 * MainApplication.WINDOW_HEIGHT / 22 - BUTTON_HEIGHT - 10;
 	public static final int DOWN_BTN = MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10;
 	
-
+	private int cheatCtr = 0;
+	
 	private GLabel title;
 	private GButton btnBack;
 	private GLine headerSeparator;
@@ -42,12 +43,20 @@ public class ShopPane extends GraphicsPane {
 	private GImage rangedImg;
 	private GImage speedImg;
 
+	private GLabel hpLabel;
+	private GLabel meleeLabel;
+	private GLabel rangedLabel;
+	private GLabel speedLabel;
+	
 	private GButton coinCheat;
 
 	public ShopPane(MainApplication app) {
 		this.program = app;
 		initObjs();
-		coinCheat.setVisible(false);
+
+		// Button to cheat and add coins
+		coinCheat = new GButton("Add 10 coin", MainApplication.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2,
+				MainApplication.WINDOW_HEIGHT / 2 - BUTTON_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 	}
 
 	private void initObjs() {
@@ -86,10 +95,6 @@ public class ShopPane extends GraphicsPane {
 		speedImg = new GImage("movement_speed_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
 
-		// Button to cheat and add coins
-		coinCheat = new GButton("Add 10 coin", MainApplication.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2,
-				MainApplication.WINDOW_HEIGHT / 2 - BUTTON_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
-
 		// Coin counter at the top left
 		coinCtr = new GLabel("Coin: " + PlayerData.getMap().get("Coin"), MainApplication.WINDOW_WIDTH - 300,
 				MainApplication.WINDOW_HEIGHT / 18);
@@ -122,6 +127,22 @@ public class ShopPane extends GraphicsPane {
 		if (speedCost > Integer.parseInt(PlayerData.getMap().get("Coin"))){
 			speedBtn.setColor(Color.red);
 		}
+		
+		// HP label to tell how much there is
+		hpLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("HPUpgrades") + "/" + MAX_UPGRADES, 200, 200);
+		hpLabel.setFont("Arial-24");
+		
+		// Melee label to tell how much there is
+		meleeLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("MeleeUpgrades") + "/" + MAX_UPGRADES, 200, 300);
+		meleeLabel.setFont("Arial-24");
+		
+		// Ranged label to tell how much there is
+		rangedLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("RangedUpgrades") + "/" + MAX_UPGRADES, 200, 400);
+		rangedLabel.setFont("Arial-24");
+		
+		// Speed label to tell how much there is
+		speedLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("SpeedUpgrades") + "/" + MAX_UPGRADES, 200, 500);
+		speedLabel.setFont("Arial-24");
 	}
 
 	@Override
@@ -140,12 +161,15 @@ public class ShopPane extends GraphicsPane {
 		program.add(meleeImg);
 		program.add(rangedImg);
 		program.add(speedImg);
-		program.add(coinCheat);
+		program.add(hpLabel);
+		program.add(meleeLabel);
+		program.add(rangedLabel);
+		program.add(speedLabel);
+		coinCheat.sendToFront();
 	}
 
 	@Override
 	public void hideContents() {
-		coinCheat.setVisible(false);
 		program.remove(title);
 		program.remove(btnBack);
 		program.remove(headerSeparator);
@@ -160,7 +184,10 @@ public class ShopPane extends GraphicsPane {
 		program.remove(meleeImg);
 		program.remove(rangedImg);
 		program.remove(speedImg);
-		program.remove(coinCheat);
+		program.remove(hpLabel);
+		program.remove(meleeLabel);
+		program.remove(rangedLabel);
+		program.remove(speedLabel);
 	}
 
 	private void purchase(GObject obj) {
@@ -195,7 +222,9 @@ public class ShopPane extends GraphicsPane {
 			initObjs();
 			showContents();
 		} else if (obj == coinCtr) {
-			coinCheat.setVisible(!coinCheat.isVisible());
+			System.out.println(cheatCtr);
+			if (cheatCtr %2 == 0) {program.add(coinCheat);} else {program.remove(coinCheat);}
+			cheatCtr++;
 		} else if (obj instanceof GButton) {
 			purchase(obj);
 		}

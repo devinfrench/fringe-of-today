@@ -1,6 +1,7 @@
 package fringeoftoday.graphics.panes;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
@@ -20,6 +21,7 @@ public class TutorialPane extends GraphicsPane {
 	private GImage attackKeys; // Keys to show which to click to attack
 
 	public TutorialPane(MainApplication app) {
+
 		this.program = app;
 		header = new GParagraph(
 				"Your goal is to defeat all the enemies in a room then progress to the next.\nFind the staircase to the next floor.",
@@ -61,14 +63,15 @@ public class TutorialPane extends GraphicsPane {
 		program.remove(attackKeys);
 	}
 
+
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) == 0) {
-			PlayerData.updateMap("Tutorial", 1);
-		}
-		if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) == 1) {
+		if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) != 101) {
+			PlayerData.updateMap("Tutorial", Integer.parseInt(PlayerData.getMap().get("Tutorial")) - 100);
 			program.switchToMenu();
 		}
-		program.switchToGame();
+		else if(Integer.parseInt(PlayerData.getMap().get("Tutorial")) == 101) {
+			program.switchToGame();
+		}
 	}
 }

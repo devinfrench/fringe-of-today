@@ -55,11 +55,13 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToTutorial() {
+		PlayerData.updateMap("Tutorial", Integer.parseInt(PlayerData.getMap().get("Tutorial")) + 100);
 		switchToScreen(tutorial);
 	}
 
 	public void switchToGame() {
 		if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) == 0) {
+			PlayerData.updateMap("Tutorial", 1);
 			switchToTutorial();
 		} else {
 			switchToScreen(game);

@@ -95,7 +95,7 @@ public class MenuPane extends GraphicsPane {
 		} else if (obj == btnExit) {
 			program.exitProgram();
 		} else if (obj == btnTutorial) {
-			//program.switchToTutorial();
+			program.switchToTutorial();
 		}
 		
 	}

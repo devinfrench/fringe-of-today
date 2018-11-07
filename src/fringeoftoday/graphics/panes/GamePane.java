@@ -38,6 +38,6 @@ public class GamePane extends GraphicsPane {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
-		
+		program.switchToMenu();	//Delete this when things start happening here
 	}
 }
