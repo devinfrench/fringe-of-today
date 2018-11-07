@@ -20,20 +20,23 @@ public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_HEIGHT = 900;
 	public static final String MUSIC_FOLDER = "sounds";
 	private final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
-	
+
 	private ShopPane shopPane;
 	private MenuPane menu;
 	private TutorialPane tutorial;
 	private GamePane game;
 	private int count;
 	private FloorManager floorManager;
-	private enum RoomType { STANDARD, BOSS, SPAWN };
+
+	private enum RoomType {
+		STANDARD, BOSS, SPAWN
+	};
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		PlayerData.playerFileSetup();
 		floorManager = new FloorManager();
-		//importAllLayouts();
+		// importAllLayouts();
 	}
 
 	public void run() {
@@ -86,19 +89,45 @@ public class MainApplication extends GraphicsApplication {
 	public static int getWindowHeight() {
 		return WINDOW_HEIGHT;
 	}
-	
+
 	public void importAllLayouts() {
 		importFloors();
 		importRooms(RoomType.STANDARD);
 		importRooms(RoomType.BOSS);
 		importRooms(RoomType.SPAWN);
 	}
-	
+
 	public void importFloors() {
-		//TODO Finish function
+		/*
+		 * TODO Grab all layouts from floors.txt as 2D char arrays and call
+		 * floorManager.addFloorLayout() on each one
+		 * 
+		 * Dimensions for layouts can be found by calling floorManager.FLOOR_ROWS, etc.
+		 */
 	}
-	
+
 	public void importRooms(RoomType type) {
-		//TODO Finish function
+		switch (type) {
+		case STANDARD:
+			/*
+			 * TODO Grab all layouts from rooms_standard.txt as 2D char arrays and call
+			 * floorManager.addRoomLayout(layout) on each one
+			 */
+			break;
+
+		case BOSS:
+			/*
+			 * TODO Grab all layouts from rooms_boss.txt as 2D char arrays and call
+			 * floorManager.addBossRoomLayout(layout) on each one
+			 */
+			break;
+
+		case SPAWN:
+			/*
+			 * TODO Grab the layout from rooms_spawn.txt as 2D char arrays and call
+			 * floorManager.setSpawnRoom(layout) on it
+			 */
+			break;
+		}
 	}
 }
