@@ -23,9 +23,10 @@ public class ShopPane extends GraphicsPane {
 	public static final int RIGHT_BTN = 3 * MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2;
 	public static final int UP_BTN = 12 * MainApplication.WINDOW_HEIGHT / 22 - BUTTON_HEIGHT - 10;
 	public static final int DOWN_BTN = MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10;
-	
+	public static final int LABEL_WIDTH = 190;
+
 	private int cheatCtr = 0;
-	
+
 	private GLabel title;
 	private GButton btnBack;
 	private GLine headerSeparator;
@@ -47,7 +48,7 @@ public class ShopPane extends GraphicsPane {
 	private GLabel meleeLabel;
 	private GLabel rangedLabel;
 	private GLabel speedLabel;
-	
+
 	private GButton coinCheat;
 
 	public ShopPane(MainApplication app) {
@@ -103,45 +104,51 @@ public class ShopPane extends GraphicsPane {
 		// HP Upgrade Button
 		int hpCost = (Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 1) * 10;
 		hpBtn = new GButton("Cost: " + hpCost, LEFT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
-		if (hpCost > Integer.parseInt(PlayerData.getMap().get("Coin"))){
+		if (hpCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			hpBtn.setColor(Color.red);
 		}
 
 		// Melee Damage Upgrade Button
 		int meleeCost = (Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")) + 1) * 10;
 		meleeBtn = new GButton("Cost: " + meleeCost, RIGHT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
-		if (meleeCost > Integer.parseInt(PlayerData.getMap().get("Coin"))){
+		if (meleeCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			meleeBtn.setColor(Color.red);
 		}
 
 		// Ranged Damage Upgrade Button
 		int rangedCost = (Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")) + 1) * 10;
 		rangedBtn = new GButton("Cost: " + rangedCost, LEFT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
-		if (rangedCost > Integer.parseInt(PlayerData.getMap().get("Coin"))){
+		if (rangedCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			rangedBtn.setColor(Color.red);
 		}
 
 		// Speed Movement Upgrade Button
 		int speedCost = (Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")) + 1) * 10;
 		speedBtn = new GButton("Cost: " + speedCost, RIGHT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
-		if (speedCost > Integer.parseInt(PlayerData.getMap().get("Coin"))){
+		if (speedCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			speedBtn.setColor(Color.red);
 		}
-		
+
 		// HP label to tell how much there is
-		hpLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("HPUpgrades") + "/" + MAX_UPGRADES, 200, 200);
+		hpLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("HPUpgrades") + "/" + MAX_UPGRADES,
+				MainApplication.WINDOW_WIDTH / 2 - LABEL_WIDTH, MainApplication.WINDOW_HEIGHT / 8);
 		hpLabel.setFont("Arial-24");
-		
+
 		// Melee label to tell how much there is
-		meleeLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("MeleeUpgrades") + "/" + MAX_UPGRADES, 200, 300);
+		meleeLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("MeleeUpgrades") + "/" + MAX_UPGRADES,
+				MainApplication.WINDOW_WIDTH - LABEL_WIDTH, MainApplication.WINDOW_HEIGHT / 8);
 		meleeLabel.setFont("Arial-24");
-		
+
 		// Ranged label to tell how much there is
-		rangedLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("RangedUpgrades") + "/" + MAX_UPGRADES, 200, 400);
+		rangedLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("RangedUpgrades") + "/" + MAX_UPGRADES,
+				MainApplication.WINDOW_WIDTH / 2 - LABEL_WIDTH,
+				MainApplication.WINDOW_HEIGHT / 14 + MainApplication.WINDOW_HEIGHT / 2);
 		rangedLabel.setFont("Arial-24");
-		
+
 		// Speed label to tell how much there is
-		speedLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("SpeedUpgrades") + "/" + MAX_UPGRADES, 200, 500);
+		speedLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("SpeedUpgrades") + "/" + MAX_UPGRADES,
+				MainApplication.WINDOW_WIDTH - LABEL_WIDTH,
+				MainApplication.WINDOW_HEIGHT / 14 + MainApplication.WINDOW_HEIGHT / 2);
 		speedLabel.setFont("Arial-24");
 	}
 
@@ -222,8 +229,11 @@ public class ShopPane extends GraphicsPane {
 			initObjs();
 			showContents();
 		} else if (obj == coinCtr) {
-			System.out.println(cheatCtr);
-			if (cheatCtr %2 == 0) {program.add(coinCheat);} else {program.remove(coinCheat);}
+			if (cheatCtr % 2 == 0) {
+				program.add(coinCheat);
+			} else {
+				program.remove(coinCheat);
+			}
 			cheatCtr++;
 		} else if (obj instanceof GButton) {
 			purchase(obj);
