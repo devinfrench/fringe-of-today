@@ -107,12 +107,18 @@ public class ShopPane extends GraphicsPane {
 		if (hpCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			hpBtn.setColor(Color.red);
 		}
+		if (Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) == MAX_UPGRADES) {
+			hpBtn.setVisible(false);			
+		}
 
 		// Melee Damage Upgrade Button
 		int meleeCost = (Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")) + 1) * 10;
 		meleeBtn = new GButton("Cost: " + meleeCost, RIGHT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 		if (meleeCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			meleeBtn.setColor(Color.red);
+		}
+		if (Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")) == MAX_UPGRADES) {
+			meleeBtn.setVisible(false);			
 		}
 
 		// Ranged Damage Upgrade Button
@@ -121,12 +127,18 @@ public class ShopPane extends GraphicsPane {
 		if (rangedCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			rangedBtn.setColor(Color.red);
 		}
+		if (Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")) == MAX_UPGRADES) {
+			rangedBtn.setVisible(false);			
+		}
 
 		// Speed Movement Upgrade Button
 		int speedCost = (Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")) + 1) * 10;
 		speedBtn = new GButton("Cost: " + speedCost, RIGHT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 		if (speedCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			speedBtn.setColor(Color.red);
+		}
+		if (Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")) == MAX_UPGRADES) {
+			speedBtn.setVisible(false);			
 		}
 
 		// HP label to tell how much there is
@@ -209,7 +221,7 @@ public class ShopPane extends GraphicsPane {
 			type = "SpeedUpgrades";
 		}
 		int cost = (Integer.parseInt(PlayerData.getMap().get(type)) + 1) * 10;
-		if (cost <= Integer.parseInt(PlayerData.getMap().get("Coin"))) {
+		if (cost <= Integer.parseInt(PlayerData.getMap().get("Coin")) && (Integer.parseInt(PlayerData.getMap().get(type)) < MAX_UPGRADES)) {
 			hideContents();
 			PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) - cost);
 			PlayerData.updateMap(type, (Integer.parseInt(PlayerData.getMap().get(type)) + 1));
