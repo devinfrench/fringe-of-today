@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 /**
- * Demonstration of getting an image from spritesheet
+ * Demonstration of getting an image from spritesheet and animating it
  * 
  * @author Alexander Ng
  *
@@ -21,14 +21,19 @@ import javax.swing.Timer;
 public class SpriteSheetDemo extends GraphicsProgram implements ActionListener {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
+	
+	//dimensions of individual sprite
 	public static final int SPRITE_WIDTH = 200;
 	public static final int SPRITE_HEIGHT = 400;
+	
 	public static final String FILE_NAME = "spritesheetdemo.png";
 	public static final int DELAY_MS = 250;
 	
 	private static BufferedImage spriteSheet;
 	private static int frame = 0;
 	private GImage image;
+	
+	//loads image using bufferedimage
 	public static BufferedImage loadSprite(String file) {
 		BufferedImage sprite = null;
 		try {
@@ -39,6 +44,7 @@ public class SpriteSheetDemo extends GraphicsProgram implements ActionListener {
 		return sprite;
 	}
 	
+	//crops the image at coordinates
 	public static BufferedImage getSprite(int xGrid, int yGrid) {
 
         if (spriteSheet == null) {
