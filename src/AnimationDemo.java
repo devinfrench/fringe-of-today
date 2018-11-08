@@ -13,9 +13,10 @@ public class AnimationDemo extends GraphicsProgram {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	
+	private GImage image;
 	
 	public void run() {
-		
+		//image = new GImage(null, eventMask, eventMask);
 	}
 	
 	
