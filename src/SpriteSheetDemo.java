@@ -61,7 +61,7 @@ public class SpriteSheetDemo extends GraphicsProgram implements ActionListener {
 		Timer t = new Timer(DELAY_MS, this);
 		t.start();
 	}
-	
+	/*Timer based animation implementation
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (frame == 0) {
@@ -72,11 +72,18 @@ public class SpriteSheetDemo extends GraphicsProgram implements ActionListener {
 		}
 		image.setImage(getSprite(frame,0));
 	}
+	*/
 	
-	
+	//user input based animation implementation
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+		if (frame == 0) {
+			frame = 2;
+		}
+		else {
+			frame = 0;
+		}
+		image.setImage(getSprite(frame,0));
 	}
 
 	public void init() {
