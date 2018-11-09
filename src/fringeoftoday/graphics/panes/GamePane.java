@@ -9,6 +9,7 @@ import acm.graphics.GRect;
 import acm.graphics.GLabel;
 import fringeoftoday.MainApplication;
 import fringeoftoday.graphics.GButton;
+import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.panes.GraphicsPane;
 
 public class GamePane extends GraphicsPane {
@@ -18,17 +19,30 @@ public class GamePane extends GraphicsPane {
 	public static final int BUTTON_HEIGHT = 100;
 	public static final int HEADER_WIDTH = MainApplication.WINDOW_WIDTH/3;
 	public static final int HEADER_HEIGHT = 200;
+	private int level = -1;
+	private int mDamage = -1;//Check variable names/change for consistency
+	private int rDamage = -1;
+	private int moveSpeed = -1;
 	private GButton btnDie;
 	private GRect minimapBox;
 	private GRect infoBox;
+	private GParagraph infoText;
 	private GRect healthBox;
 	
 	public GamePane(MainApplication app) {
 		super();
 		program = app;
+		
 		//HEADER
 		minimapBox = new GRect(0, 0, HEADER_WIDTH, HEADER_HEIGHT);
+		
 		infoBox = new GRect(HEADER_WIDTH,0,HEADER_WIDTH,HEADER_HEIGHT);
+		infoText = new GParagraph(
+				"Level: "+level+"\nMelee Damage: "+mDamage+"\nRanged Damage: "+rDamage+"\nMove Speed: "+moveSpeed,0,0);
+		//TODO: figure out how to set font
+		//infoText.setFont(Font("Times", BOLD,40));
+		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, infoBox.getY()+infoText.getHeight());
+		
 		healthBox = new GRect(HEADER_WIDTH*2,0,HEADER_WIDTH,HEADER_HEIGHT);
 		//FIELD
 		
@@ -53,6 +67,7 @@ public class GamePane extends GraphicsPane {
 	public void showHeader() {
 		program.add(minimapBox);
 		program.add(infoBox);
+		program.add(infoText);
 		program.add(healthBox);
 	}
 	
