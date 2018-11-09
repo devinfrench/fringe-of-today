@@ -13,6 +13,7 @@ import fringeoftoday.graphics.panes.MenuPane;
 import fringeoftoday.graphics.panes.ShopPane;
 import fringeoftoday.graphics.panes.TutorialPane;
 import fringeoftoday.graphics.panes.GamePane;
+import fringeoftoday.graphics.panes.DeathPane;
 import fringeoftoday.floor.FloorManager;
 
 public class MainApplication extends GraphicsApplication {
@@ -25,6 +26,7 @@ public class MainApplication extends GraphicsApplication {
 	private MenuPane menu;
 	private TutorialPane tutorial;
 	private GamePane game;
+	private DeathPane deathPane;
 	private int count;
 	private FloorManager floorManager;
 
@@ -44,6 +46,7 @@ public class MainApplication extends GraphicsApplication {
 		shopPane = new ShopPane(this);
 		menu = new MenuPane(this);
 		game = new GamePane(this);
+		deathPane = new DeathPane(this);
 		switchToMenu();
 	}
 
@@ -70,6 +73,10 @@ public class MainApplication extends GraphicsApplication {
 			switchToScreen(game);
 		}
 
+	}
+	
+	public void switchToDeath() {
+		switchToScreen(deathPane);
 	}
 
 	public void exitProgram() {
