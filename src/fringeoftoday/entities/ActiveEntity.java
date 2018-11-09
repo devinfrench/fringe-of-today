@@ -4,12 +4,8 @@ public abstract class ActiveEntity extends Entity {
 
     private int health;
 
-    public ActiveEntity(int posX, int posY, String sprite) {
-        super(posX, posY, sprite);
-    }
-
-    public ActiveEntity(int posX, int posY, String sprite, int health) {
-        super(posX, posY, sprite);
+    public ActiveEntity(int posX, int posY) {
+        super(posX, posY);
     }
 
     public int getHealth() {

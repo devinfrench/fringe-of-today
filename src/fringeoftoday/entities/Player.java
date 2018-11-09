@@ -8,8 +8,8 @@ public class Player extends ActiveEntity {
     private int movementUpgrade;
     private int healthUpgrade;
 
-    public Player(int posX, int posY, String sprite) {
-        super(posX, posY, sprite);
+    public Player(int posX, int posY) {
+        super(posX, posY);
     }
 
     public int getMoney() {

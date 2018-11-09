@@ -2,8 +2,8 @@ package fringeoftoday.entities;
 
 public class StandardEnemy extends Enemy {
 
-    public StandardEnemy(int posX, int posY, String sprite, int health, float dmgMult, int fireRate) {
-        super(posX, posY, sprite, health, dmgMult, fireRate);
+    public StandardEnemy(int posX, int posY) {
+        super(posX, posY);
     }
 
     @Override

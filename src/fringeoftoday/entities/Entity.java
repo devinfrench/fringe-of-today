@@ -1,64 +1,40 @@
 package fringeoftoday.entities;
 
-import acm.graphics.GImage;
+import acm.graphics.GObject;
 
 public class Entity {
 
     private int posX;
     private int posY;
-    private int deltaX;
-    private int deltaY;
-    private GImage sprite;
+    private GObject gObj;
 
     public Entity(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
     }
 
-    public Entity(int posX, int posY, String sprite) {
-        this.posX = posX;
-        this.posY = posY;
-        this.sprite = new GImage(sprite, posX, posY);
-    }
-
-    public int getPosX() {
+    public int getX() {
         return posX;
     }
 
-    public void setPosX(int posX) {
+    public void setX(int posX) {
         this.posX = posX;
     }
 
-    public int getPosY() {
+    public int getY() {
         return posY;
     }
 
-    public void setPosY(int posY) {
+    public void setY(int posY) {
         this.posY = posY;
     }
 
-    public int getDeltaX() {
-        return deltaX;
+    public GObject getGObject() {
+        return gObj;
     }
 
-    public void setDeltaX(int deltaX) {
-        this.deltaX = deltaX;
-    }
-
-    public int getDeltaY() {
-        return deltaY;
-    }
-
-    public void setDeltaY(int deltaY) {
-        this.deltaY = deltaY;
-    }
-
-    public GImage getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(String sprite) {
-        this.sprite = new GImage(sprite, this.sprite.getX(), this.sprite.getY());
+    public void setGObject(GObject gObj) {
+        this.gObj = gObj;
     }
 
 }

@@ -9,11 +9,6 @@ public class Projectile extends Entity {
         super(posX, posY);
     }
 
-    public Projectile(int posX, int posY, String sprite, int damage) {
-        super(posX, posY, sprite);
-        this.damage = damage;
-    }
-
     public int getDamage() {
         return damage;
     }
