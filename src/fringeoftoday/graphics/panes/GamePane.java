@@ -44,6 +44,7 @@ public class GamePane extends GraphicsPane {
 		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, infoBox.getY()+infoText.getHeight());
 		
 		healthBox = new GRect(HEADER_WIDTH*2,0,HEADER_WIDTH,HEADER_HEIGHT);
+		
 		//FIELD
 		
 		//OTHER
