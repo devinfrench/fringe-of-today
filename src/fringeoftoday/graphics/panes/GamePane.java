@@ -26,9 +26,13 @@ public class GamePane extends GraphicsPane {
 	public GamePane(MainApplication app) {
 		super();
 		program = app;
+		//HEADER
 		minimapBox = new GRect(0, 0, HEADER_WIDTH, HEADER_HEIGHT);
 		infoBox = new GRect(HEADER_WIDTH,0,HEADER_WIDTH,HEADER_HEIGHT);
 		healthBox = new GRect(HEADER_WIDTH*2,0,HEADER_WIDTH,HEADER_HEIGHT);
+		//FIELD
+		
+		//OTHER
 		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, (MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 	}
 
@@ -66,7 +70,7 @@ public class GamePane extends GraphicsPane {
 		
 	}
 	
-	public void onDeath() {
+	public void onDeath() {//Trigger this when player is dead, should add other functions - tally score, etc.
 		program.switchToDeath();
 	}
 	
