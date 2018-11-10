@@ -39,8 +39,8 @@ public class GamePane extends GraphicsPane {
 		infoBox = new GRect(HEADER_WIDTH,0,HEADER_WIDTH,HEADER_HEIGHT);
 		infoText = new GParagraph(
 				"Level: "+level+"\nMelee Damage: "+mDamage+"\nRanged Damage: "+rDamage+"\nMove Speed: "+moveSpeed,0,0);
-		//TODO: figure out how to set font
-		//infoText.setFont(Font("Times", BOLD,40));
+		
+		infoText.setFont("Arial-24");
 		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, infoBox.getY()+infoText.getHeight());
 		
 		healthBox = new GRect(HEADER_WIDTH*2,0,HEADER_WIDTH,HEADER_HEIGHT);
