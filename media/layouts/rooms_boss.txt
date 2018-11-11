@@ -1,0 +1,11 @@
+W W W W W W W W D W W W W W W W W
+W N I * * * * * * * * * * * I N W
+W I I * * * * * * * * * * * I I W
+W * * * * * B * C * B * * * * * W
+W * * * * * * * C S * * * * * * W
+D * * * * * C C C C C * * * * * D
+W * * * * * * * C * * * * * * * W
+W * * * * * B * C * B * * * * * W
+W I I * * * * * * * * * * * I I W
+W N I * * * * * * * * * * * I N W
+W W W W W W W W D W W W W W W W W
