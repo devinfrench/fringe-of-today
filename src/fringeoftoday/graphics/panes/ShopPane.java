@@ -15,8 +15,8 @@ import fringeoftoday.graphics.GButton;
 public class ShopPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
-	public static final int BUTTON_WIDTH = 200;
-	public static final int BUTTON_HEIGHT = 100;
+	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
+	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 	public static final int MAX_UPGRADES = 10;
 	public static final int IMAGE_SIZE = 250;
 	public static final int LEFT_BTN = MainApplication.WINDOW_WIDTH / 4 - BUTTON_WIDTH / 2;
