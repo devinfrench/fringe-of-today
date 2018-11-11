@@ -75,6 +75,7 @@ public class GamePane extends GraphicsPane {
 	public void removeHeader() {
 		program.remove(minimapBox);
 		program.remove(infoBox);
+		program.remove(infoText);
 		program.remove(healthBox);
 	}
 	
