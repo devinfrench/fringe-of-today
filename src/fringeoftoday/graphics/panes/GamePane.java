@@ -41,7 +41,7 @@ public class GamePane extends GraphicsPane {
 				"Level: "+level+"\nMelee Damage: "+mDamage+"\nRanged Damage: "+rDamage+"\nMove Speed: "+moveSpeed,0,0);
 		
 		infoText.setFont("Arial-24");
-		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, infoBox.getY()+infoText.getHeight());
+		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, (infoBox.getY()+infoText.getHeight())/2);
 		
 		healthBox = new GRect(HEADER_WIDTH*2,0,HEADER_WIDTH,HEADER_HEIGHT);
 		
