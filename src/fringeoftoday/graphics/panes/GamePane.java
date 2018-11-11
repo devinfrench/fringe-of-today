@@ -23,11 +23,11 @@ public class GamePane extends GraphicsPane {
 	private int mDamage = -1;//Check variable names/change for consistency
 	private int rDamage = -1;
 	private int moveSpeed = -1;
-	private GButton btnDie;
-	private GRect minimapBox;
-	private GRect infoBox;
-	private GParagraph infoText;
-	private GRect healthBox;
+	private GButton btnDie; //Debug, remove when done
+	private GRect minimapBox; //Minimap, left header
+	private GRect infoBox; //Center header
+	private GParagraph infoText;//Center header content
+	private GRect healthBox; //Right header
 	
 	public GamePane(MainApplication app) {
 		super();
