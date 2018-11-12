@@ -10,8 +10,7 @@ public class SniperEnemy extends Enemy {
 
 	@Override
 	public void move(Entity target) {
-		// TODO Auto-generated method stub
-		
+		return; // sniper enemy cannot move
 	}
     
     
