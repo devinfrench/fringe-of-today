@@ -42,12 +42,10 @@ public class ProjectileDemo extends GraphicsProgram {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == 1) {
-            Projectile p = new Projectile(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+            Projectile p = new Projectile(new GOval(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 5, 5));
             p.setAngle(Math.atan2(e.getX() - p.getX(), e.getY() - p.getY()));
-            GOval o = new GOval(p.getX(), p.getY(), 5, 5);
-            p.setGObject(o);
             projectiles.add(p);
-            add(o);
+            add(p.getGObject());
         }
     }
 

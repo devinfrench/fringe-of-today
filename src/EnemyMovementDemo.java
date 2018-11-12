@@ -22,7 +22,7 @@ public class EnemyMovementDemo extends GraphicsProgram {
 
 	public void run() {
 		rgen = new RandomGenerator();
-		enemy = new StandardEnemy(1, 1);
+		enemy = new StandardEnemy();
 		GRect r = new GRect(enemy.getX() * spaceWidth(), enemy.getY() * spaceHeight(), spaceWidth(), spaceHeight());
 		r.setFilled(true);
 		r.setColor(Color.RED);

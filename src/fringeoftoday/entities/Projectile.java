@@ -1,12 +1,14 @@
 package fringeoftoday.entities;
 
+import acm.graphics.GObject;
+
 public class Projectile extends Entity {
 
     private int damage;
     private double angle;
 
-    public Projectile(int posX, int posY) {
-        super(posX, posY);
+    public Projectile(GObject gObj) {
+        super(gObj);
     }
 
     public int getDamage() {

@@ -4,10 +4,6 @@ public abstract class ActiveEntity extends Entity {
 
     private int health;
 
-    public ActiveEntity(int posX, int posY) {
-        super(posX, posY);
-    }
-
     public int getHealth() {
         return health;
     }
