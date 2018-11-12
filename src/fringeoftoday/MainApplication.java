@@ -31,7 +31,7 @@ public class MainApplication extends GraphicsApplication {
 	private FloorManager floorManager;
 
 	public static void main(String[] args) {
-		importFloors();
+		importAllLayouts();
 	}
 
 	private enum RoomType {
@@ -101,49 +101,57 @@ public class MainApplication extends GraphicsApplication {
 		return WINDOW_HEIGHT;
 	}
 
-	public void importAllLayouts() {
+	public static void importAllLayouts() {
 		importFloors();
+		System.out.println();
 		importRooms(RoomType.STANDARD);
+		System.out.println();
 		importRooms(RoomType.BOSS);
+		System.out.println();
 		importRooms(RoomType.SPAWN);
+		System.out.println();
+		
 	}
 
-	public static void importFloors() {
+	public static void importer(String fileLocation, int numRows, int numCols) {
 		String text = null;
-		File file = new File("./media/layouts/floors.txt");
+		File file = new File("./media/layouts/" + fileLocation + ".txt");
+		char textArr[][] = new char[numRows][numCols];
+
+		Scanner sc;
 		try {
-
-			char textArr[][] = new char[FloorManager.FLOOR_ROWS][FloorManager.FLOOR_COLS];
-
-			Scanner sc = new Scanner(file);
+			sc = new Scanner(file);
 			while (sc.hasNextLine()) {
-				for (int row = 0; row < FloorManager.FLOOR_ROWS; row++) {
+				for (int row = 0; row < numRows; row++) {
 					text = sc.nextLine();
-					String[] textChars = text.split(" ", FloorManager.FLOOR_COLS);
-					for (int col = 0; col < FloorManager.FLOOR_COLS; col++) {
+					String[] textChars = text.split(" ", numCols);
+					for (int col = 0; col < numCols; col++) {
 						// System.out.print(textChars[col]);
 						textArr[row][col] = textChars[col].charAt(0);
 					}
 					// System.out.println();
 				}
-				FloorManager.printLayout(textArr, FloorManager.FLOOR_ROWS, FloorManager.FLOOR_COLS, "Floor");
-				/*
-				 * This below doesnt work, im not sure why, but the array looks right.  Ill need to look at Shour's code some or maybe he can help
-				 * --Alex Reynen
-				 */
-				//FloorManager.addFloorLayout(textArr);
-				if (sc.hasNextLine()) {sc.nextLine();}
+				//FloorManager.printLayout(textArr, numRows, numCols, fileLocation);
+				FloorManager.addFloorType(fileLocation, textArr);
+				if (sc.hasNextLine()) {
+					sc.nextLine();
+				}
 			}
 			sc.close();
 		} catch (FileNotFoundException e) {
+			System.out.println("Error doing this");
 			e.printStackTrace();
 		}
 	}
 
-	public void importRooms(RoomType type) {
+	public static void importFloors() {
+		importer("floors", FloorManager.FLOOR_ROWS, FloorManager.FLOOR_COLS);
+	}
+
+	public static void importRooms(RoomType type) {
 		switch (type) {
 		case STANDARD:
-
+			importer("rooms_standard", FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS);
 			/*
 			 * TODO Grab all layouts from rooms_standard.txt as 2D char arrays and call
 			 * floorManager.addRoomLayout(layout) on each one
@@ -151,6 +159,7 @@ public class MainApplication extends GraphicsApplication {
 			break;
 
 		case BOSS:
+			importer("rooms_boss", FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS);
 			/*
 			 * TODO Grab all layouts from rooms_boss.txt as 2D char arrays and call
 			 * floorManager.addBossRoomLayout(layout) on each one
@@ -158,6 +167,7 @@ public class MainApplication extends GraphicsApplication {
 			break;
 
 		case SPAWN:
+			importer("rooms_spawn", FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS);
 			/*
 			 * TODO Grab the layout from rooms_spawn.txt as 2D char arrays and call
 			 * floorManager.setSpawnRoom(layout) on it

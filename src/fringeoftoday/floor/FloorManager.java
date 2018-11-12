@@ -151,14 +151,14 @@ public class FloorManager {
 				}
 			}
 		}
-		
-		if (r.getSpace(0, (int)(Math.ceil(ROOM_COLS)/2) - 1).getType() == SpaceType.DOOR)
+
+		if (r.getSpace(0, (int) (Math.ceil(ROOM_COLS) / 2) - 1).getType() == SpaceType.DOOR)
 			r.addExit(Exit.NORTH);
-		if (r.getSpace(ROOM_ROWS - 1, (int)(Math.ceil(ROOM_COLS)/2) - 1).getType() == SpaceType.DOOR)
+		if (r.getSpace(ROOM_ROWS - 1, (int) (Math.ceil(ROOM_COLS) / 2) - 1).getType() == SpaceType.DOOR)
 			r.addExit(Exit.SOUTH);
-		if (r.getSpace((int)(Math.ceil(FLOOR_ROWS)/2) - 1, ROOM_COLS - 1).getType() == SpaceType.DOOR)
+		if (r.getSpace((int) (Math.ceil(FLOOR_ROWS) / 2) - 1, ROOM_COLS - 1).getType() == SpaceType.DOOR)
 			r.addExit(Exit.EAST);
-		if (r.getSpace((int)(Math.ceil(FLOOR_ROWS)/2) - 1, 0).getType() == SpaceType.DOOR)
+		if (r.getSpace((int) (Math.ceil(FLOOR_ROWS) / 2) - 1, 0).getType() == SpaceType.DOOR)
 			r.addExit(Exit.WEST);
 
 		return r;
@@ -193,12 +193,12 @@ public class FloorManager {
 
 		return viableRooms;
 	}
-	
+
 	/*
 	 * prints floors for checking if it imported it right
 	 */
 	public static void printLayout(char[][] out, int rows, int cols, String type) {
-		System.out.println("Here is a "+type+" Layout:");
+		System.out.println("Here is a " + type + " Layout:");
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
 				System.out.print(out[row][col]);
@@ -206,5 +206,22 @@ public class FloorManager {
 			System.out.println();
 		}
 	}
-	
+
+	public static void addFloorType(String fileLocation, char[][] textArr) {
+		switch (fileLocation) {
+		case ("floors"):
+			System.out.println("Adding floor...");
+		break;
+		case ("rooms_standard"):
+			System.out.println("Adding standard room...");
+		break;
+		case ("rooms_spawn"):
+			System.out.println("Adding spawn room...");
+		break;
+		case ("rooms_boss"):
+			System.out.println("Adding boss room...");
+		break;
+		}
+
+	}
 }
