@@ -97,15 +97,13 @@ public class ProjectileMoveDemo  extends GraphicsProgram implements ActionListen
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (e.getButton() == 1) {
-			Projectile p = new Projectile(
-				(int) (ball.getX() + ball.getWidth() / 2),
-				(int) (ball.getY() + ball.getHeight() / 2)
+			Projectile p = new Projectile(new GOval(
+				ball.getX() + ball.getWidth() / 2,
+				ball.getY() + ball.getHeight() / 2, 5, 5)
 			);
 			p.setAngle(Math.atan2(e.getX() - p.getX(), e.getY() - p.getY()));
-			GOval o = new GOval(p.getX(), p.getY(), 5, 5);
-			p.setGObject(o);
 			projectiles.add(p);
-			add(o);
+			add(p.getGObject());
 		}
 	}
 

@@ -8,10 +8,6 @@ public class Player extends ActiveEntity {
     private int movementUpgrade;
     private int healthUpgrade;
 
-    public Player(int posX, int posY) {
-        super(posX, posY);
-    }
-
     public int getMoney() {
         return money;
     }

@@ -4,29 +4,49 @@ import acm.graphics.GObject;
 
 public class Entity {
 
-    private int posX;
-    private int posY;
     private GObject gObj;
 
-    public Entity(int posX, int posY) {
-        this.posX = posX;
-        this.posY = posY;
+    public Entity() {
     }
 
-    public int getX() {
-        return posX;
+    public Entity(GObject gObj) {
+        this.gObj = gObj;
     }
 
-    public void setX(int posX) {
-        this.posX = posX;
+    /**
+     * Gets the x-coordinate of the GObject
+     * @return the x-coordinate of the GObject or 0 if GObject is null
+     */
+    public double getX() {
+        return gObj != null ? gObj.getX() : 0;
     }
 
-    public int getY() {
-        return posY;
+    /**
+     * Sets the x-coordinate of the GObject and updates the GObject's location
+     * @param x the x-coordinate to move to.
+     */
+    public void setX(double x) {
+        if (gObj != null) {
+            gObj.move(x, 0);
+        }
     }
 
-    public void setY(int posY) {
-        this.posY = posY;
+    /**
+     * Gets the y-coordinate of the GObject
+     * @return the y-coordinate of the GObject or 0 if GObject is null
+     */
+    public double getY() {
+        return gObj != null ? gObj.getY() : 0;
+    }
+
+    /**
+     * Sets the y-coordinate of the GObject and updates the GObject's location
+     * @param y the x-coordinate to move to.
+     */
+    public void setY(double y) {
+        if (gObj != null) {
+            gObj.move(0, y);
+        }
     }
 
     public GObject getGObject() {
