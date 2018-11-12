@@ -8,6 +8,7 @@ import acm.graphics.GImage;
 import acm.graphics.GRect;
 import acm.graphics.GLabel;
 import fringeoftoday.MainApplication;
+import fringeoftoday.PlayerData;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.panes.GraphicsPane;
@@ -20,9 +21,9 @@ public class GamePane extends GraphicsPane {
 	public static final int HEADER_WIDTH = MainApplication.WINDOW_WIDTH/3;
 	public static final int HEADER_HEIGHT = 200;
 	private int level = -1;
-	private int mDamage = -1;//Check variable names/change for consistency
-	private int rDamage = -1;
-	private int moveSpeed = -1;
+	private int mDamage;
+	private int rDamage;
+	private int moveSpeed;
 	private GButton btnDie; //Debug, remove when done
 	private GRect minimapBox; //Minimap, left header
 	private GRect infoBox; //Center header
@@ -32,6 +33,11 @@ public class GamePane extends GraphicsPane {
 	public GamePane(MainApplication app) {
 		super();
 		program = app;
+		//HEADER Values
+		mDamage = 1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades"));
+		rDamage = 1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades"));
+		moveSpeed = 1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades"));
+		
 		
 		//HEADER
 		minimapBox = new GRect(0, 0, HEADER_WIDTH, HEADER_HEIGHT);
