@@ -16,11 +16,11 @@ public class FloorManager {
 	public static final int FLOOR_ROWS = 4;
 	public static final int FLOOR_COLS = 5;
 
-	private Room spawnRoom;
+	private static Room spawnRoom;
 	private static ArrayList<char[][]> floorLayouts;
-	private ArrayList<Room> roomLayouts;
-	private ArrayList<Room> bossRoomLayouts;
-	private Floor currentFloor;
+	private static ArrayList<Room> roomLayouts;
+	private static ArrayList<Room> bossRoomLayouts;
+	private static Floor currentFloor;
 
 	public FloorManager() {
 		floorLayouts = new ArrayList<char[][]>();
@@ -32,7 +32,7 @@ public class FloorManager {
 		return currentFloor;
 	}
 
-	public void setSpawnRoom(char layout[][]) {
+	public static void setSpawnRoom(char layout[][]) {
 		spawnRoom = generateRoom(layout);
 	}
 
@@ -50,7 +50,7 @@ public class FloorManager {
 	 * 
 	 * @param layout - Layout to add
 	 */
-	public void addRoomLayout(char layout[][]) {
+	public static void addRoomLayout(char layout[][]) {
 		roomLayouts.add(generateRoom(layout));
 	}
 
@@ -59,14 +59,14 @@ public class FloorManager {
 	 * 
 	 * @param layout - Layout to add
 	 */
-	public void addBossRoomLayout(char layout[][]) {
+	public static void addBossRoomLayout(char layout[][]) {
 		bossRoomLayouts.add(generateRoom(layout));
 	}
 
 	/**
 	 * Generates a new floor that is automatically stored in currentFloor
 	 */
-	public void generateNewFloor() {
+	public static void generateNewFloor() {
 		int levelCount = 1;
 		if (currentFloor != null)
 			levelCount = currentFloor.getLevel();
@@ -104,7 +104,7 @@ public class FloorManager {
 	 * @param layout - The char array that determines the layout of a room
 	 * @return A new room generated from the layout
 	 */
-	public Room generateRoom(char layout[][]) {
+	public static Room generateRoom(char layout[][]) {
 		Room r = new Room();
 
 		for (int i = 0; i < ROOM_ROWS; i++) {
@@ -173,7 +173,7 @@ public class FloorManager {
 	 * @param f   - floor that the room is in
 	 * @return ArrayList of viable room layouts
 	 */
-	public ArrayList<Room> getViableRooms(int row, int col, char f[][]) {
+	public static ArrayList<Room> getViableRooms(int row, int col, char f[][]) {
 		ArrayList<Exit> exits = new ArrayList<Exit>();
 		ArrayList<Room> viableRooms = new ArrayList<Room>();
 
@@ -205,23 +205,5 @@ public class FloorManager {
 			}
 			System.out.println();
 		}
-	}
-
-	public static void addFloorType(String fileLocation, char[][] textArr) {
-		switch (fileLocation) {
-		case ("floors"):
-			System.out.println("Adding above floor...");
-		break;
-		case ("rooms_standard"):
-			System.out.println("Adding above standard room...");
-		break;
-		case ("rooms_spawn"):
-			System.out.println("Adding above spawn room...");
-		break;
-		case ("rooms_boss"):
-			System.out.println("Adding above boss room...");
-		break;
-		}
-
 	}
 }

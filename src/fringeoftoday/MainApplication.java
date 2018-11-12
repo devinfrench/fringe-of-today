@@ -133,8 +133,8 @@ public class MainApplication extends GraphicsApplication {
 					}
 					// System.out.println();
 				}
-				FloorManager.printLayout(textArr, numRows, numCols, fileLocation);
-				FloorManager.addFloorType(fileLocation, textArr);
+				// FloorManager.printLayout(textArr, numRows, numCols, fileLocation);
+				addLayout(fileLocation, textArr);
 				if (sc.hasNextLine()) {
 					sc.nextLine();
 				}
@@ -144,6 +144,24 @@ public class MainApplication extends GraphicsApplication {
 			System.out.println("Error doing this");
 			e.printStackTrace();
 		}
+	}
+	
+	public static void addLayout(String fileLocation, char[][] textArr) {
+		switch (fileLocation) {
+		case ("floors"):
+			FloorManager.addFloorLayout(textArr);
+			break;
+		case ("rooms_standard"):
+			FloorManager.addRoomLayout(textArr);
+			break;
+		case ("rooms_spawn"):
+			FloorManager.addBossRoomLayout(textArr);
+			break;
+		case ("rooms_boss"):
+			FloorManager.setSpawnRoom(textArr);
+			break;
+		}
+
 	}
 
 	public static void importFloors() {
