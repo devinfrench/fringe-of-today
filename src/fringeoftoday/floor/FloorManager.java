@@ -210,16 +210,16 @@ public class FloorManager {
 	public static void addFloorType(String fileLocation, char[][] textArr) {
 		switch (fileLocation) {
 		case ("floors"):
-			System.out.println("Adding floor...");
+			System.out.println("Adding above floor...");
 		break;
 		case ("rooms_standard"):
-			System.out.println("Adding standard room...");
+			System.out.println("Adding above standard room...");
 		break;
 		case ("rooms_spawn"):
-			System.out.println("Adding spawn room...");
+			System.out.println("Adding above spawn room...");
 		break;
 		case ("rooms_boss"):
-			System.out.println("Adding boss room...");
+			System.out.println("Adding above boss room...");
 		break;
 		}
 

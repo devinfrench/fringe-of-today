@@ -31,6 +31,7 @@ public class MainApplication extends GraphicsApplication {
 	private FloorManager floorManager;
 
 	public static void main(String[] args) {
+		//A cool little test that shows the rooms getting added.  Right now it spams the console, but that's just for show currently.
 		importAllLayouts();
 	}
 
@@ -109,7 +110,6 @@ public class MainApplication extends GraphicsApplication {
 		importRooms(RoomType.BOSS);
 		System.out.println();
 		importRooms(RoomType.SPAWN);
-		System.out.println();
 		
 	}
 
@@ -131,7 +131,7 @@ public class MainApplication extends GraphicsApplication {
 					}
 					// System.out.println();
 				}
-				//FloorManager.printLayout(textArr, numRows, numCols, fileLocation);
+				FloorManager.printLayout(textArr, numRows, numCols, fileLocation);
 				FloorManager.addFloorType(fileLocation, textArr);
 				if (sc.hasNextLine()) {
 					sc.nextLine();
