@@ -17,16 +17,10 @@ public class FloorManager {
 	public static final int FLOOR_COLS = 5;
 
 	private static Room spawnRoom;
-	private static ArrayList<char[][]> floorLayouts;
-	private static ArrayList<Room> roomLayouts;
-	private static ArrayList<Room> bossRoomLayouts;
+	private static ArrayList<char[][]> floorLayouts = new ArrayList<char[][]>();
+	private static ArrayList<Room> roomLayouts = new ArrayList<Room>();
+	private static ArrayList<Room> bossRoomLayouts = new ArrayList<Room>();
 	private static Floor currentFloor;
-
-	public FloorManager() {
-		floorLayouts = new ArrayList<char[][]>();
-		roomLayouts = new ArrayList<Room>();
-		bossRoomLayouts = new ArrayList<Room>();
-	}
 
 	public Floor getFloor() {
 		return currentFloor;

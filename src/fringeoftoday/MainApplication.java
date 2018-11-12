@@ -34,11 +34,12 @@ public class MainApplication extends GraphicsApplication {
 
 	public static void main(String[] args) {
 		//A cool little test that shows the rooms getting added.  Right now it spams the console, but that's just for show currently.
+		//jk it works now
 		importAllLayouts();
 	}
 
-	private enum RoomType {
-		STANDARD, BOSS, SPAWN
+	private enum LayoutType {
+		FLOOR, STANDARD, BOSS, SPAWN
 	};
 
 	public void init() {
@@ -105,13 +106,13 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public static void importAllLayouts() {
-		importFloors();
-		System.out.println();
-		importRooms(RoomType.STANDARD);
-		System.out.println();
-		importRooms(RoomType.BOSS);
-		System.out.println();
-		importRooms(RoomType.SPAWN);
+		importLayoutsByType(LayoutType.FLOOR);
+		// System.out.println();
+		importLayoutsByType(LayoutType.STANDARD);
+		// System.out.println();
+		importLayoutsByType(LayoutType.BOSS);
+		// System.out.println();
+		importLayoutsByType(LayoutType.SPAWN);
 		
 	}
 
@@ -164,34 +165,22 @@ public class MainApplication extends GraphicsApplication {
 
 	}
 
-	public static void importFloors() {
-		importer("floors", FloorManager.FLOOR_ROWS, FloorManager.FLOOR_COLS);
-	}
-
-	public static void importRooms(RoomType type) {
+	public static void importLayoutsByType(LayoutType type) {
 		switch (type) {
+		case FLOOR:
+			importer("floors", FloorManager.FLOOR_ROWS, FloorManager.FLOOR_COLS);
+			break;
+		
 		case STANDARD:
 			importer("rooms_standard", FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS);
-			/*
-			 * TODO Grab all layouts from rooms_standard.txt as 2D char arrays and call
-			 * floorManager.addRoomLayout(layout) on each one
-			 */
 			break;
 
 		case BOSS:
 			importer("rooms_boss", FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS);
-			/*
-			 * TODO Grab all layouts from rooms_boss.txt as 2D char arrays and call
-			 * floorManager.addBossRoomLayout(layout) on each one
-			 */
 			break;
 
 		case SPAWN:
 			importer("rooms_spawn", FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS);
-			/*
-			 * TODO Grab the layout from rooms_spawn.txt as 2D char arrays and call
-			 * floorManager.setSpawnRoom(layout) on it
-			 */
 			break;
 		}
 	}
