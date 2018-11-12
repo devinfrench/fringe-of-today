@@ -20,15 +20,18 @@ public class GamePane extends GraphicsPane {
 	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 	public static final int HEADER_WIDTH = MainApplication.WINDOW_WIDTH/3;
 	public static final int HEADER_HEIGHT = 200;
-	private int level = -1;
+	private int level = -1;	//Work on this when we get it in
 	private int mDamage;
 	private int rDamage;
 	private int moveSpeed;
+	private int startHealth;
+	private int curHealth;
 	private GButton btnDie; //Debug, remove when done
 	private GRect minimapBox; //Minimap, left header
 	private GRect infoBox; //Center header
 	private GParagraph infoText;//Center header content
 	private GRect healthBox; //Right header
+	private GLabel healthLabel;
 	
 	public GamePane(MainApplication app) {
 		super();
@@ -55,20 +58,47 @@ public class GamePane extends GraphicsPane {
 		
 		//OTHER
 		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, (MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
+		
+		//HEALTH
+	}
+
+	private void changeHealth(boolean up) {
+		if (up) {
+			curHealth++;
+		}
+		else {
+			curHealth--;
+		}
+		program.remove(healthLabel);
+		drawHealth(curHealth);
+	}
+	
+	private void initHealth() {
+		curHealth = startHealth;
+		drawHealth(curHealth);
+	}
+
+	private void drawHealth(int health) {
+		healthLabel = new GLabel("Health: " + health, HEADER_WIDTH*2.25, HEADER_HEIGHT/1.9);
+		healthLabel.setFont("Arial-48");
+		program.add(healthLabel);
 	}
 
 	@Override
 	public void showContents() {//split showContents into showHeader and showField for clarity
+		startHealth = Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3;
 		showHeader(); //Top bar
 		showField(); //Game field
-		program.add(btnDie);//Testing death screen, remove when things are added
+//		program.add(btnDie);//Testing death screen, remove when things are added
+		initHealth();
 	}
 
 	@Override
 	public void hideContents() {
 		removeHeader();
 		removeField();
-		program.remove(btnDie);//Testing death screen, remove when things are added
+//		program.remove(btnDie);//Testing death screen, remove when things are added
+		program.remove(healthLabel);
 	}
 	
 	public void showHeader() {
@@ -100,7 +130,13 @@ public class GamePane extends GraphicsPane {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
-		if (obj == btnDie) {
+//		if (obj == btnDie) {
+//			onDeath();
+//		}
+//		else {
+			changeHealth(false);
+//		}
+		if (curHealth == 0) {
 			onDeath();
 		}
 	}
