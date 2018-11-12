@@ -15,19 +15,19 @@ import fringeoftoday.graphics.panes.GraphicsPane;
 public class GamePane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
-	public static final int BUTTON_WIDTH = 200;
-	public static final int BUTTON_HEIGHT = 100;
+	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
+	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 	public static final int HEADER_WIDTH = MainApplication.WINDOW_WIDTH/3;
 	public static final int HEADER_HEIGHT = 200;
 	private int level = -1;
 	private int mDamage = -1;//Check variable names/change for consistency
 	private int rDamage = -1;
 	private int moveSpeed = -1;
-	private GButton btnDie;
-	private GRect minimapBox;
-	private GRect infoBox;
-	private GParagraph infoText;
-	private GRect healthBox;
+	private GButton btnDie; //Debug, remove when done
+	private GRect minimapBox; //Minimap, left header
+	private GRect infoBox; //Center header
+	private GParagraph infoText;//Center header content
+	private GRect healthBox; //Right header
 	
 	public GamePane(MainApplication app) {
 		super();
@@ -41,7 +41,7 @@ public class GamePane extends GraphicsPane {
 				"Level: "+level+"\nMelee Damage: "+mDamage+"\nRanged Damage: "+rDamage+"\nMove Speed: "+moveSpeed,0,0);
 		
 		infoText.setFont("Arial-24");
-		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, infoBox.getY()+infoText.getHeight());
+		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, (infoBox.getY()+infoText.getHeight())/2);
 		
 		healthBox = new GRect(HEADER_WIDTH*2,0,HEADER_WIDTH,HEADER_HEIGHT);
 		

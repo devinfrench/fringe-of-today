@@ -19,6 +19,8 @@ import fringeoftoday.floor.FloorManager;
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 1600;
 	public static final int WINDOW_HEIGHT = 900;
+	public static final int BUTTON_WIDTH = 200;
+	public static final int BUTTON_HEIGHT = 100;
 	public static final String MUSIC_FOLDER = "sounds";
 	private final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
