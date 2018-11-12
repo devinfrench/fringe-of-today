@@ -30,6 +30,10 @@ public class MainApplication extends GraphicsApplication {
 	private int count;
 	private FloorManager floorManager;
 
+	public static void main(String[] args) {
+		importFloors();
+	}
+
 	private enum RoomType {
 		STANDARD, BOSS, SPAWN
 	};
@@ -74,7 +78,7 @@ public class MainApplication extends GraphicsApplication {
 		}
 
 	}
-	
+
 	public void switchToDeath() {
 		switchToScreen(deathPane);
 	}
@@ -104,18 +108,42 @@ public class MainApplication extends GraphicsApplication {
 		importRooms(RoomType.SPAWN);
 	}
 
-	public void importFloors() {
-		/*
-		 * TODO Grab all layouts from floors.txt as 2D char arrays and call
-		 * floorManager.addFloorLayout() on each one
-		 * 
-		 * Dimensions for layouts can be found by calling floorManager.FLOOR_ROWS, etc.
-		 */
+	public static void importFloors() {
+		String text = null;
+		File file = new File("./media/layouts/floors.txt");
+		try {
+
+			char textArr[][] = new char[FloorManager.FLOOR_ROWS][FloorManager.FLOOR_COLS];
+
+			Scanner sc = new Scanner(file);
+			while (sc.hasNextLine()) {
+				for (int row = 0; row < FloorManager.FLOOR_ROWS; row++) {
+					text = sc.nextLine();
+					String[] textChars = text.split(" ", FloorManager.FLOOR_COLS);
+					for (int col = 0; col < FloorManager.FLOOR_COLS; col++) {
+						// System.out.print(textChars[col]);
+						textArr[row][col] = textChars[col].charAt(0);
+					}
+					// System.out.println();
+				}
+				FloorManager.printLayout(textArr, FloorManager.FLOOR_ROWS, FloorManager.FLOOR_COLS, "Floor");
+				/*
+				 * This below doesnt work, im not sure why, but the array looks right.  Ill need to look at Shour's code some or maybe he can help
+				 * --Alex Reynen
+				 */
+				//FloorManager.addFloorLayout(textArr);
+				if (sc.hasNextLine()) {sc.nextLine();}
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void importRooms(RoomType type) {
 		switch (type) {
 		case STANDARD:
+
 			/*
 			 * TODO Grab all layouts from rooms_standard.txt as 2D char arrays and call
 			 * floorManager.addRoomLayout(layout) on each one

@@ -17,7 +17,7 @@ public class FloorManager {
 	public static final int FLOOR_COLS = 5;
 
 	private Room spawnRoom;
-	private ArrayList<char[][]> floorLayouts;
+	private static ArrayList<char[][]> floorLayouts;
 	private ArrayList<Room> roomLayouts;
 	private ArrayList<Room> bossRoomLayouts;
 	private Floor currentFloor;
@@ -41,7 +41,7 @@ public class FloorManager {
 	 * 
 	 * @param layout - Layout to add
 	 */
-	public void addFloorLayout(char layout[][]) {
+	public static void addFloorLayout(char layout[][]) {
 		floorLayouts.add(layout);
 	}
 
@@ -193,4 +193,18 @@ public class FloorManager {
 
 		return viableRooms;
 	}
+	
+	/*
+	 * prints floors for checking if it imported it right
+	 */
+	public static void printLayout(char[][] out, int rows, int cols, String type) {
+		System.out.println("Here is a "+type+" Layout:");
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; col++) {
+				System.out.print(out[row][col]);
+			}
+			System.out.println();
+		}
+	}
+	
 }
