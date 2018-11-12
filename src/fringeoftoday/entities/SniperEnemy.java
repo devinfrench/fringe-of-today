@@ -7,4 +7,12 @@ public class SniperEnemy extends Enemy {
         // TODO implement
         return new Projectile[0];
     }
+
+	@Override
+	public void move(Entity target) {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    
 }
