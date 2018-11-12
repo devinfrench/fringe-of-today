@@ -39,7 +39,6 @@ public class ProjectileMoveDemo  extends GraphicsProgram implements ActionListen
 		count = new GLabel("Projectile Count: 0");
 		count.setLocation(20, 20);
 		add(count);
-		addMouseListeners();
 		Timer timer = new Timer(50, e -> {
 			count.setLabel("Projectile Count: " + projectiles.size());
 			projectiles.forEach((p) -> {
