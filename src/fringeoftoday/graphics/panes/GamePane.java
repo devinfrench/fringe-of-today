@@ -8,6 +8,7 @@ import acm.graphics.GImage;
 import acm.graphics.GRect;
 import acm.graphics.GLabel;
 import fringeoftoday.MainApplication;
+import fringeoftoday.floor.FloorManager;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.panes.GraphicsPane;
@@ -18,7 +19,9 @@ public class GamePane extends GraphicsPane {
 	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
 	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 	public static final int HEADER_WIDTH = MainApplication.WINDOW_WIDTH/3;
-	public static final int HEADER_HEIGHT = 200;
+	public static final int HEADER_HEIGHT = 196;
+	public static final int SPACE_SIZE = (MainApplication.WINDOW_HEIGHT - HEADER_HEIGHT)/FloorManager.ROOM_ROWS;
+	public static final String FILE_PATH = "../media/textures/";
 	private int level = -1;
 	private int mDamage = -1;//Check variable names/change for consistency
 	private int rDamage = -1;
@@ -28,6 +31,7 @@ public class GamePane extends GraphicsPane {
 	private GRect infoBox; //Center header
 	private GParagraph infoText;//Center header content
 	private GRect healthBox; //Right header
+	private GImage[][] room;
 	
 	public GamePane(MainApplication app) {
 		super();
@@ -85,6 +89,22 @@ public class GamePane extends GraphicsPane {
 	
 	public void removeField() {
 		
+	}
+	
+	public void createImageList() {
+		int rows = FloorManager.ROOM_ROWS;
+		int cols = FloorManager.ROOM_COLS;
+		
+		room = new GImage[rows][cols];
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				room[i][j] = new GImage(getImagePath(i, j), (j * SPACE_SIZE) + HEADER_HEIGHT, (i * SPACE_SIZE));
+			}
+		}
+	}
+	
+	public String getImagePath(int row, int col) {
+		return null;
 	}
 	
 	public void onDeath() {//Trigger this when player is dead, should add other functions - tally score, etc.
