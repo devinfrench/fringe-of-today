@@ -19,7 +19,7 @@ public class MoveDemo extends GraphicsProgram implements ActionListener{
 	
 	private GOval ball;
 	public String direction;
-	
+	public String facing;
 	public void run() {
 		ball = new GOval(WINDOW_HEIGHT/2-BALL_SIZE/2, WINDOW_WIDTH/2-BALL_SIZE/2, BALL_SIZE, BALL_SIZE);
 		ball.setColor(Color.RED);
@@ -32,15 +32,19 @@ public class MoveDemo extends GraphicsProgram implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if (direction == "up") {
+			facing = "up";
 			ball.move(0, -5);
 		}
 		else if (direction =="down") {
+			facing = "down";
 			ball.move(0, 5);
 		}
 		else if (direction == "left") {
+			facing = "left";
 			ball.move(-5, 0);
 		}
 		else if (direction == "right") {
+			facing = "right";
 			ball.move(5, 0);
 		}
 

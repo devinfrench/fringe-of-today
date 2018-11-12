@@ -32,11 +32,11 @@ public class MainApplication extends GraphicsApplication {
 	private int count;
 	private FloorManager floorManager;
 
-	public static void main(String[] args) {
-		//A cool little test that shows the rooms getting added.  Right now it spams the console, but that's just for show currently.
-		//jk it works now
-		importAllLayouts();
-	}
+//	public static void main(String[] args) {
+//		//A cool little test that shows the rooms getting added.  Right now it spams the console, but that's just for show currently.
+//		//jk it works now
+//		importAllLayouts();
+//	}
 
 	private enum LayoutType {
 		FLOOR, STANDARD, BOSS, SPAWN
@@ -46,7 +46,7 @@ public class MainApplication extends GraphicsApplication {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		PlayerData.playerFileSetup();
 		floorManager = new FloorManager();
-		// importAllLayouts();
+		importAllLayouts();
 	}
 
 	public void run() {
@@ -122,7 +122,7 @@ public class MainApplication extends GraphicsApplication {
 
 	public static void importer(String fileLocation, int numRows, int numCols) {
 		String text = null;
-		File file = new File("./media/layouts/" + fileLocation + ".txt");
+		File file = new File("../media/layouts/" + fileLocation + ".txt");
 		char textArr[][] = new char[numRows][numCols];
 
 		Scanner sc;

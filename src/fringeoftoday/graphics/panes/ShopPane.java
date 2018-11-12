@@ -236,6 +236,7 @@ public class ShopPane extends GraphicsPane {
 		if (obj == btnBack) {
 			PlayerData.writeFile();
 			program.switchToMenu();
+			program.remove(coinCheat);
 		} else if (obj == coinCheat) {
 			hideContents();
 			PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) + 10);
