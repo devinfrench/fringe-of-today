@@ -35,8 +35,10 @@ public class EnemyMovementDemo extends GraphicsProgram {
 			double x;
 			double y;
 			do {
-				x = obj.getX() + rgen.nextInt(-1, 1) * spaceWidth();
-				y = obj.getY() + rgen.nextInt(-1, 1) * spaceHeight();
+				int dirX = rgen.nextInt(-1,  1);
+				int dirY = dirX == 0 ? rgen.nextInt(-1, 1) : 0;
+				x = obj.getX() + dirX * spaceWidth();
+				y = obj.getY() + dirY * spaceHeight();
 			} while (x < 0 || x > canvasWidth() || y < 0 || y > canvasHeight());
 			enemy.getGObject().setLocation(x, y);
 		});
