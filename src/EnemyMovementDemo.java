@@ -3,11 +3,12 @@ import java.awt.Color;
 import javax.swing.Timer;
 
 import acm.graphics.GLine;
-import acm.graphics.GObject;
+import acm.graphics.GOval;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 import acm.util.RandomGenerator;
 import fringeoftoday.entities.Enemy;
+import fringeoftoday.entities.Player;
 import fringeoftoday.entities.StandardEnemy;
 
 public class EnemyMovementDemo extends GraphicsProgram {
@@ -17,41 +18,42 @@ public class EnemyMovementDemo extends GraphicsProgram {
 	public static final int ROOM_ROWS = 11;
 	public static final int ROOM_COLS = 17;
 
+	private Player player;
 	private Enemy enemy;
 	private RandomGenerator rgen;
 
 	public void run() {
 		rgen = new RandomGenerator();
+		initPlayer();
+		initEnemy();
+		Timer timer = new Timer(20, e -> {
+			enemy.move(player);
+			if (Math.abs(enemy.getX() - player.getX()) <= 10 || Math.abs(enemy.getY() - player.getY()) <= 10) {
+				player.getGObject().setLocation(rgen.nextInt(10) * spaceWidth(), rgen.nextInt(15) * spaceHeight());
+			}
+		});
+		timer.start();
+	}
+
+	private void initPlayer() {
+		player = new Player();
+		GOval o = new GOval(rgen.nextInt(10) * spaceWidth(), rgen.nextInt(15) * spaceHeight(), spaceWidth(), spaceHeight());
+		o.setFilled(true);
+		o.setFillColor(Color.GREEN);
+		o.setColor(Color.GREEN);
+		player.setGObject(o);
+		add(o);
+	}
+
+	private void initEnemy() {
 		enemy = new StandardEnemy();
+		enemy.setVelocity(3.0);
 		GRect r = new GRect(enemy.getX() * spaceWidth(), enemy.getY() * spaceHeight(), spaceWidth(), spaceHeight());
 		r.setFilled(true);
 		r.setColor(Color.RED);
 		r.setFillColor(Color.RED);
 		enemy.setGObject(r);
-		drawGrid();
-		add(enemy.getGObject());
-		Timer timer = new Timer(600, e -> {
-			GObject obj = enemy.getGObject();
-			double x;
-			double y;
-			do {
-				int dirX = rgen.nextInt(-1,  1);
-				int dirY = dirX == 0 ? rgen.nextInt(-1, 1) : 0;
-				x = obj.getX() + dirX * spaceWidth();
-				y = obj.getY() + dirY * spaceHeight();
-			} while (x < 0 || x > canvasWidth() || y < 0 || y > canvasHeight());
-			enemy.getGObject().setLocation(x, y);
-		});
-		timer.start();
-	}
-
-	private void drawGrid() {
-		for (int x = 0; x <= ROOM_ROWS; x++) {
-			add(new GLine(x * spaceWidth(), 0, x * spaceWidth(), canvasHeight()));
-		}
-		for (int y = 0; y <= ROOM_COLS; y++) {
-			add(new GLine(0, y * spaceHeight(), canvasWidth(), y * spaceHeight()));
-		}
+		add(r);
 	}
 
 	private double canvasWidth() {
