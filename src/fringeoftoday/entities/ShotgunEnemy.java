@@ -8,9 +8,4 @@ public class ShotgunEnemy extends Enemy {
         return new Projectile[0];
     }
 
-	@Override
-	public void move(Entity target) {
-		// TODO Auto-generated method stub
-		
-	}
 }
