@@ -32,8 +32,10 @@ public class SpriteSheetDemo extends GraphicsProgram implements ActionListener {
 	private static BufferedImage spriteSheet;
 	private static int frame = 0;
 	private GImage image;
+	public boolean keyPressed = false;
 	public String direction;
 	public String facing;
+	public int numTimes=0;
 	//loads image using bufferedimage
 	public static BufferedImage loadSprite(String file) {
 		BufferedImage sprite = null;
@@ -65,29 +67,31 @@ public class SpriteSheetDemo extends GraphicsProgram implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (direction == "up") {
-			facing = "up";
-			image.setImage(getSprite(0,1));
+		numTimes++;
+		if (direction == "up" && keyPressed) {
+			
+			image.setImage(getSprite(numTimes%3,1));
 			image.move(0, -5);
 		}
-		else if (direction =="down") {
-			facing = "down";
-			image.setImage(getSprite(0,0));
+		else if (direction =="down" && keyPressed) {
+			
+			image.setImage(getSprite(numTimes%3,0));
 			image.move(0, 5);
 		}
-		else if (direction == "left") {
-			facing = "left";
-			image.setImage(getSprite(0,2));
+		else if (direction == "left" && keyPressed) {
+			
+			image.setImage(getSprite(numTimes%3,2));
 			image.move(-5, 0);
 		}
-		else if (direction == "right") {
-			facing = "right";
-			image.setImage(flipHoriz(getSprite(0,2)));
+		else if (direction == "right" && keyPressed) {
+			
+			image.setImage(flipHoriz(getSprite(numTimes%3,2)));
 			image.move(5, 0);
 		}
 	}
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
+		keyPressed = true;
 		if (key == KeyEvent.VK_W) {
 			direction = "up";
 		}
@@ -104,6 +108,7 @@ public class SpriteSheetDemo extends GraphicsProgram implements ActionListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		direction = "stop";
+		keyPressed = false;
 	}
 	public static BufferedImage flipHoriz(BufferedImage image) {
 	    int width = image.getWidth();
