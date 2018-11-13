@@ -10,6 +10,7 @@ public class Space {
 	private int numRow;
 	private int numCol;
 	private SpaceType type;
+	private String filePath;
 
 	/**
 	 * @param numRow - X position in room
@@ -33,6 +34,10 @@ public class Space {
 	public SpaceType getType() {
 		return type;
 	}
+	
+	public String getFilePath() {
+		return filePath;
+	}
 
 	public void setNumRow(int numRow) {
 		this.numRow = numRow;
@@ -44,5 +49,9 @@ public class Space {
 
 	public void setType(SpaceType type) {
 		this.type = type;
+	}
+	
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 }

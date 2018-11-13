@@ -40,11 +40,15 @@ public class Room {
 	}
 
 	/**
-	 * Adds the given exit to the list of exits thr room has
+	 * Adds the given exit to the list of exits the room has
 	 * 
 	 * @param e - Exit to add
 	 */
 	public void addExit(Exit e) {
 		exits.add(e);
+	}
+	
+	public void setFilePaths() {
+		
 	}
 }
