@@ -1,6 +1,9 @@
 package fringeoftoday.graphics.panes;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GObject;
@@ -13,8 +16,9 @@ import fringeoftoday.PlayerData;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.panes.GraphicsPane;
+import javax.swing.Timer;
 
-public class GamePane extends GraphicsPane {
+public class GamePane extends GraphicsPane implements ActionListener {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
 	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
@@ -23,6 +27,11 @@ public class GamePane extends GraphicsPane {
 	public static final int HEADER_HEIGHT = 196;
 	public static final int SPACE_SIZE = (MainApplication.WINDOW_HEIGHT - HEADER_HEIGHT)/FloorManager.ROOM_ROWS;
 	public static final String FILE_PATH = "../media/textures/";
+	public int numTimes=0; //Timer stuff
+	public static final int DELAY_MS = 25;
+	public boolean keyPressed = false; //Keyboard input stuff
+	public String direction;
+
 	private int level = -1;	//Work on this when we get it in
 	private int mDamage;
 	private int rDamage;
@@ -64,6 +73,10 @@ public class GamePane extends GraphicsPane {
 		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, (MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 		
 		//HEALTH
+		
+		//Timer
+		Timer t = new Timer(DELAY_MS, this);
+		t.start();
 	}
 
 	private void changeHealth(boolean up) {
@@ -160,4 +173,23 @@ public class GamePane extends GraphicsPane {
 			onDeath();
 		}
 	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	//Timer loop
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }
