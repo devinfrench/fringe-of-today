@@ -49,6 +49,33 @@ public class Room {
 	}
 	
 	public void setFilePaths() {
+		String path;
 		
+		for (int i = 0; i < ROOM_ROWS; i++) {
+			for (int j = 0; j < ROOM_COLS; j++) {
+				switch (roomLayout[i][j].getType()) {
+				case IMPASSIBLE:
+					path = "water";
+					break;
+					
+				case COLLIDABLE:
+					path = "wall";
+					break;
+					
+				case WALL:
+					path = "wall";
+					break;
+					
+				case DOOR:
+					path = "wall";
+					break;
+					
+				default:
+					path = "ground";
+					break;
+				}
+				
+			}
+		}
 	}
 }
