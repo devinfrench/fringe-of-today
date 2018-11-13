@@ -27,7 +27,7 @@ public class Entity {
      */
     public void setX(double x) {
         if (gObj != null) {
-            gObj.move(x, 0);
+            gObj.setLocation(x, 0);
         }
     }
 
@@ -45,7 +45,7 @@ public class Entity {
      */
     public void setY(double y) {
         if (gObj != null) {
-            gObj.move(0, y);
+            gObj.setLocation(0, y);
         }
     }
 
