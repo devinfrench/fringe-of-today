@@ -27,12 +27,15 @@ public class SpriteSheetDemo extends GraphicsProgram implements ActionListener {
 	public static final int SPRITE_HEIGHT = 400;
 	
 	public static final String FILE_NAME = "spritesheetdemo.png";
-	public static final int DELAY_MS = 250;
+	public static final int DELAY_MS = 25;
 	
 	private static BufferedImage spriteSheet;
 	private static int frame = 0;
 	private GImage image;
-	
+	public boolean keyPressed = false;
+	public String direction;
+	public String facing;
+	public int numTimes=0;
 	//loads image using bufferedimage
 	public static BufferedImage loadSprite(String file) {
 		BufferedImage sprite = null;
@@ -57,34 +60,79 @@ public class SpriteSheetDemo extends GraphicsProgram implements ActionListener {
 	public void run() {
 		image = new GImage(getSprite(0,0), 0, 0);
 		add(image);
-		addMouseListeners();
+		addKeyListeners();
 		Timer t = new Timer(DELAY_MS, this);
 		t.start();
 	}
-	/*Timer based animation implementation
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (frame == 0) {
-			frame = 2;
+		numTimes++;
+		if (direction == "up" && keyPressed) {
+			
+			image.setImage(getSprite(numTimes%3,1));
+			image.move(0, -5);
 		}
-		else {
-			frame = 0;
+		else if (direction =="down" && keyPressed) {
+			
+			image.setImage(getSprite(numTimes%3,0));
+			image.move(0, 5);
 		}
-		image.setImage(getSprite(frame,0));
+		else if (direction == "left" && keyPressed) {
+			
+			image.setImage(getSprite(numTimes%3,2));
+			image.move(-5, 0);
+		}
+		else if (direction == "right" && keyPressed) {
+			
+			image.setImage(flipHoriz(getSprite(numTimes%3,2)));
+			image.move(5, 0);
+		}
 	}
-	*/
-	
-	//user input based animation implementation
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		keyPressed = true;
+		if (key == KeyEvent.VK_W) {
+			direction = "up";
+		}
+		else if (key == KeyEvent.VK_S) {
+			direction = "down";
+		}
+		else if (key == KeyEvent.VK_A) {
+			direction = "left";
+		}
+		else if (key == KeyEvent.VK_D) {
+			direction = "right";
+		}
+	}
 	@Override
-	public void mousePressed(MouseEvent e) {
-		if (frame == 0) {
-			frame = 2;
-		}
-		else {
-			frame = 0;
-		}
-		image.setImage(getSprite(frame,0));
+	public void keyReleased(KeyEvent e) {
+		direction = "stop";
+		keyPressed = false;
 	}
+	public static BufferedImage flipHoriz(BufferedImage image) {
+	    int width = image.getWidth();
+	    int height = image.getHeight();
+	    BufferedImage mimg = new BufferedImage(width, height, 
+                BufferedImage.TYPE_INT_ARGB);
+	    for (int y = 0; y < height; y++) 
+        { 
+            for (int lx = 0, rx = width - 1; lx < width; lx++, rx--) 
+            { 
+                // lx starts from the left side of the image 
+                // rx starts from the right side of the image 
+                // lx is used since we are getting pixel from left side 
+                // rx is used to set from right side 
+                // get source pixel value 
+                int p = image.getRGB(lx, y); 
+  
+                // set mirror image pixel value 
+                mimg.setRGB(rx, y, p); 
+            } 
+        }
+	    return mimg;
+	}
+	
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);

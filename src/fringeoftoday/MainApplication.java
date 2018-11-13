@@ -57,6 +57,10 @@ public class MainApplication extends GraphicsApplication {
 		deathPane = new DeathPane(this);
 		switchToMenu();
 	}
+	
+	public FloorManager getFloorManager() {
+		return floorManager;
+	}
 
 	public void switchToMenu() {
 		// playRandomSound();
