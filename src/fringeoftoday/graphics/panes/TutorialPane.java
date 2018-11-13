@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
+import acm.graphics.GObject;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
 import fringeoftoday.graphics.GParagraph;
@@ -33,7 +34,7 @@ public class TutorialPane extends GraphicsPane {
 		attackInstructions = new GParagraph("To fire, use the Left Mouse Button\nTo swing your sword,\nuse the Right Mouse Button",
 				4 * MainApplication.WINDOW_WIDTH / 6 , 2 * MainApplication.WINDOW_HEIGHT / 3);
 		attackInstructions.setFont("Arial-24");
-		pressToContinue = new GLabel("Press any key to continue...", MainApplication.WINDOW_WIDTH / 2 - 200,
+		pressToContinue = new GLabel("Press any key or mouse button to continue...", MainApplication.WINDOW_WIDTH / 2 - 250,
 				5 * MainApplication.WINDOW_HEIGHT / 6);
 		pressToContinue.setFont("Arial-24");
 
@@ -66,7 +67,16 @@ public class TutorialPane extends GraphicsPane {
 
 
 	@Override
+	public void mousePressed(MouseEvent e) {
+		exit();
+	}
+	
+	@Override
 	public void keyPressed(KeyEvent e) {
+		exit();
+	}
+
+	private void exit() {
 		if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) != 101) {
 			PlayerData.updateMap("Tutorial", Integer.parseInt(PlayerData.getMap().get("Tutorial")) - 100);
 			program.switchToMenu();
