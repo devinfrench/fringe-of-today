@@ -50,21 +50,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public GamePane(MainApplication app) {
 		super();
 		program = app;
-		//HEADER Values
-		mDamage = 1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades"));
-		rDamage = 1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades"));
-		moveSpeed = 1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades"));
-		
 		
 		//HEADER
 		minimapBox = new GRect(0, 0, HEADER_WIDTH, HEADER_HEIGHT);
 		
 		infoBox = new GRect(HEADER_WIDTH,0,HEADER_WIDTH,HEADER_HEIGHT);
-		infoText = new GParagraph(
-				"Level: "+level+"\nMelee Damage: "+mDamage+"\nRanged Damage: "+rDamage+"\nMove Speed: "+moveSpeed,0,0);
-		
-		infoText.setFont("Arial-24");
-		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, (infoBox.getY()+infoText.getHeight())/2);
 		
 		healthBox = new GRect(HEADER_WIDTH*2,0,HEADER_WIDTH,HEADER_HEIGHT);
 		
@@ -72,12 +62,24 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		
 		//OTHER
 		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, (MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
-		
-		//HEALTH
-		
+
 		//Timer
 		Timer t = new Timer(DELAY_MS, this);
 		t.start();
+	}
+
+	private void infoDrawing() {
+		mDamage = 1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades"));
+		rDamage = 1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades"));
+		moveSpeed = 1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades"));
+		
+		infoText = new GParagraph(
+				"Level: "+level+"\nMelee Damage: "+mDamage+"\nRanged Damage: "+rDamage+"\nMove Speed: "+moveSpeed,0,0);
+		
+		infoText.setFont("Arial-24");
+		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, (infoBox.getY()+infoText.getHeight())/2);
+
+		program.add(infoText);
 	}
 
 	private void changeHealth(boolean up) {
@@ -110,6 +112,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		showField(); //Game field
 //		program.add(btnDie);//Testing death screen, remove when things are added
 		initHealth();
+		infoDrawing();
 	}
 
 	@Override
@@ -118,12 +121,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		removeField();
 //		program.remove(btnDie);//Testing death screen, remove when things are added
 		program.remove(healthLabel);
+		program.remove(infoText);
 	}
 	
 	public void showHeader() {
 		program.add(minimapBox);
 		program.add(infoBox);
-		program.add(infoText);
 		program.add(healthBox);
 	}
 	
