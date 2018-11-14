@@ -105,15 +105,11 @@ public class FloorManager {
 			for (int j = 0; j < ROOM_COLS; j++) {
 				switch (layout[i][j]) {
 				case '*':
-					r.setSpace(i, j, SpaceType.STANDARD);
+					r.setSpace(i, j, SpaceType.GROUND);
 					break;
 
 				case 'I':
-					r.setSpace(i, j, SpaceType.IMPASSIBLE);
-					break;
-
-				case 'C':
-					r.setSpace(i, j, SpaceType.COLLIDABLE);
+					r.setSpace(i, j, SpaceType.WATER);
 					break;
 
 				case 'B':

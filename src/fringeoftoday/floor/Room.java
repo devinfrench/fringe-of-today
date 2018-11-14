@@ -54,8 +54,8 @@ public class Room {
 		for (int i = 0; i < ROOM_ROWS; i++) {
 			for (int j = 0; j < ROOM_COLS; j++) {
 				switch (roomLayout[i][j].getType()) {
-				case IMPASSIBLE:
-					path = pathGenerator("water", i, j, SpaceType.IMPASSIBLE);
+				case WATER:
+					path = pathGenerator("water", i, j, SpaceType.WATER);
 					break;
 				
 				case WALL:
@@ -70,28 +70,28 @@ public class Room {
 					path = "ground";
 					
 					//Northwest
-					if (i > 0 && j > 0 && roomLayout[i-1][j-1].getType() != SpaceType.IMPASSIBLE && roomLayout[i-1][j-1].getType() != SpaceType.WALL)
+					if (i > 0 && j > 0 && roomLayout[i-1][j-1].getType() != SpaceType.WATER && roomLayout[i-1][j-1].getType() != SpaceType.WALL)
 						path = path + "_nw";
 					//North
-					if (i > 0 && roomLayout[i-1][j].getType() != SpaceType.IMPASSIBLE && roomLayout[i-1][j].getType() != SpaceType.WALL)
+					if (i > 0 && roomLayout[i-1][j].getType() != SpaceType.WATER && roomLayout[i-1][j].getType() != SpaceType.WALL)
 						path = path + "_n";
 					//Northeast
-					if (i > 0 && j < ROOM_COLS-1 && roomLayout[i-1][j+1].getType() != SpaceType.IMPASSIBLE && roomLayout[i-1][j+1].getType() != SpaceType.WALL)
+					if (i > 0 && j < ROOM_COLS-1 && roomLayout[i-1][j+1].getType() != SpaceType.WATER && roomLayout[i-1][j+1].getType() != SpaceType.WALL)
 						path = path + "_ne";
 					//West
-					if (j > 0 && roomLayout[i][j-1].getType() != SpaceType.IMPASSIBLE && roomLayout[i][j-1].getType() != SpaceType.WALL)
+					if (j > 0 && roomLayout[i][j-1].getType() != SpaceType.WATER && roomLayout[i][j-1].getType() != SpaceType.WALL)
 						path = path + "_w";
 					//East
-					if (j < ROOM_COLS-1 && roomLayout[i][j+1].getType() != SpaceType.IMPASSIBLE && roomLayout[i][j+1].getType() != SpaceType.WALL)
+					if (j < ROOM_COLS-1 && roomLayout[i][j+1].getType() != SpaceType.WATER && roomLayout[i][j+1].getType() != SpaceType.WALL)
 						path = path + "_e";
 					//Southwest
-					if (i < ROOM_ROWS-1 && j > 0 && roomLayout[i+1][j-1].getType() != SpaceType.IMPASSIBLE && roomLayout[i+1][j-1].getType() != SpaceType.WALL)
+					if (i < ROOM_ROWS-1 && j > 0 && roomLayout[i+1][j-1].getType() != SpaceType.WATER && roomLayout[i+1][j-1].getType() != SpaceType.WALL)
 						path = path + "_sw";
 					//South
-					if (i < ROOM_ROWS-1 && roomLayout[i+1][j].getType() != SpaceType.IMPASSIBLE && roomLayout[i+1][j].getType() != SpaceType.WALL)
+					if (i < ROOM_ROWS-1 && roomLayout[i+1][j].getType() != SpaceType.WATER && roomLayout[i+1][j].getType() != SpaceType.WALL)
 						path = path + "_s";
 					//Southeast
-					if (i < ROOM_ROWS-1 && j < ROOM_COLS-1 && roomLayout[i+1][j+1].getType() != SpaceType.IMPASSIBLE && roomLayout[i+1][j+1].getType() != SpaceType.WALL)
+					if (i < ROOM_ROWS-1 && j < ROOM_COLS-1 && roomLayout[i+1][j+1].getType() != SpaceType.WATER && roomLayout[i+1][j+1].getType() != SpaceType.WALL)
 						path = path + "_se";
 					break;
 				}

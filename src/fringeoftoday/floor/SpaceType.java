@@ -10,12 +10,12 @@ public enum SpaceType {
 	/**
 	 * '*'; Standard space
 	 */
-	STANDARD,
+	GROUND,
 
 	/**
 	 * 'I'; Space that can be shot over but not walked on
 	 */
-	IMPASSIBLE,
+	WATER,
 
 	/**
 	 * 'B'; Appears as a standard space but spawns a basic enemy
