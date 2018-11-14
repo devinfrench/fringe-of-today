@@ -75,30 +75,47 @@ public class Room {
 				default:
 					path = "ground";
 					
-					//Northwest
-					if (i > 0 && j > 0 && roomLayout[i-1][j-1].getType() != SpaceType.WALL)
-						path = path + "_nw";
 					//North
 					if (i > 0 && roomLayout[i-1][j].getType() != SpaceType.WALL)
-						path = path + "_n";
-					//Northeast
-					if (i > 0 && j < ROOM_COLS-1 && roomLayout[i-1][j+1].getType() != SpaceType.WALL)
-						path = path + "_ne";
-					//West
-					if (j > 0 &&roomLayout[i][j-1].getType() != SpaceType.WALL)
-						path = path + "_w";
-					//East
-					if (j < ROOM_COLS-1 && roomLayout[i][j+1].getType() != SpaceType.WALL)
-						path = path + "_e";
-					//Southwest
-					if (i < ROOM_ROWS-1 && j > 0 && roomLayout[i+1][j-1].getType() != SpaceType.WALL)
-						path = path + "_sw";
+						directions.add(Direction.NORTH);
 					//South
 					if (i < ROOM_ROWS-1 && roomLayout[i+1][j].getType() != SpaceType.WALL)
-						path = path + "_s";
+						directions.add(Direction.SOUTH);
+					//East
+					if (j < ROOM_COLS-1 && roomLayout[i][j+1].getType() != SpaceType.WALL)
+						directions.add(Direction.EAST);
+					//West
+					if (j > 0 && roomLayout[i][j-1].getType() != SpaceType.WALL)
+						directions.add(Direction.WEST);
+					//Northeast
+					if (i > 0 && j < ROOM_COLS-1 && roomLayout[i-1][j+1].getType() != SpaceType.WALL)
+						directions.add(Direction.NORTHEAST);
+					//Northwest
+					if (i > 0 && j > 0 && roomLayout[i-1][j-1].getType() != SpaceType.WALL)
+						directions.add(Direction.NORTHWEST);
 					//Southeast
 					if (i < ROOM_ROWS-1 && j < ROOM_COLS-1  && roomLayout[i+1][j+1].getType() != SpaceType.WALL)
-						path = path + "_se";
+						directions.add(Direction.SOUTHEAST);
+					//Southwest
+					if (i < ROOM_ROWS-1 && j > 0 && roomLayout[i+1][j-1].getType() != SpaceType.WALL)
+						directions.add(Direction.SOUTHWEST);
+					
+					if (directions.contains(Direction.NORTHWEST))
+						path = appendDirection(path, Direction.NORTHWEST);
+					if (directions.contains(Direction.NORTH))
+						path = appendDirection(path, Direction.NORTH);
+					if (directions.contains(Direction.NORTHEAST))
+						path = appendDirection(path, Direction.NORTHEAST);
+					if (directions.contains(Direction.WEST))
+						path = appendDirection(path, Direction.WEST);
+					if (directions.contains(Direction.EAST))
+						path = appendDirection(path, Direction.EAST);
+					if (directions.contains(Direction.SOUTHWEST))
+						path = appendDirection(path, Direction.SOUTHWEST);
+					if (directions.contains(Direction.SOUTH))
+						path = appendDirection(path, Direction.SOUTH);
+					if (directions.contains(Direction.SOUTHEAST))
+						path = appendDirection(path, Direction.SOUTHEAST);
 					
 					path = path + ".png";
 					break;
@@ -136,5 +153,9 @@ public class Room {
 			path = path + "_se";
 		
 		return path + ".png";
+	}
+	
+	private String appendDirection(String path, Direction d) {
+		return path + d.toString();
 	}
 }
