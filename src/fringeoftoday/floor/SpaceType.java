@@ -18,11 +18,6 @@ public enum SpaceType {
 	IMPASSIBLE,
 
 	/**
-	 * 'C'; Space that can't be shot over or walked on
-	 */
-	COLLIDABLE,
-
-	/**
 	 * 'B'; Appears as a standard space but spawns a basic enemy
 	 */
 	BASIC_SPAWN,
@@ -48,7 +43,7 @@ public enum SpaceType {
 	DOOR,
 
 	/**
-	 * 'W'; Space on edge of room that can't be shot over or walked on
+	 * 'W'; Space that can't be shot over or walked on
 	 */
 	WALL;
 }
