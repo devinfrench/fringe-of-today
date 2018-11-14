@@ -143,17 +143,15 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void createImageList() {
 		int rows = FloorManager.ROOM_ROWS;
 		int cols = FloorManager.ROOM_COLS;
+		String path = FILE_PATH;
+		//TODO Add switch cases for different file paths based on level
 		
 		room = new GImage[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				room[i][j] = new GImage(getImagePath(i, j), (j * SPACE_SIZE) + HEADER_HEIGHT, (i * SPACE_SIZE));
+				room[i][j] = new GImage(path + program.getFloorManager().getFloor().getRoom(i, j).getSpace(i, j).getFilePath(), (j * SPACE_SIZE) + HEADER_HEIGHT, (i * SPACE_SIZE));
 			}
 		}
-	}
-	
-	public String getImagePath(int row, int col) {
-		return null;
 	}
 	
 	public void onDeath() {//Trigger this when player is dead, should add other functions - tally score, etc.
