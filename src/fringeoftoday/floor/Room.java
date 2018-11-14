@@ -14,10 +14,12 @@ public class Room {
 
 	private Space roomLayout[][];
 	private ArrayList<Exit> exits;
+	private ArrayList<Direction> directions;
 
 	public Room() {
 		roomLayout = new Space[ROOM_ROWS][ROOM_COLS];
 		exits = new ArrayList<Exit>();
+		directions = new ArrayList<Direction>();
 	}
 
 	public Space getSpace(int row, int col) {

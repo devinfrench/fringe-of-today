@@ -1,6 +1,6 @@
 package fringeoftoday.floor;
 
-public enum Directions {
+public enum Direction {
 	NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST;
 	
 	public String toString() {
