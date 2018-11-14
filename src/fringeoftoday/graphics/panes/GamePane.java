@@ -133,11 +133,19 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 	
 	public void showField() {
-		
+		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+				program.add(room[i][j]);
+			}
+		}
 	}
 	
 	public void removeField() {
-		
+		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+				program.remove(room[i][j]);
+			}
+		}
 	}
 	
 	public void createImageList() {
