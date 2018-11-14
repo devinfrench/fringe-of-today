@@ -153,6 +153,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void createImageList() {
 		int rows = FloorManager.ROOM_ROWS;
 		int cols = FloorManager.ROOM_COLS;
+		GImage temp;
 		String path = FILE_PATH + "RockPath/";
 		//TODO Add switch cases for different file paths based on level
 		
@@ -162,7 +163,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		room = new GImage[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				room[i][j] = new GImage(path + testRoom.getSpace(i, j).getFilePath(), (j * SPACE_SIZE) + HEADER_HEIGHT, (i * SPACE_SIZE));
+				temp = new GImage(path + testRoom.getSpace(i, j).getFilePath(), (j * SPACE_SIZE), (i * SPACE_SIZE) + HEADER_HEIGHT);
+				temp.setSize(SPACE_SIZE, SPACE_SIZE);
+				room[i][j] = temp;
 			}
 		}
 	}
