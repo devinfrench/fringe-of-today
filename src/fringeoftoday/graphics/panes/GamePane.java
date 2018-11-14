@@ -12,6 +12,7 @@ import acm.graphics.GRect;
 import acm.graphics.GLabel;
 import fringeoftoday.MainApplication;
 import fringeoftoday.floor.FloorManager;
+import fringeoftoday.floor.Room;
 import fringeoftoday.PlayerData;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
@@ -105,6 +106,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void showContents() {//split showContents into showHeader and showField for clarity
 		startHealth = Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3;
 		showHeader(); //Top bar
+		createImageList();
 		showField(); //Game field
 //		program.add(btnDie);//Testing death screen, remove when things are added
 		initHealth();
@@ -154,10 +156,13 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		String path = FILE_PATH + "RockPath/";
 		//TODO Add switch cases for different file paths based on level
 		
+		Room testRoom = program.getFloorManager().getSpawnRoom();
+		testRoom.setFilePaths();
+		
 		room = new GImage[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				room[i][j] = new GImage(path + program.getFloorManager().getFloor().getRoom(i, j).getSpace(i, j).getFilePath(), (j * SPACE_SIZE) + HEADER_HEIGHT, (i * SPACE_SIZE));
+				room[i][j] = new GImage(path + testRoom.getSpace(i, j).getFilePath(), (j * SPACE_SIZE) + HEADER_HEIGHT, (i * SPACE_SIZE));
 			}
 		}
 	}
