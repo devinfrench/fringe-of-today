@@ -160,10 +160,10 @@ public class MainApplication extends GraphicsApplication {
 			FloorManager.addRoomLayout(textArr);
 			break;
 		case ("rooms_spawn"):
-			FloorManager.addBossRoomLayout(textArr);
+			FloorManager.setSpawnRoom(textArr);
 			break;
 		case ("rooms_boss"):
-			FloorManager.setSpawnRoom(textArr);
+			FloorManager.addBossRoomLayout(textArr);
 			break;
 		}
 
