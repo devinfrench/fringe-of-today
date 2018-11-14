@@ -101,6 +101,8 @@ public class Room {
 					if (i < ROOM_ROWS-1 && j > 0 && roomLayout[i+1][j-1].getType() != SpaceType.WALL)
 						directions.add(Direction.SOUTHWEST);
 					
+					removeDiagonals();
+					
 					if (directions.contains(Direction.NORTHWEST))
 						path = appendDirection(path, Direction.NORTHWEST);
 					if (directions.contains(Direction.NORTH))
@@ -121,15 +123,6 @@ public class Room {
 					path = path + ".png";
 					break;
 				}
-				
-				if (directions.contains(Direction.NORTHWEST) && !(directions.contains(Direction.NORTH) && directions.contains(Direction.WEST)))
-					directions.remove(Direction.NORTHWEST);
-				if (directions.contains(Direction.NORTHEAST) && !(directions.contains(Direction.NORTH) && directions.contains(Direction.EAST)))
-					directions.remove(Direction.NORTHEAST);
-				if (directions.contains(Direction.SOUTHWEST) && !(directions.contains(Direction.SOUTH) && directions.contains(Direction.WEST)))
-					directions.remove(Direction.SOUTHWEST);
-				if (directions.contains(Direction.SOUTHEAST) && !(directions.contains(Direction.SOUTH) && directions.contains(Direction.EAST)))
-					directions.remove(Direction.SOUTHEAST);
 				
 				roomLayout[i][j].setFilePath(path);
 			}
@@ -162,6 +155,8 @@ public class Room {
 		if (i < ROOM_ROWS-1 && j > 0 && roomLayout[i+1][j-1].getType() == type)
 			directions.add(Direction.SOUTHWEST);
 		
+		removeDiagonals();
+		
 		if (directions.contains(Direction.NORTHWEST))
 			path = appendDirection(path, Direction.NORTHWEST);
 		if (directions.contains(Direction.NORTH))
@@ -185,5 +180,16 @@ public class Room {
 	
 	private String appendDirection(String path, Direction d) {
 		return path + d.toString();
+	}
+	
+	private void removeDiagonals() {
+		if (directions.contains(Direction.NORTHWEST) && !(directions.contains(Direction.NORTH) && directions.contains(Direction.WEST)))
+			directions.remove(Direction.NORTHWEST);
+		if (directions.contains(Direction.NORTHEAST) && !(directions.contains(Direction.NORTH) && directions.contains(Direction.EAST)))
+			directions.remove(Direction.NORTHEAST);
+		if (directions.contains(Direction.SOUTHWEST) && !(directions.contains(Direction.SOUTH) && directions.contains(Direction.WEST)))
+			directions.remove(Direction.SOUTHWEST);
+		if (directions.contains(Direction.SOUTHEAST) && !(directions.contains(Direction.SOUTH) && directions.contains(Direction.EAST)))
+			directions.remove(Direction.SOUTHEAST);
 	}
 }
