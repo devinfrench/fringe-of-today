@@ -199,4 +199,9 @@ public class FloorManager {
 			System.out.println();
 		}
 	}
+	
+	//For testing
+	public Room getSpawnRoom() {
+		return spawnRoom;
+	}
 }
