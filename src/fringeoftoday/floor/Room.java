@@ -67,7 +67,7 @@ public class Room {
 					break;
 					
 				case BLANK:
-					path = "blank";
+					path = "blank.png";
 					break;
 					
 				default:
