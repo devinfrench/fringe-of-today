@@ -13,7 +13,7 @@ public enum SpaceType {
 	GROUND,
 
 	/**
-	 * 'I'; Space that can be shot over but not walked on
+	 * '~'; Space that can be shot over but not walked on
 	 */
 	WATER,
 
@@ -45,5 +45,10 @@ public enum SpaceType {
 	/**
 	 * 'W'; Space that can't be shot over or walked on
 	 */
-	WALL;
+	WALL,
+	
+	/**
+	 * 'X', Space not used in room
+	 */
+	BLANK;
 }

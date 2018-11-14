@@ -108,7 +108,7 @@ public class FloorManager {
 					r.setSpace(i, j, SpaceType.GROUND);
 					break;
 
-				case 'I':
+				case '~':
 					r.setSpace(i, j, SpaceType.WATER);
 					break;
 
@@ -135,6 +135,9 @@ public class FloorManager {
 				case 'W':
 					r.setSpace(i, j, SpaceType.WALL);
 					break;
+					
+				case 'X':
+					r.setSpace(i, j, SpaceType.BLANK);
 
 				default:
 					break;
