@@ -19,7 +19,6 @@ public class Room {
 	public Room() {
 		roomLayout = new Space[ROOM_ROWS][ROOM_COLS];
 		exits = new ArrayList<Exit>();
-		directions = new ArrayList<Direction>();
 	}
 
 	public Space getSpace(int row, int col) {
@@ -55,6 +54,8 @@ public class Room {
 		
 		for (int i = 0; i < ROOM_ROWS; i++) {
 			for (int j = 0; j < ROOM_COLS; j++) {
+				directions = new ArrayList<Direction>();
+				
 				switch (roomLayout[i][j].getType()) {
 				case WATER:
 					path = pathGenerator("water", i, j, SpaceType.WATER);
@@ -120,6 +121,15 @@ public class Room {
 					path = path + ".png";
 					break;
 				}
+				
+				if (directions.contains(Direction.NORTHWEST) && !(directions.contains(Direction.NORTH) && directions.contains(Direction.WEST)))
+					directions.remove(Direction.NORTHWEST);
+				if (directions.contains(Direction.NORTHEAST) && !(directions.contains(Direction.NORTH) && directions.contains(Direction.EAST)))
+					directions.remove(Direction.NORTHEAST);
+				if (directions.contains(Direction.SOUTHWEST) && !(directions.contains(Direction.SOUTH) && directions.contains(Direction.WEST)))
+					directions.remove(Direction.SOUTHWEST);
+				if (directions.contains(Direction.SOUTHEAST) && !(directions.contains(Direction.SOUTH) && directions.contains(Direction.EAST)))
+					directions.remove(Direction.SOUTHEAST);
 				
 				roomLayout[i][j].setFilePath(path);
 			}
