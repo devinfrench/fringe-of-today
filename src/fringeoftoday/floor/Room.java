@@ -66,6 +66,10 @@ public class Room {
 					path = "wall.png";
 					break;
 					
+				case BLANK:
+					path = "blank";
+					break;
+					
 				default:
 					path = "ground";
 					
@@ -93,6 +97,8 @@ public class Room {
 					//Southeast
 					if (i < ROOM_ROWS-1 && j < ROOM_COLS-1 && roomLayout[i+1][j+1].getType() != SpaceType.WATER && roomLayout[i+1][j+1].getType() != SpaceType.WALL)
 						path = path + "_se";
+					
+					path = path + ".png";
 					break;
 				}
 				
