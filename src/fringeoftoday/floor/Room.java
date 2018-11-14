@@ -55,27 +55,53 @@ public class Room {
 			for (int j = 0; j < ROOM_COLS; j++) {
 				switch (roomLayout[i][j].getType()) {
 				case IMPASSIBLE:
-					path = "water";
+					path = pathGenerator("water", i, j, SpaceType.IMPASSIBLE);
 					break;
-					
-				case COLLIDABLE:
-					path = "wall";
-					break;
-					
+				
 				case WALL:
-					path = "wall";
+					path = pathGenerator("wall", i, j, SpaceType.WALL);
 					break;
 					
 				case DOOR:
-					path = "wall";
+					path = "wall.png";
 					break;
 					
 				default:
-					path = "ground";
+					// path = pathGenerator("ground", i, j, SpaceType.STANDARD);
 					break;
 				}
 				
+				roomLayout[i][j].setFilePath(path);
 			}
 		}
+	}
+	
+	private String pathGenerator(String path, int i, int j, SpaceType type) {
+		//Northwest
+		if (i > 0 && j > 0 && roomLayout[i-1][j-1].getType() == type)
+			path = path + "_nw";
+		//North
+		if (i > 0 && roomLayout[i-1][j].getType() == type)
+			path = path + "_n";
+		//Northeast
+		if (i > 0 && j < ROOM_COLS-1 && roomLayout[i-1][j+1].getType() == type)
+			path = path + "_ne";
+		//West
+		if (j > 0 && roomLayout[i][j-1].getType() == type)
+			path = path + "_w";
+		//East
+		if (j < ROOM_COLS-1 && roomLayout[i][j+1].getType() == type)
+			path = path + "_e";
+		//Southwest
+		if (i < ROOM_ROWS-1 && j > 0 && roomLayout[i+1][j-1].getType() == type)
+			path = path + "_sw";
+		//South
+		if (i < ROOM_ROWS-1 && roomLayout[i+1][j].getType() == type)
+			path = path + "_s";
+		//Southeast
+		if (i < ROOM_ROWS-1 && j < ROOM_COLS-1 && roomLayout[i+1][j+1].getType() == type)
+			path = path + "_se";
+		
+		return path + ".png";
 	}
 }
