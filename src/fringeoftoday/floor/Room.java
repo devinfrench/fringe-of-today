@@ -9,8 +9,8 @@ import java.util.*;
  *
  */
 public class Room {
-	public static final int ROOM_ROWS = 11;
-	public static final int ROOM_COLS = 17;
+	public static final int ROOM_ROWS = FloorManager.ROOM_ROWS;
+	public static final int ROOM_COLS = FloorManager.ROOM_COLS;
 
 	private Space roomLayout[][];
 	private ArrayList<Exit> exits;

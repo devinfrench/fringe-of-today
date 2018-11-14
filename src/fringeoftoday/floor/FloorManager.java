@@ -12,7 +12,7 @@ import java.lang.Math;
  */
 public class FloorManager {
 	public static final int ROOM_ROWS = 11;
-	public static final int ROOM_COLS = 17;
+	public static final int ROOM_COLS = 25;
 	public static final int FLOOR_ROWS = 4;
 	public static final int FLOOR_COLS = 5;
 
