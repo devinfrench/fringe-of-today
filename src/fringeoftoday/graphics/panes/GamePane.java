@@ -61,7 +61,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, (MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		//Player
-		player = new Player();
+		player = program.getEntityManager().getPlayer();
 
 		//Timer
 		Timer t = new Timer(DELAY_MS, this);

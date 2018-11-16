@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.lang.*;
 
 import fringeoftoday.audio.AudioPlayer;
+import fringeoftoday.entities.EntityManager;
 import fringeoftoday.graphics.GraphicsApplication;
 import fringeoftoday.graphics.panes.MenuPane;
 import fringeoftoday.graphics.panes.ShopPane;
@@ -31,6 +32,7 @@ public class MainApplication extends GraphicsApplication {
 	private DeathPane deathPane;
 	private int count;
 	private FloorManager floorManager;
+	private EntityManager entityManager;
 
 //	public static void main(String[] args) {
 //		//A cool little test that shows the rooms getting added.  Right now it spams the console, but that's just for show currently.
@@ -46,6 +48,7 @@ public class MainApplication extends GraphicsApplication {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		PlayerData.playerFileSetup();
 		floorManager = new FloorManager();
+		entityManager = new EntityManager();
 		importAllLayouts();
 	}
 
@@ -60,6 +63,10 @@ public class MainApplication extends GraphicsApplication {
 	
 	public FloorManager getFloorManager() {
 		return floorManager;
+	}
+
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 
 	public void switchToMenu() {
