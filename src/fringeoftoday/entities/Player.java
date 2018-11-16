@@ -3,10 +3,10 @@ package fringeoftoday.entities;
 public class Player extends ActiveEntity {
 
     private int money;
-    private int meleeUpgrade;
-    private int projectileUpgrade;
-    private int movementUpgrade;
-    private int healthUpgrade;
+    private int meleeDamage;
+    private int rangedDamage;
+    private int movementSpeed;
+    private int health;
 
     public int getMoney() {
         return money;
@@ -16,36 +16,36 @@ public class Player extends ActiveEntity {
         this.money = money;
     }
 
-    public int getMeleeUpgrade() {
-        return meleeUpgrade;
+    public int getMeleeDamage() {
+        return meleeDamage;
     }
 
-    public void setMeleeUpgrade(int meleeUpgrade) {
-        this.meleeUpgrade = meleeUpgrade;
+    public void setMeleeDamage(int damage) {
+        this.meleeDamage = damage;
     }
 
-    public int getProjectileUpgrade() {
-        return projectileUpgrade;
+    public int getRangedDamage() {
+        return rangedDamage;
     }
 
-    public void setProjectileUpgrade(int projectileUpgrade) {
-        this.projectileUpgrade = projectileUpgrade;
+    public void setRangedDamage(int damage) {
+        this.rangedDamage = damage;
     }
 
-    public int getMovementUpgrade() {
-        return movementUpgrade;
+    public int getMoveSpeed() {
+        return movementSpeed;
     }
 
-    public void setMovementUpgrade(int movementUpgrade) {
-        this.movementUpgrade = movementUpgrade;
+    public void setMoveSpeed(int speed) {
+        this.movementSpeed = speed;
     }
 
-    public int getHealthUpgrade() {
-        return healthUpgrade;
+    public int getHealth() {
+        return health;
     }
 
-    public void setHealthUpgrade(int healthUpgrade) {
-        this.healthUpgrade = healthUpgrade;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     @Override
