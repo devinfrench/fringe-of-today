@@ -47,6 +47,10 @@ public class DeathPane extends GraphicsPane {
 		program.remove(deathMessage);
 	}
 
+	@Override
+	public void mousePressed(MouseEvent e) {
+		program.switchToMenu();
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
