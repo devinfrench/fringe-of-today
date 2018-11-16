@@ -174,6 +174,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 	
 	public void onDeath() {//Trigger this when player is dead, should add other functions - tally score, etc.
+		PlayerData.writeFile();
 		program.switchToDeath();
 	}
 	

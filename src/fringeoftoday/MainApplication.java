@@ -78,6 +78,7 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToGame() {
+		PlayerData.writeFile();
 		if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) == 0) {
 			PlayerData.updateMap("Tutorial", 1);
 			switchToTutorial();

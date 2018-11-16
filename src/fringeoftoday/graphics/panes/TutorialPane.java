@@ -79,9 +79,11 @@ public class TutorialPane extends GraphicsPane {
 	private void exit() {
 		if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) != 101) {
 			PlayerData.updateMap("Tutorial", Integer.parseInt(PlayerData.getMap().get("Tutorial")) - 100);
+			PlayerData.writeFile();
 			program.switchToMenu();
 		}
 		else if(Integer.parseInt(PlayerData.getMap().get("Tutorial")) == 101) {
+			PlayerData.writeFile();
 			program.switchToGame();
 		}
 	}
