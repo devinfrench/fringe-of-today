@@ -14,6 +14,7 @@ import fringeoftoday.MainApplication;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
 import fringeoftoday.PlayerData;
+import fringeoftoday.entities.Player;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.panes.GraphicsPane;
@@ -34,11 +35,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public String direction;
 
 	private int level = -1;	//Work on this when we get it in
-	private int mDamage;
-	private int rDamage;
-	private int moveSpeed;
-	private int startHealth;
-	private int curHealth;
 	private GButton btnDie; //Debug, remove when done
 	private GRect minimapBox; //Minimap, left header
 	private GRect infoBox; //Center header
@@ -46,6 +42,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private GRect healthBox; //Right header
 	private GLabel healthLabel;
 	private GImage[][] room;
+	private Player player;
 	
 	public GamePane(MainApplication app) {
 		super();
@@ -63,18 +60,24 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		//OTHER
 		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, (MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 
+		//Player
+		player = new Player();
+
 		//Timer
 		Timer t = new Timer(DELAY_MS, this);
 		t.start();
 	}
 
 	private void infoDrawing() {
-		mDamage = 1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades"));
-		rDamage = 1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades"));
-		moveSpeed = 1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades"));
+		player.setMeleeDamage(1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")));
+		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
+		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 		
 		infoText = new GParagraph(
-				"Level: "+level+"\nMelee Damage: "+mDamage+"\nRanged Damage: "+rDamage+"\nMove Speed: "+moveSpeed,0,0);
+				"Level: " + level
+				+ "\nMelee Damage: " + player.getMeleeDamage()
+				+ "\nRanged Damage: " + player.getRangedDamage()
+				+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
 		
 		infoText.setFont("Arial-24");
 		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, (infoBox.getY()+infoText.getHeight())/2);
@@ -84,18 +87,17 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	private void changeHealth(boolean up) {
 		if (up) {
-			curHealth++;
+			player.setHealth(player.getHealth() + 1);
 		}
 		else {
-			curHealth--;
+			player.setHealth(player.getHealth() - 1);
 		}
-		program.remove(healthLabel);
-		drawHealth(curHealth);
+		healthLabel.setLabel("Health: " + player.getHealth());
 	}
 	
 	private void initHealth() {
-		curHealth = startHealth;
-		drawHealth(curHealth);
+		player.setHealth(player.getMaxHealth());
+		drawHealth(player.getHealth());
 	}
 
 	private void drawHealth(int health) {
@@ -106,7 +108,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	@Override
 	public void showContents() {//split showContents into showHeader and showField for clarity
-		startHealth = Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3;
+		player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3);
 		showHeader(); //Top bar
 		createImageList();
 		showField(); //Game field
@@ -186,7 +188,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 //		else {
 			changeHealth(false);
 //		}
-		if (curHealth == 0) {
+		if (player.getHealth() == 0) {
 			onDeath();
 		}
 	}
