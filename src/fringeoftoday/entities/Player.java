@@ -6,6 +6,7 @@ public class Player extends ActiveEntity {
     private int meleeDamage;
     private int rangedDamage;
     private int movementSpeed;
+    private int maxHealth;
     private int health;
 
     public int getMoney() {
@@ -38,6 +39,14 @@ public class Player extends ActiveEntity {
 
     public void setMoveSpeed(int speed) {
         this.movementSpeed = speed;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int max) {
+        this.maxHealth = max;
     }
 
     public int getHealth() {
