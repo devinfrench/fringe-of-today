@@ -154,22 +154,22 @@ public class MainApplication extends GraphicsApplication {
 	
 	public static void addLayout(String fileLocation, char[][] textArr) {
 		// Souts for demoing
-		System.out.println("\nAdding something...");
+		// System.out.println("\nAdding something...");
 		switch (fileLocation) {
 		case ("floors"):
-			FloorManager.printLayout(textArr, FloorManager.FLOOR_ROWS, FloorManager.FLOOR_COLS, fileLocation);
+			// FloorManager.printLayout(textArr, FloorManager.FLOOR_ROWS, FloorManager.FLOOR_COLS, fileLocation);
 			FloorManager.addFloorLayout(textArr);
 			break;
 		case ("rooms_standard"):
-			FloorManager.printLayout(textArr, FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS, fileLocation);
+			// FloorManager.printLayout(textArr, FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS, fileLocation);
 			FloorManager.addRoomLayout(textArr);
 			break;
 		case ("rooms_spawn"):
-			FloorManager.printLayout(textArr, FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS, fileLocation);
+			// FloorManager.printLayout(textArr, FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS, fileLocation);
 			FloorManager.setSpawnRoom(textArr);
 			break;
 		case ("rooms_boss"):
-			FloorManager.printLayout(textArr, FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS, fileLocation);
+			// FloorManager.printLayout(textArr, FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS, fileLocation);
 			FloorManager.addBossRoomLayout(textArr);
 			break;
 		}
