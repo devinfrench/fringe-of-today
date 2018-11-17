@@ -1,10 +1,13 @@
 package fringeoftoday.graphics.panes;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import acm.graphics.GObject;
 import acm.graphics.GImage;
@@ -18,6 +21,8 @@ import fringeoftoday.entities.Player;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.panes.GraphicsPane;
+
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 public class GamePane extends GraphicsPane implements ActionListener {
@@ -111,6 +116,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		showHeader(); //Top bar
 		createImageList();
 		showField(); //Game field
+		showPlayer();
 		//		program.add(btnDie);//Testing death screen, remove when things are added
 		initHealth();
 		infoDrawing();
@@ -120,6 +126,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void hideContents() {
 		removeHeader();
 		removeField();
+		removePlayer();
 		//		program.remove(btnDie);//Testing death screen, remove when things are added
 		program.remove(healthLabel);
 		program.remove(infoText);
@@ -175,6 +182,26 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				room[i][j] = temp;
 			}
 		}
+	}
+
+	public void showPlayer() {
+		Image sprite = loadSprite("player_sprite_temp.png");
+		player.setGObject(new GImage(sprite, 24 * (FloorManager.SPACE_SIZE / 2), 16 * (FloorManager.SPACE_SIZE / 2)));
+		program.add(player.getGObject());
+	}
+
+	public void removePlayer() {
+		program.remove(player.getGObject());
+	}
+
+	public static BufferedImage loadSprite(String file) {
+		BufferedImage sprite = null;
+		try {
+			sprite = ImageIO.read(new File(file));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return sprite;
 	}
 
 	public void onDeath() {//Trigger this when player is dead, should add other functions - tally score, etc.
