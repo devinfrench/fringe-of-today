@@ -22,12 +22,11 @@ import javax.swing.Timer;
 
 public class GamePane extends GraphicsPane implements ActionListener {
 	private MainApplication program; // you will use program to get access to
-										// all of the GraphicsProgram calls
+	// all of the GraphicsProgram calls
 	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
 	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 	public static final int HEADER_WIDTH = MainApplication.WINDOW_WIDTH/3;
 	public static final int HEADER_HEIGHT = 196;
-	public static final int SPACE_SIZE = (MainApplication.WINDOW_HEIGHT - HEADER_HEIGHT)/FloorManager.ROOM_ROWS;
 	public static final String FILE_PATH = "../media/textures/";
 	public int numTimes=0; //Timer stuff
 	public static final int DELAY_MS = 25;
@@ -43,20 +42,20 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private GLabel healthLabel;
 	private GImage[][] room;
 	private Player player;
-	
+
 	public GamePane(MainApplication app) {
 		super();
 		program = app;
-		
+
 		//HEADER
 		minimapBox = new GRect(0, 0, HEADER_WIDTH, HEADER_HEIGHT);
-		
+
 		infoBox = new GRect(HEADER_WIDTH,0,HEADER_WIDTH,HEADER_HEIGHT);
-		
+
 		healthBox = new GRect(HEADER_WIDTH*2,0,HEADER_WIDTH,HEADER_HEIGHT);
-		
+
 		//FIELD
-		
+
 		//OTHER
 		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, (MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 
@@ -72,13 +71,13 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		player.setMeleeDamage(1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")));
 		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
-		
+
 		infoText = new GParagraph(
 				"Level: " + level
 				+ "\nMelee Damage: " + player.getMeleeDamage()
 				+ "\nRanged Damage: " + player.getRangedDamage()
 				+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
-		
+
 		infoText.setFont("Arial-24");
 		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, (infoBox.getY()+infoText.getHeight())/2);
 
@@ -94,7 +93,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		}
 		healthLabel.setLabel("Health: " + player.getHealth());
 	}
-	
+
 	private void initHealth() {
 		player.setHealth(player.getMaxHealth());
 		drawHealth(player.getHealth());
@@ -112,7 +111,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		showHeader(); //Top bar
 		createImageList();
 		showField(); //Game field
-//		program.add(btnDie);//Testing death screen, remove when things are added
+		//		program.add(btnDie);//Testing death screen, remove when things are added
 		initHealth();
 		infoDrawing();
 	}
@@ -121,24 +120,24 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void hideContents() {
 		removeHeader();
 		removeField();
-//		program.remove(btnDie);//Testing death screen, remove when things are added
+		//		program.remove(btnDie);//Testing death screen, remove when things are added
 		program.remove(healthLabel);
 		program.remove(infoText);
 	}
-	
+
 	public void showHeader() {
 		program.add(minimapBox);
 		program.add(infoBox);
 		program.add(healthBox);
 	}
-	
+
 	public void removeHeader() {
 		program.remove(minimapBox);
 		program.remove(infoBox);
 		program.remove(infoText);
 		program.remove(healthBox);
 	}
-	
+
 	public void showField() {
 		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
 			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
@@ -146,7 +145,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			}
 		}
 	}
-	
+
 	public void removeField() {
 		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
 			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
@@ -154,40 +153,43 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			}
 		}
 	}
-	
+
 	public void createImageList() {
 		int rows = FloorManager.ROOM_ROWS;
 		int cols = FloorManager.ROOM_COLS;
 		GImage temp;
 		String path = FILE_PATH + "RockPath/";
 		//TODO Add switch cases for different file paths based on level
-		
+
 		Room testRoom = program.getFloorManager().getSpawnRoom();
 		testRoom.setFilePaths();
-		
+
 		room = new GImage[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				temp = new GImage(path + testRoom.getSpace(i, j).getFilePath(), (j * SPACE_SIZE), (i * SPACE_SIZE) + HEADER_HEIGHT);
-				temp.setSize(SPACE_SIZE, SPACE_SIZE);
+				temp = new GImage(
+						path + testRoom.getSpace(i, j).getFilePath(),
+						(j * FloorManager.SPACE_SIZE), 
+						(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
+				temp.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 				room[i][j] = temp;
 			}
 		}
 	}
-	
+
 	public void onDeath() {//Trigger this when player is dead, should add other functions - tally score, etc.
 		program.switchToDeath();
 	}
-	
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
-//		if (obj == btnDie) {
-//			onDeath();
-//		}
-//		else {
-			changeHealth(false);
-//		}
+		//		if (obj == btnDie) {
+		//			onDeath();
+		//		}
+		//		else {
+		changeHealth(false);
+		//		}
 		if (player.getHealth() == 0) {
 			onDeath();
 		}
@@ -202,13 +204,13 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	//Timer loop
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
+
 }
