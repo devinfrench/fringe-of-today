@@ -18,6 +18,7 @@ import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
 import fringeoftoday.PlayerData;
 import fringeoftoday.entities.Player;
+import fringeoftoday.floor.Space;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.panes.GraphicsPane;
@@ -174,12 +175,14 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		room = new GImage[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
+				Space space = testRoom.getSpace(i, j);
 				temp = new GImage(
-						path + testRoom.getSpace(i, j).getFilePath(),
+						path + space.getFilePath(),
 						(j * FloorManager.SPACE_SIZE), 
 						(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
 				temp.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 				room[i][j] = temp;
+				space.setGObject(temp);
 			}
 		}
 	}
