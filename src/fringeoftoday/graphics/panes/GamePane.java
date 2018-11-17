@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.HashSet;
+import java.util.Set;
 
 import acm.graphics.GImage;
 import acm.graphics.GRect;
@@ -34,8 +36,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public static final String FILE_PATH = "../media/textures/";
 	public int numTimes=0; //Timer stuff
 	public static final int DELAY_MS = 25;
-	public boolean keyPressed = false; //Keyboard input stuff
 	public Direction direction;
+	private Set<Integer> keysPressed = new HashSet<>();
 
 	private int level = -1;	//Work on this when we get it in
 	private GButton btnDie; //Debug, remove when done
@@ -228,24 +230,40 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_W) {
-			direction = Direction.NORTH;
-		}
-		else if (key == KeyEvent.VK_S) {
-			direction = Direction.SOUTH;
-		}
-		else if (key == KeyEvent.VK_A) {
-			direction = Direction.WEST;
-		}
-		else if (key == KeyEvent.VK_D) {
-			direction = Direction.EAST;
+		Direction dir = getDirection(key);
+		if (dir != null) {
+			keysPressed.add(key);
+			direction = dir;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		direction = null;
+		int key = e.getKeyCode();
+		if (keysPressed.contains(key)) {
+			keysPressed.remove(key);
+		}
+		if (keysPressed.isEmpty()) {
+			direction = null;
+		} else {
+			direction = getDirection(keysPressed.iterator().next());
+		}
+	}
 
+	private Direction getDirection(int key) {
+		if (key == KeyEvent.VK_W) {
+			return Direction.NORTH;
+		}
+		else if (key == KeyEvent.VK_S) {
+			return Direction.SOUTH;
+		}
+		else if (key == KeyEvent.VK_A) {
+			return Direction.WEST;
+		}
+		else if (key == KeyEvent.VK_D) {
+			return Direction.EAST;
+		}
+		return null;
 	}
 
 	//Timer loop
