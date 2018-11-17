@@ -49,6 +49,12 @@ public class Entity {
         }
     }
 
+    public void move(double x, double y) {
+        if (gObj != null) {
+            gObj.move(x, y);
+        }
+    }
+
     public GObject getGObject() {
         return gObj;
     }
