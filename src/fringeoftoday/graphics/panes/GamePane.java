@@ -14,6 +14,8 @@ import acm.graphics.GImage;
 import acm.graphics.GRect;
 import acm.graphics.GLabel;
 import fringeoftoday.MainApplication;
+import fringeoftoday.core.CollisionManager;
+import fringeoftoday.floor.Direction;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
 import fringeoftoday.PlayerData;
@@ -21,7 +23,6 @@ import fringeoftoday.entities.Player;
 import fringeoftoday.floor.Space;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
-import fringeoftoday.graphics.panes.GraphicsPane;
 
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
@@ -37,7 +38,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public int numTimes=0; //Timer stuff
 	public static final int DELAY_MS = 25;
 	public boolean keyPressed = false; //Keyboard input stuff
-	public String direction;
+	public Direction direction;
 
 	private int level = -1;	//Work on this when we get it in
 	private GButton btnDie; //Debug, remove when done
@@ -46,8 +47,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private GParagraph infoText;//Center header content
 	private GRect healthBox; //Right header
 	private GLabel healthLabel;
-	private GImage[][] room;
+	private Room room;
 	private Player player;
+	private CollisionManager collisionManager;
 
 	public GamePane(MainApplication app) {
 		super();
@@ -65,8 +67,14 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		//OTHER
 		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, (MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 
+		//Room
+		room = program.getFloorManager().getSpawnRoom();
+
 		//Player
 		player = program.getEntityManager().getPlayer();
+
+		//Collision
+		collisionManager = new CollisionManager(program.getEntityManager(), room);
 
 		//Timer
 		Timer t = new Timer(DELAY_MS, this);
@@ -149,7 +157,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void showField() {
 		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
 			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-				program.add(room[i][j]);
+				program.add(room.getSpace(i, j).getGObject());
 			}
 		}
 	}
@@ -157,7 +165,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void removeField() {
 		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
 			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-				program.remove(room[i][j]);
+				program.remove(room.getSpace(i, j).getGObject());
 			}
 		}
 	}
@@ -169,19 +177,16 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		String path = FILE_PATH + "RockPath/";
 		//TODO Add switch cases for different file paths based on level
 
-		Room testRoom = program.getFloorManager().getSpawnRoom();
-		testRoom.setFilePaths();
+		room.setFilePaths();
 
-		room = new GImage[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				Space space = testRoom.getSpace(i, j);
+				Space space = room.getSpace(i, j);
 				temp = new GImage(
 						path + space.getFilePath(),
 						(j * FloorManager.SPACE_SIZE), 
 						(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
 				temp.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
-				room[i][j] = temp;
 				space.setGObject(temp);
 			}
 		}
@@ -226,20 +231,50 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		int key = e.getKeyCode();
+		if (key == KeyEvent.VK_W) {
+			direction = Direction.NORTH;
+		}
+		else if (key == KeyEvent.VK_S) {
+			direction = Direction.SOUTH;
+		}
+		else if (key == KeyEvent.VK_A) {
+			direction = Direction.WEST;
+		}
+		else if (key == KeyEvent.VK_D) {
+			direction = Direction.EAST;
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		direction = null;
 
 	}
 
 	//Timer loop
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		if (direction == Direction.NORTH) {
+			if (collisionManager.playerCanMove(0, -5)) {
+				player.move(0, -5);
+			}
+		}
+		else if (direction == Direction.SOUTH) {
+			if (collisionManager.playerCanMove(0, 5)) {
+				player.move(0, 5);
+			}
+		}
+		else if (direction == Direction.WEST) {
+			if (collisionManager.playerCanMove(-5, 0)) {
+				player.move(-5, 0);
+			}
+		}
+		else if (direction == Direction.EAST) {
+			if (collisionManager.playerCanMove(5, 0)) {
+				player.move(5, 0);
+			}
+		}
 	}
 
 
