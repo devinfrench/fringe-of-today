@@ -44,7 +44,8 @@ public class CollisionManager {
                 Space space = room.getSpace(i, j);
                 if (space.getGObject().contains(x, y)) {
                     if (space.getType() == SpaceType.WALL
-                      || space.getType() == SpaceType.BLANK) {
+                      || space.getType() == SpaceType.BLANK
+                      || space.getType() == SpaceType.DOOR) {
                         return true;
                     }
                 }
