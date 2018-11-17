@@ -2,6 +2,7 @@ package fringeoftoday.core;
 
 import acm.graphics.GObject;
 import fringeoftoday.entities.EntityManager;
+import fringeoftoday.entities.Projectile;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
 import fringeoftoday.floor.Space;
@@ -32,5 +33,23 @@ public class CollisionManager {
             }
         }
         return true;
+    }
+
+    public boolean isProjectileCollision(Projectile p) {
+        GObject sprite = p.getGObject();
+        double x = sprite.getX() + (sprite.getWidth() / 2);
+        double y = sprite.getY() + (sprite.getHeight() / 2);
+        for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+            for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+                Space space = room.getSpace(i, j);
+                if (space.getGObject().contains(x, y)) {
+                    if (space.getType() == SpaceType.WALL
+                      || space.getType() == SpaceType.BLANK) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

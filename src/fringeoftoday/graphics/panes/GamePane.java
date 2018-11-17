@@ -284,6 +284,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		program.getEntityManager().getProjectiles().forEach((p) -> {
 			p.move();
+			if (collisionManager.isProjectileCollision(p)) {
+				program.getEntityManager().getProjectiles().remove(p);
+				program.remove(p.getGObject());
+			}
 		});
 	}
 
