@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import acm.graphics.GObject;
 import acm.graphics.GImage;
@@ -15,6 +16,7 @@ import acm.graphics.GRect;
 import acm.graphics.GLabel;
 import fringeoftoday.MainApplication;
 import fringeoftoday.core.CollisionManager;
+import fringeoftoday.entities.Projectile;
 import fringeoftoday.floor.Direction;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
@@ -87,10 +89,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 
 		infoText = new GParagraph(
-				"Level: " + level
-				+ "\nMelee Damage: " + player.getMeleeDamage()
-				+ "\nRanged Damage: " + player.getRangedDamage()
-				+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
+		"Level: " + level
+		+ "\nMelee Damage: " + player.getMeleeDamage()
+		+ "\nRanged Damage: " + player.getRangedDamage()
+		+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
 
 		infoText.setFont("Arial-24");
 		infoText.move(infoBox.getX()+(infoBox.getWidth()-infoText.getWidth())/2, (infoBox.getY()+infoText.getHeight())/2);
@@ -183,9 +185,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			for (int j = 0; j < cols; j++) {
 				Space space = room.getSpace(i, j);
 				temp = new GImage(
-						path + space.getFilePath(),
-						(j * FloorManager.SPACE_SIZE), 
-						(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
+				path + space.getFilePath(),
+				(j * FloorManager.SPACE_SIZE),
+				(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
 				temp.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 				space.setGObject(temp);
 			}
@@ -218,15 +220,19 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		GObject obj = program.getElementAt(e.getX(), e.getY());
+//		GObject obj = program.getElementAt(e.getX(), e.getY());
 		//		if (obj == btnDie) {
 		//			onDeath();
 		//		}
 		//		else {
-		changeHealth(false);
+//		changeHealth(false);
 		//		}
-		if (player.getHealth() == 0) {
-			onDeath();
+//		if (player.getHealth() == 0) {
+//			onDeath();
+//		}
+		for (Projectile p : player.attack(e.getX(), e.getY())) {
+			program.getEntityManager().getProjectiles().add(p);
+			program.add(p.getGObject());
 		}
 	}
 	@Override
@@ -275,6 +281,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				player.move(5, 0);
 			}
 		}
+
+		program.getEntityManager().getProjectiles().forEach((p) -> {
+			p.move();
+		});
 	}
 
 
