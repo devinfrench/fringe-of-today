@@ -133,6 +133,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		removeHeader();
 		removeField();
 		removePlayer();
+		removeProjectiles();
 		//		program.remove(btnDie);//Testing death screen, remove when things are added
 		program.remove(healthLabel);
 		program.remove(infoText);
@@ -197,6 +198,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	public void removePlayer() {
 		program.remove(player.getGObject());
+	}
+
+	public void removeProjectiles() {
+		program.getEntityManager().getProjectiles().forEach(p -> program.remove(p.getGObject()));
 	}
 
 	public void onDeath() {//Trigger this when player is dead, should add other functions - tally score, etc.
