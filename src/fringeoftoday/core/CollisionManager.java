@@ -35,7 +35,7 @@ public class CollisionManager {
         return true;
     }
 
-    public boolean isProjectileCollision(Projectile p) {
+    public boolean isTerrainCollision(Projectile p) {
         GObject sprite = p.getGObject();
         double x = sprite.getX() + (sprite.getWidth() / 2);
         double y = sprite.getY() + (sprite.getHeight() / 2);
