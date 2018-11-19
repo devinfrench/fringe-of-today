@@ -39,6 +39,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public static final int DELAY_MS = 25;
 	private static final int LEVEL_ALERT_X_SIZE = 600;
 	private static final int LEVEL_ALERT_Y_SIZE = 150;
+	private static final double SPEED_EFFECT = .25;	//How effective the speed upgrades are, I've found .25 to be pretty good
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
 
@@ -119,10 +120,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		healthLabel.setFont("Arial-48");
 		program.add(healthLabel);
 	}
-	
+
 	private void drawLevelAlert() {
-		levelAlert = new GButtonMD("Level " + level, (MainApplication.WINDOW_WIDTH-LEVEL_ALERT_X_SIZE)/2,
-				(MainApplication.WINDOW_HEIGHT)/2, LEVEL_ALERT_X_SIZE, LEVEL_ALERT_Y_SIZE, "blue");
+		levelAlert = new GButtonMD("Level " + level, (MainApplication.WINDOW_WIDTH - LEVEL_ALERT_X_SIZE) / 2,
+				(MainApplication.WINDOW_HEIGHT) / 2, LEVEL_ALERT_X_SIZE, LEVEL_ALERT_Y_SIZE, "blue");
 		levelAlert.setVisible(true);
 		program.add(levelAlert);
 	}
@@ -229,7 +230,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			t.start();
 			return;
 		}
-		
+
 		// GObject obj = program.getElementAt(e.getX(), e.getY());
 		// if (obj == btnDie) {
 		// onDeath();
@@ -287,18 +288,21 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		int x = 0, y = 0;
 		if (direction == Direction.NORTH) {
-			x = 0;
-			y = -5;
+			y = -1;
 		} else if (direction == Direction.SOUTH) {
-			x = 0;
-			y = 5;
+			y = 1;
 		} else if (direction == Direction.WEST) {
-			x = -5;
-			y = 0;
+			x = -1;
 		} else if (direction == Direction.EAST) {
-			x = 5;
-			y = 0;
+			x = 1;
 		}
+		/*
+		 * Here the SPEED_EFFECT changes how quickly guy moves with speed upgrades. At
+		 * 10 upgrades (max) he moves at 7.5 (1.5x the original speed of 5). We'll
+		 * probably change this as we need to with balancing and such.
+		 */
+		x *= (5 + SPEED_EFFECT * Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
+		y *= (5 + SPEED_EFFECT * Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 		if (collisionManager.playerCanMove(x, y)) {
 			player.move(x, y);
 		}
