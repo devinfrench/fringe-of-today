@@ -28,8 +28,8 @@ public class GButtonMD extends GCompound {
 
 	public static final int BUFFER = 20;
 	
-	public GButtonMD(String string, int i, int j, int k, int l) {
-		this(string, i, j, k, l, "blue");
+	public GButtonMD(String string, int x, int y, int width, int height) {
+		this(string, x, y, width, height, "blue");
 	}
 	
 	public GButtonMD(String label, int x, int y, int width, int height, String color) {
