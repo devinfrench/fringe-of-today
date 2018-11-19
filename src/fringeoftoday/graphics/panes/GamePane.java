@@ -287,7 +287,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		} else if (direction == Direction.EAST) {
 			x = 5;
 		}
-		if (collisionManager.playerCanMove(x, y)) {
+		if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 			player.move(x, y);
 		}
 	}
