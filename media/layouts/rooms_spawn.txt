@@ -3,9 +3,9 @@ X X X X W ~ ~ ~ ~ ~ ~ * * * ~ ~ ~ ~ ~ ~ W X X X X
 X X X X W ~ ~ ~ ~ ~ ~ * * * ~ ~ ~ ~ ~ ~ W X X X X
 X X X X W ~ ~ ~ ~ ~ * * * * * ~ ~ ~ ~ ~ W X X X X
 X X X X W * * * * * * ~ * ~ * * * * * * W X X X X
-X X X X D * * * * * * * * * * * * * * * D X X X X
-X X X X W * * * * * * ~ * ~ * * * * * * W X X X X
-X X X X W ~ ~ ~ ~ ~ * * * * * ~ ~ ~ ~ ~ W X X X X
-X X X X W ~ ~ ~ ~ ~ ~ * * * ~ ~ ~ ~ ~ ~ W X X X X
-X X X X W ~ ~ ~ ~ ~ ~ * * * ~ ~ ~ ~ ~ ~ W X X X X
+X X X X D * * * * W * * * * * * W * * * D X X X X
+X X X X W * * * * W W W * ~ * * * * * * W X X X X
+X X X X W ~ ~ ~ ~ ~ W W * * * ~ ~ ~ ~ ~ W X X X X
+X X X X W ~ ~ ~ ~ ~ ~ W * * ~ ~ ~ ~ ~ ~ W X X X X
+X X X X W ~ ~ ~ ~ ~ ~ W * * ~ ~ ~ ~ ~ ~ W X X X X
 X X X X W W W W W W W W D W W W W W W W W X X X X
