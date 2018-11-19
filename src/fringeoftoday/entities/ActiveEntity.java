@@ -12,6 +12,6 @@ public abstract class ActiveEntity extends Entity {
         this.health = health;
     }
 
-    public abstract Projectile[] attack();
+    public abstract Projectile[] attack(double targetX, double targetY);
 
 }

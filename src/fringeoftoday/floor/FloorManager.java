@@ -1,5 +1,8 @@
 package fringeoftoday.floor;
 
+import fringeoftoday.MainApplication;
+import fringeoftoday.graphics.panes.GamePane;
+
 import java.util.*;
 import java.lang.Math;
 
@@ -15,6 +18,7 @@ public class FloorManager {
 	public static final int ROOM_COLS = 25;
 	public static final int FLOOR_ROWS = 4;
 	public static final int FLOOR_COLS = 5;
+	public static final int SPACE_SIZE = (MainApplication.WINDOW_HEIGHT - GamePane.HEADER_HEIGHT)/FloorManager.ROOM_ROWS;
 
 	private static Room spawnRoom;
 	private static ArrayList<char[][]> floorLayouts = new ArrayList<char[][]>();

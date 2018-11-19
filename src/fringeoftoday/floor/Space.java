@@ -1,5 +1,7 @@
 package fringeoftoday.floor;
 
+import acm.graphics.GObject;
+
 /**
  * Holds data on a single space of a room
  * 
@@ -11,6 +13,7 @@ public class Space {
 	private int numCol;
 	private SpaceType type;
 	private String filePath;
+	private GObject gObject;
 
 	/**
 	 * @param numRow - X position in room
@@ -53,5 +56,13 @@ public class Space {
 	
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public GObject getGObject() {
+		return gObject;
+	}
+
+	public void setGObject(GObject gObject) {
+		this.gObject = gObject;
 	}
 }

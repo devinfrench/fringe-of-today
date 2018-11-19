@@ -1,12 +1,27 @@
 package fringeoftoday.entities;
 
+import acm.graphics.GImage;
+import acm.graphics.GObject;
+import fringeoftoday.graphics.Sprites;
+
+import java.awt.*;
+
 public class Player extends ActiveEntity {
 
+    private static final String PROJECTILE_IMAGE_PATH = "projectiles/bullet_red.png";
+
     private int money;
-    private int meleeUpgrade;
-    private int projectileUpgrade;
-    private int movementUpgrade;
-    private int healthUpgrade;
+    private int meleeDamage;
+    private int rangedDamage;
+    private int movementSpeed;
+    private int maxHealth;
+    private int health;
+    private Image projectileImage;
+    private long lastAttackTime;
+
+    public Player() {
+        projectileImage = Sprites.loadSprite(PROJECTILE_IMAGE_PATH);
+    }
 
     public int getMoney() {
         return money;
@@ -16,42 +31,61 @@ public class Player extends ActiveEntity {
         this.money = money;
     }
 
-    public int getMeleeUpgrade() {
-        return meleeUpgrade;
+    public int getMeleeDamage() {
+        return meleeDamage;
     }
 
-    public void setMeleeUpgrade(int meleeUpgrade) {
-        this.meleeUpgrade = meleeUpgrade;
+    public void setMeleeDamage(int damage) {
+        this.meleeDamage = damage;
     }
 
-    public int getProjectileUpgrade() {
-        return projectileUpgrade;
+    public int getRangedDamage() {
+        return rangedDamage;
     }
 
-    public void setProjectileUpgrade(int projectileUpgrade) {
-        this.projectileUpgrade = projectileUpgrade;
+    public void setRangedDamage(int damage) {
+        this.rangedDamage = damage;
     }
 
-    public int getMovementUpgrade() {
-        return movementUpgrade;
+    public int getMoveSpeed() {
+        return movementSpeed;
     }
 
-    public void setMovementUpgrade(int movementUpgrade) {
-        this.movementUpgrade = movementUpgrade;
+    public void setMoveSpeed(int speed) {
+        this.movementSpeed = speed;
     }
 
-    public int getHealthUpgrade() {
-        return healthUpgrade;
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
-    public void setHealthUpgrade(int healthUpgrade) {
-        this.healthUpgrade = healthUpgrade;
+    public void setMaxHealth(int max) {
+        this.maxHealth = max;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     @Override
-    public Projectile[] attack() {
-        // TODO implement
-        return new Projectile[0];
+    public Projectile[] attack(double targetX, double targetY) {
+        if (System.currentTimeMillis() - lastAttackTime < 500) {
+            return new Projectile[0];
+        }
+        GObject gObj = getGObject();
+        double x = gObj.getX() + gObj.getWidth() / 2;
+        double y = gObj.getY() + getGObject().getHeight() / 2;
+        GImage sprite = new GImage(projectileImage, x, y);
+        Projectile p = new Projectile(sprite);
+        p.setAngle(Math.atan2(targetX - p.getX(), targetY - p.getY()));
+        p.setPlayer(true);
+        p.setDamage(rangedDamage);
+        lastAttackTime = System.currentTimeMillis();
+        return new Projectile[] { p };
     }
 
     public void melee() {
