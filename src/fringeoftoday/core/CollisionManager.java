@@ -20,6 +20,9 @@ public class CollisionManager {
 
     public boolean playerCanMove(double x, double y) {
         GObject player = entityManager.getPlayer().getGObject();
+        if (player == null) {
+        	return false;
+        }
         x = player.getX() + x + (player.getWidth() / 2);
         y = player.getY() + y + (player.getHeight() / 2);
         for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
@@ -37,6 +40,9 @@ public class CollisionManager {
 
     public boolean isTerrainCollision(Projectile p) {
         GObject sprite = p.getGObject();
+        if (sprite == null) {
+        	return true;
+        }
         double x = sprite.getX() + (sprite.getWidth() / 2);
         double y = sprite.getY() + (sprite.getHeight() / 2);
         for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {

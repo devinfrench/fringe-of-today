@@ -92,8 +92,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 
-		infoText = new GParagraph("Level: " + level + "\nMelee Damage: " + player.getMeleeDamage() + "\nRanged Damage: "
-				+ player.getRangedDamage() + "\nMove Speed: " + player.getMoveSpeed(), 0, 0);
+		infoText = new GParagraph(
+		"Level: " + level
+		+ "\nMelee Damage: " + player.getMeleeDamage()
+		+ "\nRanged Damage: " + player.getRangedDamage()
+		+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
 
 		infoText.setFont("Arial-24");
 		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
@@ -194,8 +197,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Space space = room.getSpace(i, j);
-				temp = new GImage(path + space.getFilePath(), (j * FloorManager.SPACE_SIZE),
-						(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
+				temp = new GImage(
+				path + space.getFilePath(),
+				(j * FloorManager.SPACE_SIZE),
+				(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
 				temp.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 				space.setGObject(temp);
 			}
@@ -287,7 +292,14 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	// Timer loop
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int x = 0, y = 0;
+		movePlayer();
+
+		checkProjectileCollision();
+	}
+
+	private void movePlayer() {
+		double x = 0;
+		double y = 0;
 		if (direction == Direction.NORTH) {
 			y = -1;
 		} else if (direction == Direction.SOUTH) {
@@ -305,10 +317,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		 */
 		x *= (5 + SPEED_EFFECT * Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 		y *= (5 + SPEED_EFFECT * Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
-		if (collisionManager.playerCanMove(x, y)) {
+		if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 			player.move(x, y);
 		}
+	}
 
+	private void checkProjectileCollision() {
 		program.getEntityManager().getProjectiles().forEach((p) -> {
 			p.move();
 			if (collisionManager.isTerrainCollision(p)) {
