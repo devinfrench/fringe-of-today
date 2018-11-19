@@ -1,6 +1,5 @@
 package starter;
 
-
 /*
  * File: GButton.java
  * ------------------
@@ -20,25 +19,26 @@ import acm.graphics.GLabel;
 import acm.graphics.GRoundRect;
 
 public class GButtonMD extends GCompound {
+	private static final String FILE_PATH = "../media/buttonMD/box";
+	private static final String FILE_END = ".png";
+
 	private GImage rect;
 	private GLabel message;
-	private String filePath = "../media/buttonMD/box";
 	private String color;
-	private String fileEnd = ".png";
 
 	public static final int BUFFER = 20;
-	
+
 	public GButtonMD(String string, int x, int y, int width, int height) {
 		this(string, x, y, width, height, "blue");
 	}
-	
+
 	public GButtonMD(String label, int x, int y, int width, int height, String color) {
 		super();
 		setLocation(x, y);
 		if (width == height) {
 			color = color + "SQR";
 		}
-		rect = new GImage(filePath + color + fileEnd, 0, 0);
+		rect = new GImage(FILE_PATH + color + FILE_END, 0, 0);
 		rect.setSize(width, height);
 		add(rect);
 		message = new GLabel(label);
@@ -48,7 +48,6 @@ public class GButtonMD extends GCompound {
 		double centerY = height / 2 + message.getAscent() / 4;
 		add(message, centerX, centerY);
 	}
-
 
 	private void sizeLabelFont(GLabel label, double width, double height) {
 		int size, style;

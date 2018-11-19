@@ -25,6 +25,7 @@ public class ShopPane extends GraphicsPane {
 	public static final int UP_BTN = 12 * MainApplication.WINDOW_HEIGHT / 22 - BUTTON_HEIGHT - 10;
 	public static final int DOWN_BTN = MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10;
 	public static final int LABEL_WIDTH = 190;
+	public static final String FILE_PATH = "../media/shop/";
 
 	private int cheatCtr = 0;
 
@@ -51,7 +52,6 @@ public class ShopPane extends GraphicsPane {
 	private GLabel speedLabel;
 
 	private GButton coinCheat;
-	private String filePath = "../media/shop/";
 
 	public ShopPane(MainApplication app) {
 		this.program = app;
@@ -83,19 +83,19 @@ public class ShopPane extends GraphicsPane {
 				12 * MainApplication.WINDOW_HEIGHT / 22);
 
 		// HP Image
-		hpImg = new GImage(filePath + "hp_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		hpImg = new GImage(FILE_PATH + "hp_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
 
 		// Melee Image
-		meleeImg = new GImage(filePath + "melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		meleeImg = new GImage(FILE_PATH + "melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
 
 		// Ranged Image
-		rangedImg = new GImage(filePath + "ranged_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		rangedImg = new GImage(FILE_PATH + "ranged_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
 
 		// Speed Image
-		speedImg = new GImage(filePath + "movement_speed_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		speedImg = new GImage(FILE_PATH + "movement_speed_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
 
 		// Coin counter at the top left
