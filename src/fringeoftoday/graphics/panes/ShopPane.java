@@ -11,6 +11,7 @@ import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
 import fringeoftoday.entities.Player;
 import fringeoftoday.graphics.GButton;
+import starter.GButtonMD;
 
 public class ShopPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
@@ -28,16 +29,16 @@ public class ShopPane extends GraphicsPane {
 	private int cheatCtr = 0;
 
 	private GLabel title;
-	private GButton btnBack;
+	private GButtonMD btnBack;
 	private GLine headerSeparator;
 	private GLabel coinCtr;
 	private GLine horizSeparator;
 	private GLine vertSeperator;
 
-	private GButton hpBtn;
-	private GButton meleeBtn;
-	private GButton rangedBtn;
-	private GButton speedBtn;
+	private GButtonMD hpBtn;
+	private GButtonMD meleeBtn;
+	private GButtonMD rangedBtn;
+	private GButtonMD speedBtn;
 
 	private GImage hpImg;
 	private GImage meleeImg;
@@ -50,6 +51,7 @@ public class ShopPane extends GraphicsPane {
 	private GLabel speedLabel;
 
 	private GButton coinCheat;
+	private String filePath = "../media/shop/";
 
 	public ShopPane(MainApplication app) {
 		this.program = app;
@@ -66,7 +68,7 @@ public class ShopPane extends GraphicsPane {
 		title.setFont("Arial-46");
 
 		// Back button
-		btnBack = new GButton("Back", 1, 1, BUTTON_WIDTH, BUTTON_HEIGHT * .75);
+		btnBack = new GButtonMD("Back", 1, 1, BUTTON_WIDTH, (int) (BUTTON_HEIGHT * .75));
 
 		// Header separator
 		headerSeparator = new GLine(0, MainApplication.WINDOW_HEIGHT / 11, MainApplication.WINDOW_WIDTH,
@@ -81,19 +83,19 @@ public class ShopPane extends GraphicsPane {
 				12 * MainApplication.WINDOW_HEIGHT / 22);
 
 		// HP Image
-		hpImg = new GImage("hp_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		hpImg = new GImage(filePath + "hp_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
 
 		// Melee Image
-		meleeImg = new GImage("melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		meleeImg = new GImage(filePath + "melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
 
 		// Ranged Image
-		rangedImg = new GImage("ranged_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		rangedImg = new GImage(filePath + "ranged_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
 
 		// Speed Image
-		speedImg = new GImage("movement_speed_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		speedImg = new GImage(filePath + "movement_speed_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				MainApplication.WINDOW_HEIGHT - IMAGE_SIZE * 1.5);
 
 		// Coin counter at the top left
@@ -103,7 +105,7 @@ public class ShopPane extends GraphicsPane {
 
 		// HP Upgrade Button
 		int hpCost = (Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 1) * 10;
-		hpBtn = new GButton("Cost: " + hpCost, LEFT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
+		hpBtn = new GButtonMD("Cost: " + hpCost, LEFT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 		if (hpCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			hpBtn.setColor(Color.red);
 		}
@@ -113,7 +115,7 @@ public class ShopPane extends GraphicsPane {
 
 		// Melee Damage Upgrade Button
 		int meleeCost = (Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")) + 1) * 10;
-		meleeBtn = new GButton("Cost: " + meleeCost, RIGHT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
+		meleeBtn = new GButtonMD("Cost: " + meleeCost, RIGHT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 		if (meleeCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			meleeBtn.setColor(Color.red);
 		}
@@ -123,7 +125,7 @@ public class ShopPane extends GraphicsPane {
 
 		// Ranged Damage Upgrade Button
 		int rangedCost = (Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")) + 1) * 10;
-		rangedBtn = new GButton("Cost: " + rangedCost, LEFT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
+		rangedBtn = new GButtonMD("Cost: " + rangedCost, LEFT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 		if (rangedCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			rangedBtn.setColor(Color.red);
 		}
@@ -133,7 +135,7 @@ public class ShopPane extends GraphicsPane {
 
 		// Speed Movement Upgrade Button
 		int speedCost = (Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")) + 1) * 10;
-		speedBtn = new GButton("Cost: " + speedCost, RIGHT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
+		speedBtn = new GButtonMD("Cost: " + speedCost, RIGHT_BTN, DOWN_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 		if (speedCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
 			speedBtn.setColor(Color.red);
 		}
@@ -249,7 +251,7 @@ public class ShopPane extends GraphicsPane {
 				program.remove(coinCheat);
 			}
 			cheatCtr++;
-		} else if (obj instanceof GButton) {
+		} else if (obj instanceof GButtonMD) {
 			purchase(obj);
 		}
 	}

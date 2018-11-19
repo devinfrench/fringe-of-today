@@ -10,6 +10,7 @@ import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.panes.GraphicsPane;
+import starter.GButtonMD;
 
 public class MenuPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
@@ -17,10 +18,10 @@ public class MenuPane extends GraphicsPane {
 	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
 	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 
-	private GButton btnPlay;
-	private GButton btnShop;
-	private GButton btnExit;
-	private GButton btnTutorial;
+	private GButtonMD btnPlay;
+	private GButtonMD btnShop;
+	private GButtonMD btnExit;
+	private GButtonMD btnTutorial;
 	private GImage title;
 	private GLabel lastRun;
 	private GLabel bestRun;
@@ -34,22 +35,19 @@ public class MenuPane extends GraphicsPane {
 		title.setSize(600, 300);
 
 		// Play button
-		btnPlay = new GButton("Play", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 400, BUTTON_WIDTH,
-				BUTTON_HEIGHT);
-		btnPlay.setFillColor(Color.BLUE);
+		btnPlay = new GButtonMD("Play", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 400, BUTTON_WIDTH,
+				BUTTON_HEIGHT, "blue");
 
 		// Shop button
-		btnShop = new GButton("Shop", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 550, BUTTON_WIDTH,
-				BUTTON_HEIGHT);
-		btnShop.setFillColor(Color.RED);
+		btnShop = new GButtonMD("Shop", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 550, BUTTON_WIDTH,
+				BUTTON_HEIGHT, "green");
 
 		// Exit button
-		btnExit = new GButton("Exit", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 700, BUTTON_WIDTH,
-				BUTTON_HEIGHT);
-		btnExit.setFillColor(Color.RED);
+		btnExit = new GButtonMD("Exit", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 700, BUTTON_WIDTH,
+				BUTTON_HEIGHT, "green");
 		
 		//Tutorial button
-		btnTutorial = new GButton("?", 0, 0, 100, 100);
+		btnTutorial = new GButtonMD("?", 0, 0, 100, 100);
 		
 		
 		// Latest Score
