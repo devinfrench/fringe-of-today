@@ -285,22 +285,22 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	// Timer loop
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		int x = 0, y = 0;
 		if (direction == Direction.NORTH) {
-			if (collisionManager.playerCanMove(0, -5)) {
-				player.move(0, -5);
-			}
+			x = 0;
+			y = -5;
 		} else if (direction == Direction.SOUTH) {
-			if (collisionManager.playerCanMove(0, 5)) {
-				player.move(0, 5);
-			}
+			x = 0;
+			y = 5;
 		} else if (direction == Direction.WEST) {
-			if (collisionManager.playerCanMove(-5, 0)) {
-				player.move(-5, 0);
-			}
+			x = -5;
+			y = 0;
 		} else if (direction == Direction.EAST) {
-			if (collisionManager.playerCanMove(5, 0)) {
-				player.move(5, 0);
-			}
+			x = 5;
+			y = 0;
+		}
+		if (collisionManager.playerCanMove(x, y)) {
+			player.move(x, y);
 		}
 
 		program.getEntityManager().getProjectiles().forEach((p) -> {
