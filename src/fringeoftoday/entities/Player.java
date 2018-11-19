@@ -9,6 +9,7 @@ import java.awt.*;
 public class Player extends ActiveEntity {
 
     private static final String PROJECTILE_IMAGE_PATH = "projectiles/bullet_red.png";
+    private static final int RANGED_ATTACK_DELAY = 500;
 
     private int money;
     private int meleeDamage;
@@ -73,7 +74,7 @@ public class Player extends ActiveEntity {
 
     @Override
     public Projectile[] attack(double targetX, double targetY) {
-        if (System.currentTimeMillis() - lastAttackTime < 500) {
+        if (System.currentTimeMillis() - lastAttackTime < RANGED_ATTACK_DELAY) {
             return new Projectile[0];
         }
         GObject gObj = getGObject();
