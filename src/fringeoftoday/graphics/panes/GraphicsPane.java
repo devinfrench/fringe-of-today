@@ -14,8 +14,11 @@ package fringeoftoday.graphics.panes;
 
 import fringeoftoday.graphics.Interfaceable;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 public abstract class GraphicsPane implements Interfaceable {
 	@Override
@@ -64,5 +67,14 @@ public abstract class GraphicsPane implements Interfaceable {
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 	}
-
+	
+	public void loadFont() {
+		try {
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("PKMN-Mystery-Dungeon.ttf")));
+		} catch (Exception e) {
+			System.out.println("Failed to load font.");
+			e.printStackTrace();
+		}
+	}
 }

@@ -36,13 +36,7 @@ public class MenuPane extends GraphicsPane {
 	public MenuPane(MainApplication app) {
 		super();
 		program = app;
-		try {
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("PKMN-Mystery-Dungeon.ttf")));
-		} catch (Exception e) {
-			System.out.println("Failed to load font.");
-			e.printStackTrace();
-		}
+		loadFont();
 		// Title banner - maybe use GImage instead?
 		title = new GImage("../media/logo_transparent.png", (MainApplication.WINDOW_WIDTH - 600) / 2, 30);
 		title.setSize(600, 300);
@@ -100,7 +94,7 @@ public class MenuPane extends GraphicsPane {
 		program.remove(btnShop);
 		program.remove(btnExit);
 		program.remove(btnTutorial);
-		program.remove(btnTutorial);
+		program.remove(btnAudio);
 		program.remove(lastRun);
 		program.remove(bestRun);
 	}
