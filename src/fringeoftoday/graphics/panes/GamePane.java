@@ -43,7 +43,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 													// good
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
-
+	
+	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
 	private int level = -1; // Work on this when we get it in
 	private GButton btnDie; // Debug, remove when done
 	private GRect minimapBox; // Minimap, left header
@@ -60,7 +61,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public GamePane(MainApplication app) {
 		super();
 		program = app;
-
+		loadFont();
 		// HEADER
 		minimapBox = new GRect(0, 0, HEADER_WIDTH, HEADER_HEIGHT);
 
@@ -98,7 +99,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		+ "\nRanged Damage: " + player.getRangedDamage()
 		+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
 
-		infoText.setFont("Arial-24");
+		infoText.setFont(hdrFont);
 		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
 				(infoBox.getY() + infoText.getHeight()) / 2);
 
