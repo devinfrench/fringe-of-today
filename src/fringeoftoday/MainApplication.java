@@ -22,9 +22,11 @@ public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_HEIGHT = 900;
 	public static final int BUTTON_WIDTH = 200;
 	public static final int BUTTON_HEIGHT = 100;
+	
 	public static final String MUSIC_FOLDER = "sounds";
 	public static final String MUSIC_MENU = "menumusic.mp3";
-
+	public static boolean isSoundOn = true;
+	
 	private ShopPane shopPane;
 	private MenuPane menu;
 	private TutorialPane tutorial;
@@ -71,8 +73,10 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToMenu() {
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, MUSIC_MENU, true);
+		if (isSoundOn) {
+			AudioPlayer audio = AudioPlayer.getInstance();
+			audio.playSound(MUSIC_FOLDER, MUSIC_MENU, true);
+		}
 		switchToScreen(menu);
 	}
 
