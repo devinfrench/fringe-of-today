@@ -21,7 +21,9 @@ public class MenuPane extends GraphicsPane {
 										// all of the GraphicsProgram calls
 	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
 	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
-
+	
+	private Font btnFont = new Font("PKMN Mystery Dungeon", 0, 80);
+	
 	private GButtonMD btnPlay;
 	private GButtonMD btnShop;
 	private GButtonMD btnExit;
@@ -48,17 +50,21 @@ public class MenuPane extends GraphicsPane {
 		// Play button
 		btnPlay = new GButtonMD("Play", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 400, BUTTON_WIDTH,
 				BUTTON_HEIGHT, "blue");
+		btnPlay.getLabel().setFont(btnFont);
 		
 		// Shop button
 		btnShop = new GButtonMD("Shop", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 550, BUTTON_WIDTH,
 				BUTTON_HEIGHT, "green");
-
+		btnShop.getLabel().setFont(btnFont);
+		
 		// Exit button
 		btnExit = new GButtonMD("Exit", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 700, BUTTON_WIDTH,
 				BUTTON_HEIGHT, "green");
+		btnExit.getLabel().setFont(btnFont);
 		
 		//Tutorial button
 		btnTutorial = new GButtonMD("?", 0, 0, 100, 100);
+		btnTutorial.getLabel().setFont(btnFont);
 		
 		//Audio button
 		btnAudio = new GImage("../media/soundon.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
