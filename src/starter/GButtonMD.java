@@ -67,4 +67,8 @@ public class GButtonMD extends GCompound {
 	public void setColor(Color col) {
 		message.setColor(col);
 	}
+	
+	public GLabel getLabel() {
+		return message;
+	}
 }
