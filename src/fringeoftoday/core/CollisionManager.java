@@ -21,7 +21,7 @@ public class CollisionManager {
     public boolean playerCanMove(double x, double y) {
         GObject player = entityManager.getPlayer().getGObject();
         if (player == null) {
-        	return false;
+            return false;
         }
         x = player.getX() + x + (player.getWidth() / 2);
         y = player.getY() + y + (player.getHeight() / 2);
@@ -29,19 +29,25 @@ public class CollisionManager {
             for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
                 Space space = room.getSpace(i, j);
                 if (space.getGObject().contains(x, y)) {
-                    if (space.getType() != SpaceType.GROUND) {
-                        return false;
+                    switch (space.getType()) {
+                        case GROUND:
+                        case BASIC_SPAWN:
+                        case SHOTGUN_SPAWN:
+                        case SNIPER_SPAWN:
+                            return true;
+                        default:
+                            return  false;
                     }
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public boolean isTerrainCollision(Projectile p) {
         GObject sprite = p.getGObject();
         if (sprite == null) {
-        	return true;
+            return true;
         }
         double x = sprite.getX() + (sprite.getWidth() / 2);
         double y = sprite.getY() + (sprite.getHeight() / 2);
