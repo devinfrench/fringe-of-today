@@ -65,4 +65,18 @@ public class CollisionManager {
         }
         return false;
     }
+
+    public boolean isPlayerCollision(Projectile p) {
+        if (p.isPlayer()) {
+            return false;
+        }
+        GObject sprite = p.getGObject();
+        GObject player = entityManager.getPlayer().getGObject();
+        if (sprite == null || player == null) {
+            return false;
+        }
+        double x = sprite.getX() + (sprite.getWidth() / 2);
+        double y = sprite.getY() + (sprite.getHeight() / 2);
+        return player.getBounds().contains(x, y);
+    }
 }
