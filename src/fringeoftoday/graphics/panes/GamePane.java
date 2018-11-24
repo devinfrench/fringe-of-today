@@ -51,7 +51,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
 	private int level = -1; // Work on this when we get it in
-	private GButton btnDie; // Debug, remove when done
 	private GRect minimapBox; // Minimap, left header
 	private GRect infoBox; // Center header
 	private GParagraph infoText;// Center header content
@@ -75,10 +74,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		healthBox = new GRect(HEADER_WIDTH * 2, 0, HEADER_WIDTH, HEADER_HEIGHT);
 
 		// FIELD
-
-		// OTHER
-		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2,
-				(MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Room
 		room = program.getFloorManager().getSpawnRoom();
@@ -111,15 +106,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.add(infoText);
 	}
 
-	private void changeHealth(boolean up) {
-		if (up) {
-			player.setHealth(player.getHealth() + 1);
-		} else {
-			player.setHealth(player.getHealth() - 1);
-		}
-		healthLabel.setLabel("Health: " + player.getHealth());
-	}
-
 	private void initHealth() {
 		player.setHealth(player.getMaxHealth());
 		drawHealth(player.getHealth());
@@ -146,7 +132,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		showField(); // Game field
 		showPlayer();
 		showEnemies();
-		// program.add(btnDie);//Testing death screen, remove when things are added
 		initHealth();
 		infoDrawing();
 		drawLevelAlert();
@@ -159,7 +144,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		removePlayer();
 		removeEnemies();
 		removeProjectiles();
-		// program.remove(btnDie);//Testing death screen, remove when things are added
 		program.remove(healthLabel);
 		program.remove(infoText);
 	}
@@ -271,6 +255,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void onDeath() {// Trigger this when player is dead, should add other functions - tally score,
 		// etc.
 		PlayerData.writeFile();
+		t.stop();
 		program.switchToDeath();
 	}
 
@@ -344,6 +329,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		enemyAttack();
 
 		checkProjectileCollision();
+
+		if (player.getHealth() <= 0) {
+			onDeath();
+		}
 	}
 
 	private void movePlayer() {
@@ -374,7 +363,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private void checkProjectileCollision() {
 		program.getEntityManager().getProjectiles().forEach((p) -> {
 			p.move();
-			if (collisionManager.isTerrainCollision(p)) {
+			boolean playerCollision = collisionManager.isPlayerCollision(p);
+			if (playerCollision || collisionManager.isTerrainCollision(p)) {
+				if (playerCollision) {
+					player.setHealth(player.getHealth() - p.getDamage());
+					healthLabel.setLabel("Health: " + player.getHealth());
+				}
 				program.getEntityManager().getProjectiles().remove(p);
 				program.remove(p.getGObject());
 			}
