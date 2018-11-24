@@ -52,6 +52,7 @@ public class MainApplication extends GraphicsApplication {
 		floorManager = new FloorManager();
 		entityManager = new EntityManager();
 		importAllLayouts();
+		FloorManager.generateNewFloor();
 	}
 
 	public void run() {
