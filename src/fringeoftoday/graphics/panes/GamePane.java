@@ -365,18 +365,33 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void checkProjectileCollision() {
-		program.getEntityManager().getProjectiles().forEach((p) -> {
+		for (Projectile p : program.getEntityManager().getProjectiles()) {
 			p.move();
-			boolean playerCollision = collisionManager.isPlayerCollision(p);
-			if (playerCollision || collisionManager.isTerrainCollision(p)) {
-				if (playerCollision) {
-					player.setHealth(player.getHealth() - p.getDamage());
-					healthLabel.setLabel("Health: " + player.getHealth());
+			boolean collision = false;
+			if (collisionManager.isPlayerCollision(p)) {
+				collision = true;
+				player.setHealth(player.getHealth() - p.getDamage());
+				healthLabel.setLabel("Health: " + player.getHealth());
+			}
+			for (Enemy enemy : program.getEntityManager().getEnemies()) {
+				if (collisionManager.isEnemyCollision(enemy, p)) {
+					collision = true;
+					enemy.setHealth(enemy.getHealth() - p.getDamage());
+					if (enemy.getHealth() <= 0) {
+						program.remove(enemy.getGObject());
+						program.getEntityManager().getEnemies().remove(enemy);
+					}
+					break;
 				}
+			}
+			if (collisionManager.isTerrainCollision(p)) {
+				collision = true;
+			}
+			if (collision) {
 				program.getEntityManager().getProjectiles().remove(p);
 				program.remove(p.getGObject());
 			}
-		});
+		}
 	}
 
 	private void enemyAttack() {
