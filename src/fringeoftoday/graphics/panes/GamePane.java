@@ -161,6 +161,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.remove(infoText);
 		program.remove(healthBox);
 		minimapDestructor();
+		pauseElements = new ArrayList<>();
 	}
 
 	public void showField() {
