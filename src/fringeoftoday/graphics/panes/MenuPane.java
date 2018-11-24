@@ -54,7 +54,12 @@ public class MenuPane extends GraphicsPane {
 		btnTutorial = new GButtonMD("?", 0, 0, 100, 100);
 		
 		//Audio button
-		btnAudio = new GImage("../media/soundon.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
+		int sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
+		if (sounds == 1) {
+			btnAudio = new GImage("../media/soundon.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
+		}else {
+			btnAudio = new GImage("../media/soundoff.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
+		}
 		btnAudio.setSize(BUTTON_HEIGHT,BUTTON_HEIGHT);
 		
 		// Latest Score
@@ -105,17 +110,18 @@ public class MenuPane extends GraphicsPane {
 			program.switchToTutorial();
 		} else if (obj == btnAudio) {
 			AudioPlayer audio = AudioPlayer.getInstance();
-			if (MainApplication.isSoundOn) {
+			int sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
+			if (sounds == 1) {
 				audio.stopSound("sounds", "menumusic.mp3");
 				btnAudio.setImage("soundoff.jpg");
 				btnAudio.setSize(BUTTON_HEIGHT,BUTTON_HEIGHT);
-				MainApplication.isSoundOn = false;
+				PlayerData.updateMap("Sounds", 0);
 			}
 			else {
 				audio.playSound("sounds", "menumusic.mp3");
 				btnAudio.setImage("soundon.jpg");
 				btnAudio.setSize(BUTTON_HEIGHT,BUTTON_HEIGHT);
-				MainApplication.isSoundOn = true;
+				PlayerData.updateMap("Sounds", 1);
 			}
 		}
 		

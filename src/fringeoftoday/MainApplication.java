@@ -25,7 +25,6 @@ public class MainApplication extends GraphicsApplication {
 	
 	public static final String MUSIC_FOLDER = "sounds";
 	public static final String MUSIC_MENU = "menumusic.mp3";
-	public static boolean isSoundOn = true;
 	
 	private ShopPane shopPane;
 	private MenuPane menu;
@@ -73,7 +72,7 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToMenu() {
-		if (isSoundOn) {
+		if (Integer.parseInt(PlayerData.getMap().get("Sounds"))==1) {
 			AudioPlayer audio = AudioPlayer.getInstance();
 			audio.playSound(MUSIC_FOLDER, MUSIC_MENU, true);
 		}
