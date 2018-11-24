@@ -132,7 +132,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		initHealth();
 		infoDrawing();
 		drawLevelAlert();
-		minimapBuilder();
 	}
 
 	@Override
@@ -150,6 +149,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.add(minimapBox);
 		program.add(infoBox);
 		program.add(healthBox);
+		minimapBuilder();
 	}
 
 	public void removeHeader() {
@@ -157,6 +157,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.remove(infoBox);
 		program.remove(infoText);
 		program.remove(healthBox);
+		minimapDestructor();
 	}
 
 	public void showField() {
@@ -392,6 +393,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		}
 	}
 
+	private void minimapDestructor() {
+		for (GRect tile: minimap) {
+			program.remove(tile);
+		}
+	}
+	
 	private void minimapBuilder() {
 		int startY = 10;
 		int startX = 10;
