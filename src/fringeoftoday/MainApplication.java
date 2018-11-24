@@ -72,7 +72,13 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToMenu() {
-		if (Integer.parseInt(PlayerData.getMap().get("Sounds"))==1) {
+		boolean sounds;
+		try {
+			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"))==1;
+		}catch(NumberFormatException e){
+			sounds = true;
+		}
+		if (sounds) {
 			AudioPlayer audio = AudioPlayer.getInstance();
 			audio.playSound(MUSIC_FOLDER, MUSIC_MENU, true);
 		}
