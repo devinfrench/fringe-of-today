@@ -12,7 +12,9 @@ public class Floor {
 
 	private Room floorLayout[][];
 	private int levelCount;
-
+	private int spawnRow;
+	private int spawnCol;
+	
 	public Floor(int levelCount) {
 		floorLayout = new Room[NUM_FLOOR_ROWS][NUM_FLOOR_COLS];
 		this.levelCount = levelCount;
@@ -24,6 +26,22 @@ public class Floor {
 
 	public int getLevel() {
 		return levelCount;
+	}
+
+	public int getSpawnRow() {
+		return spawnRow;
+	}
+
+	public int getSpawnCol() {
+		return spawnCol;
+	}
+
+	public void setSpawnRow(int spawnRow) {
+		this.spawnRow = spawnRow;
+	}
+
+	public void setSpawnCol(int spawnCol) {
+		this.spawnCol = spawnCol;
 	}
 
 	/**
