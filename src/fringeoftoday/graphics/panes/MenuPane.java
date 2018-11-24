@@ -58,7 +58,7 @@ public class MenuPane extends GraphicsPane {
 		int sounds;
 		try {
 			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
-		}catch(NumberFormatException e3) {
+		} catch (NumberFormatException e3) {
 			sounds = 1;
 		}
 		if (sounds == 1) {
@@ -133,6 +133,7 @@ public class MenuPane extends GraphicsPane {
 				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
 				PlayerData.updateMap("Sounds", 1);
 			}
+			PlayerData.writeFile();
 		}
 
 	}
