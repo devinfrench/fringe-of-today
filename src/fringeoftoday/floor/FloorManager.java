@@ -149,14 +149,26 @@ public class FloorManager {
 			}
 		}
 
-		if (r.getSpace(0, (int) (Math.ceil(ROOM_COLS) / 2) - 1).getType() == SpaceType.DOOR)
+		if (r.getSpace(0, (int) (Math.ceil(ROOM_COLS / 2))).getType() == SpaceType.DOOR)
 			r.addExit(Exit.NORTH);
-		if (r.getSpace(ROOM_ROWS - 1, (int) (Math.ceil(ROOM_COLS) / 2) - 1).getType() == SpaceType.DOOR)
+		if (r.getSpace(ROOM_ROWS - 1, (int) (Math.ceil(ROOM_COLS / 2))).getType() == SpaceType.DOOR)
 			r.addExit(Exit.SOUTH);
-		if (r.getSpace((int) (Math.ceil(FLOOR_ROWS) / 2) - 1, ROOM_COLS - 1).getType() == SpaceType.DOOR)
-			r.addExit(Exit.EAST);
-		if (r.getSpace((int) (Math.ceil(FLOOR_ROWS) / 2) - 1, 0).getType() == SpaceType.DOOR)
-			r.addExit(Exit.WEST);
+		for (int i = ROOM_COLS - 1;; i--) {
+			if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
+				r.addExit(Exit.EAST);
+				break;
+			}
+			else if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2)), i).getType() == SpaceType.WALL)
+				break;
+		}
+		for (int i = 0;; i++) {
+			if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2) ), i).getType() == SpaceType.DOOR) {
+				r.addExit(Exit.WEST);
+				break;
+			}
+			else if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2)), i).getType() == SpaceType.WALL)
+				break;
+		}
 
 		return r;
 	}
