@@ -61,6 +61,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private Player player;
 	private CollisionManager collisionManager;
 	private Timer t;
+	private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
+	private GButtonMD quitPauseBtn;
 
 	public GamePane(MainApplication app) {
 		super();
@@ -132,6 +134,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		initHealth();
 		infoDrawing();
 		drawLevelAlert();
+		initPausing();
 	}
 
 	@Override
@@ -260,6 +263,16 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.switchToDeath();
 	}
 
+	private void initPausing() {
+		GImage backing = new GImage("../media/pause.png");
+		pauseElements.add(backing);
+
+		quitPauseBtn = new GButtonMD("Exit to Menu", (MainApplication.WINDOW_WIDTH - 200) / 2,
+				MainApplication.getWindowHeight() / 2, 200, 100, "green");
+		pauseElements.add(quitPauseBtn);
+
+	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// Remove Level indicator and start timer
@@ -269,10 +282,20 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			t.start();
 			return;
 		}
+		GObject obj = program.getElementAt(e.getX(), e.getY());
+		if (obj == quitPauseBtn) {
+			PlayerData.writeFile();
+			for (GObject o: pauseElements) {
+				program.remove(o);
+			}
+			program.switchToMenu();
+		}
 
-		for (Projectile p : player.attack(e.getX(), e.getY())) {
-			program.getEntityManager().getProjectiles().add(p);
-			program.add(p.getGObject());
+		if (t.isRunning()) {
+			for (Projectile p : player.attack(e.getX(), e.getY())) {
+				program.getEntityManager().getProjectiles().add(p);
+				program.add(p.getGObject());
+			}
 		}
 	}
 
@@ -283,6 +306,18 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		if (dir != null) {
 			keysPressed.add(key);
 			direction = dir;
+		} else if (key == KeyEvent.VK_ESCAPE) {
+			if (t.isRunning()) {
+				for (GObject o : pauseElements) {
+					program.add(o);
+				}
+				t.stop();
+			} else {
+				for (GObject o : pauseElements) {
+					program.remove(o);
+				}
+				t.start();
+			}
 		}
 	}
 
@@ -394,11 +429,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void minimapDestructor() {
-		for (GRect tile: minimap) {
+		for (GRect tile : minimap) {
 			program.remove(tile);
 		}
 	}
-	
+
 	private void minimapBuilder() {
 		int startY = 10;
 		int startX = 10;
@@ -408,10 +443,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			for (int col = 0; col < FloorManager.FLOOR_COLS; col++) {
 				GRect tile = new GRect(startX, startY, moveX, moveY);
 				minimap.add(tile);
-				startX+=moveX;
+				startX += moveX;
 			}
 			startX = 10;
-			startY+=moveY;
+			startY += moveY;
 		}
 		for (GRect tile : minimap) {
 			program.add(tile);
