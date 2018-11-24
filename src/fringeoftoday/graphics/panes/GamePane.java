@@ -1,11 +1,13 @@
 package fringeoftoday.graphics.panes;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,6 +46,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	// good
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
+
+	private ArrayList<GRect> minimap = new ArrayList<GRect>();
 
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
 	private int level = -1; // Work on this when we get it in
@@ -89,11 +93,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 
-		infoText = new GParagraph(
-				"Level: " + level
-				+ "\nMelee Damage: " + player.getMeleeDamage()
-				+ "\nRanged Damage: " + player.getRangedDamage()
-				+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
+		infoText = new GParagraph("Level: " + level + "\nMelee Damage: " + player.getMeleeDamage() + "\nRanged Damage: "
+				+ player.getRangedDamage() + "\nMove Speed: " + player.getMoveSpeed(), 0, 0);
 
 		infoText.setFont(hdrFont);
 		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
@@ -131,6 +132,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		initHealth();
 		infoDrawing();
 		drawLevelAlert();
+		minimapBuilder();
 	}
 
 	@Override
@@ -185,9 +187,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Space space = room.getSpace(i, j);
-				temp = new GImage(
-						path + space.getFilePath(),
-						(j * FloorManager.SPACE_SIZE),
+				temp = new GImage(path + space.getFilePath(), (j * FloorManager.SPACE_SIZE),
 						(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
 				temp.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 				space.setGObject(temp);
@@ -392,4 +392,22 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		}
 	}
 
+	private void minimapBuilder() {
+		int startY = 10;
+		int startX = 10;
+		int moveX = (HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS;
+		int moveY = (HEADER_HEIGHT - 20) / FloorManager.FLOOR_ROWS;
+		for (int row = 0; row < FloorManager.FLOOR_ROWS; row++) {
+			for (int col = 0; col < FloorManager.FLOOR_COLS; col++) {
+				GRect tile = new GRect(startX, startY, moveX, moveY);
+				minimap.add(tile);
+				startX+=moveX;
+			}
+			startX = 10;
+			startY+=moveY;
+		}
+		for (GRect tile : minimap) {
+			program.add(tile);
+		}
+	}
 }
