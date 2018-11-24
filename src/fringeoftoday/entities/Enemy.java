@@ -45,52 +45,35 @@ public abstract class Enemy extends ActiveEntity {
 		}
 		double targetX = target.getX();
 		double targetY = target.getY();
-        GPoint p = getPoint(targetX, targetY);
-        if (!collisionManager.enemyCanMove(this, p.getX(), p.getY())) {
-            GPoint closest = getClosestPoint(collisionManager, targetX, targetY);
-            p = getPoint(closest.getX(), closest.getY());
+		double enemyX = getX();
+		double enemyY = getY();
+		double closest = Double.MAX_VALUE;
+		GPoint p = new GPoint(0, 0);
+        for (int deltaX = -1; deltaX <= 1; deltaX++) {
+            for (int deltaY = -1; deltaY <= 1; deltaY++) {
+                if (deltaX == 0 && deltaY == 0 || deltaX != 0 && deltaY != 0) {
+                    continue;
+                }
+                double dx = enemyX + (deltaX * FloorManager.SPACE_SIZE);
+                double dy = enemyY + (deltaY * FloorManager.SPACE_SIZE);
+                double x = dx + (FloorManager.SPACE_SIZE / 2);
+                double y = dy + (FloorManager.SPACE_SIZE / 2);
+                double dist = Math.hypot(targetX - dx, targetY - dy);
+                if (dist < closest && collisionManager.enemyCanMove(x, y)) {
+                    closest = dist;
+                    p = getMovePoint(dx, dy);
+                }
+            }
         }
-            getGObject().move(p.getX(), p.getY());
+        getGObject().move(p.getX(), p.getY());
     }
 
-    private GPoint getPoint(double targetX, double targetY) {
+    private GPoint getMovePoint(double targetX, double targetY) {
         double deltaX = targetX - getX();
         double deltaY = targetY - getY();
         double angle = Math.atan2(deltaY, deltaX);
         double x = velocity * Math.cos(angle);
         double y = velocity * Math.sin(angle);
-        return new GPoint(x, y);
-    }
-
-    private GPoint getClosestPoint(CollisionManager collisionManager, double targetX, double targetY) {
-        double enemyX = getX();
-        double enemyY = getY();
-        double x = 0;
-        double y = 0;
-        double dist = Double.MAX_VALUE;
-        double temp = Point2D.distance(enemyX + FloorManager.SPACE_SIZE, enemyY, targetX, targetY);
-        if (temp < dist && collisionManager.enemyCanMove(this, FloorManager.SPACE_SIZE, 0)) {
-            x = enemyX + FloorManager.SPACE_SIZE;
-            y = enemyY;
-            dist = temp;
-        }
-        temp = Point2D.distance(enemyX - FloorManager.SPACE_SIZE, enemyY, targetX, targetY);
-        if (temp < dist && collisionManager.enemyCanMove(this, -FloorManager.SPACE_SIZE, 0)) {
-            x = enemyX - FloorManager.SPACE_SIZE;
-            y = enemyY;
-            dist = temp;
-        }
-        temp = Point2D.distance(enemyX, enemyY + FloorManager.SPACE_SIZE, targetX, targetY);
-        if (temp < dist && collisionManager.enemyCanMove(this, 0, FloorManager.SPACE_SIZE)) {
-            x = enemyX;
-            y = enemyY + FloorManager.SPACE_SIZE;
-            dist = temp;
-        }
-        temp = Point2D.distance(enemyX, enemyY + FloorManager.SPACE_SIZE, targetX, targetY);
-        if (temp < dist && collisionManager.enemyCanMove(this, 0, -FloorManager.SPACE_SIZE)) {
-            x = enemyX;
-            y = enemyY - FloorManager.SPACE_SIZE;
-        }
         return new GPoint(x, y);
     }
 

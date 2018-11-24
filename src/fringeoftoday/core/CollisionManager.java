@@ -45,10 +45,7 @@ public class CollisionManager {
         return false;
     }
 
-    public boolean enemyCanMove(Enemy enemy, double x, double y) {
-        GObject eSprite = enemy.getGObject();
-        x = eSprite.getX() + x + (eSprite.getWidth() / 2);
-        y = eSprite.getY() + y + (eSprite.getHeight() / 2);
+    public boolean enemyCanMove(double x, double y) {
         for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
             for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
                 Space space = room.getSpace(i, j);
