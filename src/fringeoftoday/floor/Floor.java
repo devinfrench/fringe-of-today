@@ -7,8 +7,8 @@ package fringeoftoday.floor;
  *
  */
 public class Floor {
-	public static final int NUM_FLOOR_ROWS = 5;
-	public static final int NUM_FLOOR_COLS = 7;
+	public static final int FLOOR_ROWS = FloorManager.FLOOR_ROWS;
+	public static final int FLOOR_COLS = FloorManager.FLOOR_COLS;
 
 	private Room floorLayout[][];
 	private int levelCount;
@@ -16,7 +16,7 @@ public class Floor {
 	private int spawnCol;
 	
 	public Floor(int levelCount) {
-		floorLayout = new Room[NUM_FLOOR_ROWS][NUM_FLOOR_COLS];
+		floorLayout = new Room[FLOOR_ROWS][FLOOR_COLS];
 		this.levelCount = levelCount;
 	}
 
