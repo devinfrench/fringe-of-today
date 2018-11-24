@@ -249,7 +249,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	public void removeProjectiles() {
-		program.getEntityManager().getProjectiles().forEach(p -> program.remove(p.getGObject()));
+		List<Projectile> projectiles = program.getEntityManager().getProjectiles();
+		for (Projectile projectile : projectiles) {
+			program.remove(projectile.getGObject());
+		}
+		projectiles.clear();
 	}
 
 	public void onDeath() {// Trigger this when player is dead, should add other functions - tally score,
