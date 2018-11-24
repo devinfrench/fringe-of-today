@@ -18,7 +18,8 @@ public class FloorManager {
 	public static final int ROOM_COLS = 25;
 	public static final int FLOOR_ROWS = 4;
 	public static final int FLOOR_COLS = 5;
-	public static final int SPACE_SIZE = (MainApplication.WINDOW_HEIGHT - GamePane.HEADER_HEIGHT)/FloorManager.ROOM_ROWS;
+	public static final int SPACE_SIZE = (MainApplication.WINDOW_HEIGHT - GamePane.HEADER_HEIGHT)
+			/ FloorManager.ROOM_ROWS;
 
 	private static Room spawnRoom;
 	private static ArrayList<char[][]> floorLayouts = new ArrayList<char[][]>();
@@ -26,8 +27,12 @@ public class FloorManager {
 	private static ArrayList<Room> bossRoomLayouts = new ArrayList<Room>();
 	private static Floor currentFloor;
 
-	public Floor getFloor() {
+	public static Floor getFloor() {
 		return currentFloor;
+	}
+	
+	public Room getSpawnRoom() {
+		return currentFloor.getRoom(currentFloor.getSpawnRow(), currentFloor.getSpawnCol());
 	}
 
 	public static void setSpawnRoom(char layout[][]) {
@@ -141,7 +146,7 @@ public class FloorManager {
 				case 'W':
 					r.setSpace(i, j, SpaceType.WALL);
 					break;
-					
+
 				case 'X':
 					r.setSpace(i, j, SpaceType.BLANK);
 
@@ -159,16 +164,14 @@ public class FloorManager {
 			if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
 				r.addExit(Exit.EAST);
 				break;
-			}
-			else if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2)), i).getType() == SpaceType.WALL)
+			} else if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2)), i).getType() == SpaceType.WALL)
 				break;
 		}
 		for (int i = 0;; i++) {
-			if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2) ), i).getType() == SpaceType.DOOR) {
+			if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
 				r.addExit(Exit.WEST);
 				break;
-			}
-			else if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2)), i).getType() == SpaceType.WALL)
+			} else if (r.getSpace((int) (Math.ceil(ROOM_ROWS / 2)), i).getType() == SpaceType.WALL)
 				break;
 		}
 
@@ -216,10 +219,5 @@ public class FloorManager {
 			}
 			System.out.println();
 		}
-	}
-	
-	//For testing
-	public Room getSpawnRoom() {
-		return currentFloor.getRoom(currentFloor.getSpawnRow(), currentFloor.getSpawnCol());
 	}
 }
