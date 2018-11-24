@@ -14,6 +14,7 @@ import javax.swing.Timer;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
+import acm.graphics.GObject;
 import acm.graphics.GRect;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
@@ -233,7 +234,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				switch (space.getType()) {
 				case BASIC_SPAWN:
 					enemy = new StandardEnemy();
-					// TODO set health and damage based on level
+					enemy.setDmgMult(0.5f);
+					enemy.setFireRate(10);
+					enemy.setHealth(1);
+					enemy.setVelocity(2);
+					// TODO scaling
 					break;
 				case SHOTGUN_SPAWN:
 					break;
@@ -241,10 +246,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					break;
 				}
 				if (enemy != null) {
-					enemy.getGObject().setLocation(
-							(j * FloorManager.SPACE_SIZE), 
-							(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT
-							);
+					double x = (j * FloorManager.SPACE_SIZE);
+					double y = (i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT;
+					enemy.getGObject().setLocation(x, y);
 					program.add(enemy.getGObject());
 					enemies.add(enemy);
 				}
@@ -337,6 +341,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		movePlayer();
 
+		enemyAttack();
+
 		checkProjectileCollision();
 	}
 
@@ -373,6 +379,18 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				program.remove(p.getGObject());
 			}
 		});
+	}
+
+	private void enemyAttack() {
+		GObject obj = player.getGObject();
+		double x = obj.getX() + obj.getWidth() / 2;
+		double y = obj.getY() + obj.getHeight() / 2;
+		for (Enemy enemy : program.getEntityManager().getEnemies()) {
+			for (Projectile p : enemy.attack(x, y)) {
+				program.getEntityManager().getProjectiles().add(p);
+				program.add(p.getGObject());
+			}
+		}
 	}
 
 }
