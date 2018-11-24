@@ -58,7 +58,8 @@ public class MenuPane extends GraphicsPane {
 		int sounds;
 		try {
 			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
-		} catch (NumberFormatException e3) {
+		}catch(NumberFormatException e) {
+			PlayerData.updateMap("Sounds", 1);
 			sounds = 1;
 		}
 		if (sounds == 1) {
@@ -117,11 +118,7 @@ public class MenuPane extends GraphicsPane {
 		} else if (obj == btnAudio) {
 			AudioPlayer audio = AudioPlayer.getInstance();
 			int sounds;
-			try {
-				sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
-			} catch (NumberFormatException e1) {
-				sounds = 1;
-			}
+			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
 			if (sounds == 1) {
 				audio.stopSound("sounds", "menumusic.mp3");
 				btnAudio.setImage("soundoff.jpg");
