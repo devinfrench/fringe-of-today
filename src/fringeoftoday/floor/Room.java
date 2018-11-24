@@ -15,10 +15,12 @@ public class Room {
 	private Space roomLayout[][];
 	private ArrayList<Exit> exits;
 	private ArrayList<Direction> directions;
+	private boolean cleared;
 
 	public Room() {
 		roomLayout = new Space[ROOM_ROWS][ROOM_COLS];
 		exits = new ArrayList<Exit>();
+		cleared = false;
 	}
 
 	public Space getSpace(int row, int col) {
@@ -27,6 +29,10 @@ public class Room {
 
 	public ArrayList<Exit> getExits() {
 		return exits;
+	}
+	
+	public Boolean isCleared() {
+		return cleared;
 	}
 
 	/**
@@ -38,6 +44,10 @@ public class Room {
 	 */
 	public void setSpace(int row, int col, SpaceType type) {
 		roomLayout[row][col] = new Space(row, col, type);
+	}
+	
+	public void setCleared (Boolean cleared) {
+		this.cleared = cleared;
 	}
 
 	/**
