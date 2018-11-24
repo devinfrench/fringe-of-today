@@ -27,7 +27,6 @@ import fringeoftoday.floor.Direction;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
 import fringeoftoday.floor.Space;
-import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.Sprites;
 import starter.GButtonMD;
@@ -35,12 +34,9 @@ import starter.GButtonMD;
 public class GamePane extends GraphicsPane implements ActionListener {
 	private MainApplication program; // you will use program to get access to
 	// all of the GraphicsProgram calls
-	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
-	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 	public static final int HEADER_WIDTH = MainApplication.WINDOW_WIDTH / 3;
 	public static final int HEADER_HEIGHT = 196;
 	public static final String FILE_PATH = "../media/textures/";
-	public int numTimes = 0; // Timer stuff
 	public static final int DELAY_MS = 25;
 	private static final int LEVEL_ALERT_X_SIZE = 600;
 	private static final int LEVEL_ALERT_Y_SIZE = 150;
@@ -273,16 +269,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			return;
 		}
 
-		// GObject obj = program.getElementAt(e.getX(), e.getY());
-		// if (obj == btnDie) {
-		// onDeath();
-		// }
-		// else {
-		// changeHealth(false);
-		// }
-		// if (player.getHealth() == 0) {
-		// onDeath();
-		// }
 		for (Projectile p : player.attack(e.getX(), e.getY())) {
 			program.getEntityManager().getProjectiles().add(p);
 			program.add(p.getGObject());
@@ -365,18 +351,33 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void checkProjectileCollision() {
-		program.getEntityManager().getProjectiles().forEach((p) -> {
+		for (Projectile p : program.getEntityManager().getProjectiles()) {
 			p.move();
-			boolean playerCollision = collisionManager.isPlayerCollision(p);
-			if (playerCollision || collisionManager.isTerrainCollision(p)) {
-				if (playerCollision) {
-					player.setHealth(player.getHealth() - p.getDamage());
-					healthLabel.setLabel("Health: " + player.getHealth());
+			boolean collision = false;
+			if (collisionManager.isPlayerCollision(p)) {
+				collision = true;
+				player.setHealth(player.getHealth() - p.getDamage());
+				healthLabel.setLabel("Health: " + player.getHealth());
+			}
+			for (Enemy enemy : program.getEntityManager().getEnemies()) {
+				if (collisionManager.isEnemyCollision(enemy, p)) {
+					collision = true;
+					enemy.setHealth(enemy.getHealth() - p.getDamage());
+					if (enemy.getHealth() <= 0) {
+						program.remove(enemy.getGObject());
+						program.getEntityManager().getEnemies().remove(enemy);
+					}
+					break;
 				}
+			}
+			if (collisionManager.isTerrainCollision(p)) {
+				collision = true;
+			}
+			if (collision) {
 				program.getEntityManager().getProjectiles().remove(p);
 				program.remove(p.getGObject());
 			}
-		});
+		}
 	}
 
 	private void enemyAttack() {
