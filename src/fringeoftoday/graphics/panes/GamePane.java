@@ -1,31 +1,35 @@
 package fringeoftoday.graphics.panes;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.swing.Timer;
+
 import acm.graphics.GImage;
-import acm.graphics.GRect;
 import acm.graphics.GLabel;
+import acm.graphics.GRect;
 import fringeoftoday.MainApplication;
+import fringeoftoday.PlayerData;
 import fringeoftoday.core.CollisionManager;
+import fringeoftoday.entities.Enemy;
+import fringeoftoday.entities.Player;
 import fringeoftoday.entities.Projectile;
+import fringeoftoday.entities.StandardEnemy;
 import fringeoftoday.floor.Direction;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
-import fringeoftoday.PlayerData;
-import fringeoftoday.entities.Player;
 import fringeoftoday.floor.Space;
 import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.Sprites;
 import starter.GButtonMD;
-
-import javax.swing.Timer;
 
 public class GamePane extends GraphicsPane implements ActionListener {
 	private MainApplication program; // you will use program to get access to
@@ -40,10 +44,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private static final int LEVEL_ALERT_X_SIZE = 600;
 	private static final int LEVEL_ALERT_Y_SIZE = 150;
 	private static final double SPEED_EFFECT = .25; // How effective the speed upgrades are, I've found .25 to be pretty
-													// good
+	// good
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
-	
+
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
 	private int level = -1; // Work on this when we get it in
 	private GButton btnDie; // Debug, remove when done
@@ -94,10 +98,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 
 		infoText = new GParagraph(
-		"Level: " + level
-		+ "\nMelee Damage: " + player.getMeleeDamage()
-		+ "\nRanged Damage: " + player.getRangedDamage()
-		+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
+				"Level: " + level
+				+ "\nMelee Damage: " + player.getMeleeDamage()
+				+ "\nRanged Damage: " + player.getRangedDamage()
+				+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
 
 		infoText.setFont(hdrFont);
 		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
@@ -140,6 +144,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		createImageList();
 		showField(); // Game field
 		showPlayer();
+		showEnemies();
 		// program.add(btnDie);//Testing death screen, remove when things are added
 		initHealth();
 		infoDrawing();
@@ -151,6 +156,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		removeHeader();
 		removeField();
 		removePlayer();
+		removeEnemies();
 		removeProjectiles();
 		// program.remove(btnDie);//Testing death screen, remove when things are added
 		program.remove(healthLabel);
@@ -199,9 +205,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			for (int j = 0; j < cols; j++) {
 				Space space = room.getSpace(i, j);
 				temp = new GImage(
-				path + space.getFilePath(),
-				(j * FloorManager.SPACE_SIZE),
-				(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
+						path + space.getFilePath(),
+						(j * FloorManager.SPACE_SIZE),
+						(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
 				temp.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 				space.setGObject(temp);
 			}
@@ -218,12 +224,48 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.remove(player.getGObject());
 	}
 
+	public void showEnemies() {
+		List<Enemy> enemies = program.getEntityManager().getEnemies();
+		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+				Space space = room.getSpace(i, j);
+				Enemy enemy = null;
+				switch (space.getType()) {
+				case BASIC_SPAWN:
+					enemy = new StandardEnemy();
+					// TODO set health and damage based on level
+					break;
+				case SHOTGUN_SPAWN:
+					break;
+				case SNIPER_SPAWN:
+					break;
+				}
+				if (enemy != null) {
+					enemy.getGObject().setLocation(
+							(j * FloorManager.SPACE_SIZE), 
+							(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT
+							);
+					program.add(enemy.getGObject());
+					enemies.add(enemy);
+				}
+			}
+		}
+	}
+
+	public void removeEnemies() {
+		List<Enemy> enemies = program.getEntityManager().getEnemies();
+		for (Enemy enemy : enemies) {
+			program.remove(enemy.getGObject());
+		}
+		enemies.clear();
+	}
+
 	public void removeProjectiles() {
 		program.getEntityManager().getProjectiles().forEach(p -> program.remove(p.getGObject()));
 	}
 
 	public void onDeath() {// Trigger this when player is dead, should add other functions - tally score,
-							// etc.
+		// etc.
 		PlayerData.writeFile();
 		program.switchToDeath();
 	}
