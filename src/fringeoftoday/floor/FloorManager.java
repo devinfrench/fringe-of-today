@@ -82,6 +82,8 @@ public class FloorManager {
 
 				case 'S':
 					currentFloor.setRoom(i, j, spawnRoom);
+					currentFloor.setSpawnRow(i);
+					currentFloor.setSpawnCol(j);
 					break;
 
 				case 'B':
@@ -218,6 +220,6 @@ public class FloorManager {
 	
 	//For testing
 	public Room getSpawnRoom() {
-		return spawnRoom;
+		return currentFloor.getRoom(currentFloor.getSpawnRow(), currentFloor.getSpawnCol());
 	}
 }
