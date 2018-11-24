@@ -1,6 +1,7 @@
 package fringeoftoday.graphics.panes;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
@@ -26,7 +27,7 @@ public class ShopPane extends GraphicsPane {
 	public static final int DOWN_BTN = MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT - 10;
 	public static final int LABEL_WIDTH = 190;
 	public static final String FILE_PATH = "../media/shop/";
-
+	
 	private int cheatCtr = 0;
 
 	private GLabel title;
@@ -55,6 +56,7 @@ public class ShopPane extends GraphicsPane {
 
 	public ShopPane(MainApplication app) {
 		this.program = app;
+		loadFont();
 		initObjs();
 
 		// Button to cheat and add coins
@@ -65,7 +67,7 @@ public class ShopPane extends GraphicsPane {
 	private void initObjs() {
 		// Title for the shop
 		title = new GLabel("Shop", MainApplication.WINDOW_WIDTH / 2 - 50, MainApplication.WINDOW_HEIGHT / 18);
-		title.setFont("Arial-46");
+		title.setFont(new Font("PKMN Mystery Dungeon", 0, 72));
 
 		// Back button
 		btnBack = new GButtonMD("Back", 1, 1, BUTTON_WIDTH, (int) (BUTTON_HEIGHT * .75));
@@ -101,7 +103,7 @@ public class ShopPane extends GraphicsPane {
 		// Coin counter at the top left
 		coinCtr = new GLabel("Coin: " + PlayerData.getMap().get("Coin"), MainApplication.WINDOW_WIDTH - 300,
 				MainApplication.WINDOW_HEIGHT / 18);
-		coinCtr.setFont("Arial-46");
+		coinCtr.setFont(new Font("PKMN Mystery Dungeon", 0, 72));
 
 		// HP Upgrade Button
 		int hpCost = (Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 1) * 10;
@@ -146,24 +148,24 @@ public class ShopPane extends GraphicsPane {
 		// HP label to tell how much there is
 		hpLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("HPUpgrades") + "/" + MAX_UPGRADES,
 				MainApplication.WINDOW_WIDTH / 2 - LABEL_WIDTH, MainApplication.WINDOW_HEIGHT / 8);
-		hpLabel.setFont("Arial-24");
+		hpLabel.setFont("Terminal-24");
 
 		// Melee label to tell how much there is
 		meleeLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("MeleeUpgrades") + "/" + MAX_UPGRADES,
 				MainApplication.WINDOW_WIDTH - LABEL_WIDTH, MainApplication.WINDOW_HEIGHT / 8);
-		meleeLabel.setFont("Arial-24");
+		meleeLabel.setFont("Terminal-24");
 
 		// Ranged label to tell how much there is
 		rangedLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("RangedUpgrades") + "/" + MAX_UPGRADES,
 				MainApplication.WINDOW_WIDTH / 2 - LABEL_WIDTH,
 				MainApplication.WINDOW_HEIGHT / 14 + MainApplication.WINDOW_HEIGHT / 2);
-		rangedLabel.setFont("Arial-24");
+		rangedLabel.setFont("Terminal-24");
 
 		// Speed label to tell how much there is
 		speedLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("SpeedUpgrades") + "/" + MAX_UPGRADES,
 				MainApplication.WINDOW_WIDTH - LABEL_WIDTH,
 				MainApplication.WINDOW_HEIGHT / 14 + MainApplication.WINDOW_HEIGHT / 2);
-		speedLabel.setFont("Arial-24");
+		speedLabel.setFont("Terminal-24");
 	}
 
 	@Override

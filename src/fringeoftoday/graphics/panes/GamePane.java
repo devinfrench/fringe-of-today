@@ -101,7 +101,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		infoText.setFont(hdrFont);
 		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
-				(infoBox.getY() + infoText.getHeight()) / 2);
+				(infoBox.getY() - 50 + infoText.getHeight()) / 2);
 
 		program.add(infoText);
 	}
@@ -113,7 +113,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	private void drawHealth(int health) {
 		healthLabel = new GLabel("Health: " + health, HEADER_WIDTH * 2.25, HEADER_HEIGHT / 1.9);
-		healthLabel.setFont("Arial-48");
+		healthLabel.setFont(hdrFont);
 		program.add(healthLabel);
 	}
 

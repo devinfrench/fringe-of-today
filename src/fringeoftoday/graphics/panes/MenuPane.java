@@ -22,8 +22,6 @@ public class MenuPane extends GraphicsPane {
 	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
 	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 	
-	private Font btnFont = new Font("PKMN Mystery Dungeon", 0, 80);
-	
 	private GButtonMD btnPlay;
 	private GButtonMD btnShop;
 	private GButtonMD btnExit;
@@ -36,7 +34,6 @@ public class MenuPane extends GraphicsPane {
 	public MenuPane(MainApplication app) {
 		super();
 		program = app;
-		loadFont();
 		// Title banner - maybe use GImage instead?
 		title = new GImage("../media/logo_transparent.png", (MainApplication.WINDOW_WIDTH - 600) / 2, 30);
 		title.setSize(600, 300);
@@ -44,21 +41,17 @@ public class MenuPane extends GraphicsPane {
 		// Play button
 		btnPlay = new GButtonMD("Play", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 400, BUTTON_WIDTH,
 				BUTTON_HEIGHT, "blue");
-		btnPlay.getLabel().setFont(btnFont);
 		
 		// Shop button
 		btnShop = new GButtonMD("Shop", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 550, BUTTON_WIDTH,
 				BUTTON_HEIGHT, "green");
-		btnShop.getLabel().setFont(btnFont);
 		
 		// Exit button
 		btnExit = new GButtonMD("Exit", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 700, BUTTON_WIDTH,
 				BUTTON_HEIGHT, "green");
-		btnExit.getLabel().setFont(btnFont);
 		
 		//Tutorial button
 		btnTutorial = new GButtonMD("?", 0, 0, 100, 100);
-		btnTutorial.getLabel().setFont(btnFont);
 		
 		//Audio button
 		btnAudio = new GImage("../media/soundon.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
@@ -66,13 +59,13 @@ public class MenuPane extends GraphicsPane {
 		
 		// Latest Score
 		lastRun = new GLabel("On your last run, you got to floor: " + PlayerData.getMap().get("PreviousRun"),
-				MainApplication.WINDOW_WIDTH - 310, MainApplication.WINDOW_HEIGHT - 40);
-		lastRun.setFont(new Font("PKMN Mystery Dungeon", 0, 30));
+				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 40);
+		lastRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
 		
 		// Best Score
 		bestRun = new GLabel("On your best run, you got to floor: " + PlayerData.getMap().get("GOAT"),
-				MainApplication.WINDOW_WIDTH - 310, MainApplication.WINDOW_HEIGHT - 15);
-		bestRun.setFont(new Font("PKMN Mystery Dungeon", 0, 30));
+				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 15);
+		bestRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
 	}
 
 	@Override
