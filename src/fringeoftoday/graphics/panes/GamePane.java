@@ -217,7 +217,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					enemy.setDmgMult(0.5f);
 					enemy.setFireRate(10);
 					enemy.setHealth(1);
-					enemy.setVelocity(2);
+					enemy.setVelocity(1);
 					// TODO scaling
 					break;
 				case SHOTGUN_SPAWN:
@@ -316,6 +316,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		movePlayer();
 
+		enemyMove();
+
 		enemyAttack();
 
 		checkProjectileCollision();
@@ -389,6 +391,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				program.getEntityManager().getProjectiles().add(p);
 				program.add(p.getGObject());
 			}
+		}
+	}
+
+	private void enemyMove() {
+		for (Enemy enemy : program.getEntityManager().getEnemies()) {
+			enemy.move(collisionManager, player);
 		}
 	}
 

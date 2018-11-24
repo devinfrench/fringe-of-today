@@ -27,7 +27,7 @@ public class EnemyMovementDemo extends GraphicsProgram {
 		initPlayer();
 		initEnemy();
 		Timer timer = new Timer(20, e -> {
-			enemy.move(player);
+			enemy.move(null, player);
 			if (Math.abs(enemy.getX() - player.getX()) <= 10 || Math.abs(enemy.getY() - player.getY()) <= 10) {
 				player.getGObject().setLocation(rgen.nextInt(10) * spaceWidth(), rgen.nextInt(15) * spaceHeight());
 			}

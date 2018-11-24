@@ -45,6 +45,29 @@ public class CollisionManager {
         return false;
     }
 
+    public boolean enemyCanMove(Enemy enemy, double x, double y) {
+        GObject eSprite = enemy.getGObject();
+        x = eSprite.getX() + x + (eSprite.getWidth() / 2);
+        y = eSprite.getY() + y + (eSprite.getHeight() / 2);
+        for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+            for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+                Space space = room.getSpace(i, j);
+                if (space.getGObject().contains(x, y)) {
+                    switch (space.getType()) {
+                        case GROUND:
+                        case BASIC_SPAWN:
+                        case SHOTGUN_SPAWN:
+                        case SNIPER_SPAWN:
+                            return true;
+                        default:
+                            return  false;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean isTerrainCollision(Projectile p) {
         GObject sprite = p.getGObject();
         if (sprite == null) {
