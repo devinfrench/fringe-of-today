@@ -237,6 +237,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					break;
 				case SNIPER_SPAWN:
 					break;
+				default:
+					break;
 				}
 				if (enemy != null) {
 					double x = (j * FloorManager.SPACE_SIZE);
