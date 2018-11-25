@@ -54,4 +54,16 @@ public class Floor {
 	public void setRoom(int row, int col, Room r) {
 		floorLayout[row][col] = r;
 	}
+	
+	/**
+	 * Sets entire floor's rooms to be uncleared. Use immediately before generating a new floor
+	 */
+	public void resetCleared() {
+		for (int i = 0; i < FLOOR_ROWS; i++) {
+			for (int j = 0; j < FLOOR_COLS; j++) {
+				if (floorLayout[i][j] != null)
+					floorLayout[i][j].setCleared(false);
+			}
+		}
+	}
 }
