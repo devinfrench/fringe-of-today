@@ -184,7 +184,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		int rows = FloorManager.ROOM_ROWS;
 		int cols = FloorManager.ROOM_COLS;
 		GImage temp;
-		
+
 		String path = FILE_PATH;
 		if (FloorManager.getFloor().getLevel() <= 5)
 			path = path + "RockPath/";
@@ -296,7 +296,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == quitPauseBtn) {
 			PlayerData.writeFile();
-			for (GObject o: pauseElements) {
+			for (GObject o : pauseElements) {
 				program.remove(o);
 			}
 			program.switchToMenu();

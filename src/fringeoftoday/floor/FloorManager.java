@@ -30,7 +30,7 @@ public class FloorManager {
 	public static Floor getFloor() {
 		return currentFloor;
 	}
-	
+
 	public Room getSpawnRoom() {
 		return currentFloor.getRoom(currentFloor.getSpawnRow(), currentFloor.getSpawnCol());
 	}

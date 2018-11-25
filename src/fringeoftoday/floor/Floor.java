@@ -14,7 +14,7 @@ public class Floor {
 	private int levelCount;
 	private int spawnRow;
 	private int spawnCol;
-	
+
 	public Floor(int levelCount) {
 		floorLayout = new Room[FLOOR_ROWS][FLOOR_COLS];
 		this.levelCount = levelCount;
@@ -54,9 +54,10 @@ public class Floor {
 	public void setRoom(int row, int col, Room r) {
 		floorLayout[row][col] = r;
 	}
-	
+
 	/**
-	 * Sets entire floor's rooms to be uncleared. Use immediately before generating a new floor
+	 * Sets entire floor's rooms to be uncleared. Use immediately before generating
+	 * a new floor
 	 */
 	public void resetCleared() {
 		for (int i = 0; i < FLOOR_ROWS; i++) {

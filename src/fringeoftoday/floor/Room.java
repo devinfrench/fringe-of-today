@@ -30,7 +30,7 @@ public class Room {
 	public ArrayList<Exit> getExits() {
 		return exits;
 	}
-	
+
 	public Boolean isCleared() {
 		return cleared;
 	}
@@ -45,8 +45,8 @@ public class Room {
 	public void setSpace(int row, int col, SpaceType type) {
 		roomLayout[row][col] = new Space(row, col, type);
 	}
-	
-	public void setCleared (Boolean cleared) {
+
+	public void setCleared(Boolean cleared) {
 		this.cleared = cleared;
 	}
 
@@ -58,61 +58,61 @@ public class Room {
 	public void addExit(Exit e) {
 		exits.add(e);
 	}
-	
+
 	public void setFilePaths() {
 		String path;
-		
+
 		for (int i = 0; i < ROOM_ROWS; i++) {
 			for (int j = 0; j < ROOM_COLS; j++) {
 				directions = new ArrayList<Direction>();
-				
+
 				switch (roomLayout[i][j].getType()) {
 				case WATER:
 					path = pathGenerator("water", i, j, SpaceType.WATER);
 					break;
-				
+
 				case WALL:
 					path = pathGenerator("wall", i, j, SpaceType.WALL);
 					break;
-					
+
 				case DOOR:
 					path = "wall.png";
 					break;
-					
+
 				case BLANK:
 					path = "blank.png";
 					break;
-					
+
 				default:
 					path = "ground";
-					
-					//North
-					if (i > 0 && roomLayout[i-1][j].getType() != SpaceType.WALL)
+
+					// North
+					if (i > 0 && roomLayout[i - 1][j].getType() != SpaceType.WALL)
 						directions.add(Direction.NORTH);
-					//South
-					if (i < ROOM_ROWS-1 && roomLayout[i+1][j].getType() != SpaceType.WALL)
+					// South
+					if (i < ROOM_ROWS - 1 && roomLayout[i + 1][j].getType() != SpaceType.WALL)
 						directions.add(Direction.SOUTH);
-					//East
-					if (j < ROOM_COLS-1 && roomLayout[i][j+1].getType() != SpaceType.WALL)
+					// East
+					if (j < ROOM_COLS - 1 && roomLayout[i][j + 1].getType() != SpaceType.WALL)
 						directions.add(Direction.EAST);
-					//West
-					if (j > 0 && roomLayout[i][j-1].getType() != SpaceType.WALL)
+					// West
+					if (j > 0 && roomLayout[i][j - 1].getType() != SpaceType.WALL)
 						directions.add(Direction.WEST);
-					//Northeast
-					if (i > 0 && j < ROOM_COLS-1 && roomLayout[i-1][j+1].getType() != SpaceType.WALL)
+					// Northeast
+					if (i > 0 && j < ROOM_COLS - 1 && roomLayout[i - 1][j + 1].getType() != SpaceType.WALL)
 						directions.add(Direction.NORTHEAST);
-					//Northwest
-					if (i > 0 && j > 0 && roomLayout[i-1][j-1].getType() != SpaceType.WALL)
+					// Northwest
+					if (i > 0 && j > 0 && roomLayout[i - 1][j - 1].getType() != SpaceType.WALL)
 						directions.add(Direction.NORTHWEST);
-					//Southeast
-					if (i < ROOM_ROWS-1 && j < ROOM_COLS-1  && roomLayout[i+1][j+1].getType() != SpaceType.WALL)
+					// Southeast
+					if (i < ROOM_ROWS - 1 && j < ROOM_COLS - 1 && roomLayout[i + 1][j + 1].getType() != SpaceType.WALL)
 						directions.add(Direction.SOUTHEAST);
-					//Southwest
-					if (i < ROOM_ROWS-1 && j > 0 && roomLayout[i+1][j-1].getType() != SpaceType.WALL)
+					// Southwest
+					if (i < ROOM_ROWS - 1 && j > 0 && roomLayout[i + 1][j - 1].getType() != SpaceType.WALL)
 						directions.add(Direction.SOUTHWEST);
-					
+
 					removeDiagonals();
-					
+
 					if (directions.contains(Direction.NORTHWEST))
 						path = appendDirection(path, Direction.NORTHWEST);
 					if (directions.contains(Direction.NORTH))
@@ -129,44 +129,44 @@ public class Room {
 						path = appendDirection(path, Direction.SOUTH);
 					if (directions.contains(Direction.SOUTHEAST))
 						path = appendDirection(path, Direction.SOUTHEAST);
-					
+
 					path = path + ".png";
 					break;
 				}
-				
+
 				roomLayout[i][j].setFilePath(path);
 			}
 		}
 	}
-	
+
 	private String pathGenerator(String path, int i, int j, SpaceType type) {
-		//North
-		if (i > 0 && roomLayout[i-1][j].getType() == type)
+		// North
+		if (i > 0 && roomLayout[i - 1][j].getType() == type)
 			directions.add(Direction.NORTH);
-		//South
-		if (i < ROOM_ROWS-1 && roomLayout[i+1][j].getType() == type)
+		// South
+		if (i < ROOM_ROWS - 1 && roomLayout[i + 1][j].getType() == type)
 			directions.add(Direction.SOUTH);
-		//East
-		if (j < ROOM_COLS-1 && roomLayout[i][j+1].getType() == type)
+		// East
+		if (j < ROOM_COLS - 1 && roomLayout[i][j + 1].getType() == type)
 			directions.add(Direction.EAST);
-		//West
-		if (j > 0 && roomLayout[i][j-1].getType() == type)
+		// West
+		if (j > 0 && roomLayout[i][j - 1].getType() == type)
 			directions.add(Direction.WEST);
-		//Northeast
-		if (i > 0 && j < ROOM_COLS-1 && roomLayout[i-1][j+1].getType() == type)
+		// Northeast
+		if (i > 0 && j < ROOM_COLS - 1 && roomLayout[i - 1][j + 1].getType() == type)
 			directions.add(Direction.NORTHEAST);
-		//Northwest
-		if (i > 0 && j > 0 && roomLayout[i-1][j-1].getType() == type)
+		// Northwest
+		if (i > 0 && j > 0 && roomLayout[i - 1][j - 1].getType() == type)
 			directions.add(Direction.NORTHWEST);
-		//Southeast
-		if (i < ROOM_ROWS-1 && j < ROOM_COLS-1  && roomLayout[i+1][j+1].getType() == type)
+		// Southeast
+		if (i < ROOM_ROWS - 1 && j < ROOM_COLS - 1 && roomLayout[i + 1][j + 1].getType() == type)
 			directions.add(Direction.SOUTHEAST);
-		//Southwest
-		if (i < ROOM_ROWS-1 && j > 0 && roomLayout[i+1][j-1].getType() == type)
+		// Southwest
+		if (i < ROOM_ROWS - 1 && j > 0 && roomLayout[i + 1][j - 1].getType() == type)
 			directions.add(Direction.SOUTHWEST);
-		
+
 		removeDiagonals();
-		
+
 		if (directions.contains(Direction.NORTHWEST))
 			path = appendDirection(path, Direction.NORTHWEST);
 		if (directions.contains(Direction.NORTH))
@@ -183,23 +183,26 @@ public class Room {
 			path = appendDirection(path, Direction.SOUTH);
 		if (directions.contains(Direction.SOUTHEAST))
 			path = appendDirection(path, Direction.SOUTHEAST);
-		
-		
+
 		return path + ".png";
 	}
-	
+
 	private String appendDirection(String path, Direction d) {
 		return path + d.toString();
 	}
-	
+
 	private void removeDiagonals() {
-		if (directions.contains(Direction.NORTHWEST) && !(directions.contains(Direction.NORTH) && directions.contains(Direction.WEST)))
+		if (directions.contains(Direction.NORTHWEST)
+				&& !(directions.contains(Direction.NORTH) && directions.contains(Direction.WEST)))
 			directions.remove(Direction.NORTHWEST);
-		if (directions.contains(Direction.NORTHEAST) && !(directions.contains(Direction.NORTH) && directions.contains(Direction.EAST)))
+		if (directions.contains(Direction.NORTHEAST)
+				&& !(directions.contains(Direction.NORTH) && directions.contains(Direction.EAST)))
 			directions.remove(Direction.NORTHEAST);
-		if (directions.contains(Direction.SOUTHWEST) && !(directions.contains(Direction.SOUTH) && directions.contains(Direction.WEST)))
+		if (directions.contains(Direction.SOUTHWEST)
+				&& !(directions.contains(Direction.SOUTH) && directions.contains(Direction.WEST)))
 			directions.remove(Direction.SOUTHWEST);
-		if (directions.contains(Direction.SOUTHEAST) && !(directions.contains(Direction.SOUTH) && directions.contains(Direction.EAST)))
+		if (directions.contains(Direction.SOUTHEAST)
+				&& !(directions.contains(Direction.SOUTH) && directions.contains(Direction.EAST)))
 			directions.remove(Direction.SOUTHEAST);
 	}
 }
