@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Player extends ActiveEntity {
 
-    private static final String PROJECTILE_IMAGE_PATH = "projectiles/bullet_red.png";
+    private static final String PROJECTILE_IMAGE_PATH = "projectiles/bullet_blue.png";
     private static final int RANGED_ATTACK_DELAY = 500;
 
     private int money;

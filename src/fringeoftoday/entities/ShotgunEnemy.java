@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ShotgunEnemy extends Enemy {
 
-    private static final String PROJECTILE_IMAGE_PATH = "projectiles/bullet_red.png";
+    private static final String PROJECTILE_IMAGE_PATH = "projectiles/bullet_orange.png";
     private static final int ATTACK_DELAY = 200;
     private static final int BASE_DAMAGE = 2;
     private static final int FIRST_ATTACK_DELAY = 2500;
