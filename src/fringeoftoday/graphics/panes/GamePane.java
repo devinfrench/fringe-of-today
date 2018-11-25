@@ -452,6 +452,16 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			program.remove(tile);
 		}
 	}
+	
+	private void colorTile(Room r, GRect tile) {
+		if (r != null) {
+			tile.setFillColor(Color.GRAY);
+			tile.setFilled(true);
+		}
+		else {
+			tile.setVisible(false);
+		}
+	}
 
 	private void minimapBuilder() {
 		int startY = 10;
@@ -461,6 +471,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		for (int row = 0; row < FloorManager.FLOOR_ROWS; row++) {
 			for (int col = 0; col < FloorManager.FLOOR_COLS; col++) {
 				GRect tile = new GRect(startX, startY, moveX, moveY);
+				Room r = FloorManager.getFloor().getRoom(row, col);
+				colorTile(r, tile);
 				minimap.add(tile);
 				startX += moveX;
 			}
