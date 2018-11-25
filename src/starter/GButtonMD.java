@@ -42,6 +42,7 @@ public class GButtonMD extends GCompound {
 		rect.setSize(width, height);
 		add(rect);
 		message = new GLabel(label);
+		message.setFont(new Font("PKMN Mystery Dungeon", 0, 0));
 		message.setColor(Color.WHITE);
 		sizeLabelFont(message, width - BUFFER, height - BUFFER);
 		double centerX = width / 2 - message.getWidth() / 2;
@@ -61,7 +62,7 @@ public class GButtonMD extends GCompound {
 			size = f.getSize();
 			label.setFont(new Font(name, style, size + 1));
 		}
-		label.setFont(new Font(name, style, size - 1));
+		label.setFont(new Font(name, style, (int) (size/1.75)));
 	}
 
 	public void setColor(Color col) {

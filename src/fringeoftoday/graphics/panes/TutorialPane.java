@@ -25,7 +25,7 @@ public class TutorialPane extends GraphicsPane {
 
 		this.program = app;
 		header = new GParagraph(
-				"Your goal is to defeat all the enemies in a room then progress to the next.\nFind the staircase to the next floor.",
+				"Your goal is to defeat all the enemies in a room then progress to the next.\nFind the staircase to the next floor.\nPause with `ESC`",
 				MainApplication.WINDOW_WIDTH / 4, 100);
 		header.setFont("Arial-24");
 		moveInstructions = new GParagraph("To move, use the\n\"WASD\" keys", MainApplication.WINDOW_WIDTH / 6 + 50,

@@ -1,52 +1,56 @@
 package fringeoftoday.graphics.panes;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.swing.Timer;
+
 import acm.graphics.GImage;
-import acm.graphics.GRect;
 import acm.graphics.GLabel;
+import acm.graphics.GObject;
+import acm.graphics.GRect;
 import fringeoftoday.MainApplication;
+import fringeoftoday.PlayerData;
 import fringeoftoday.core.CollisionManager;
+import fringeoftoday.entities.Enemy;
+import fringeoftoday.entities.Player;
 import fringeoftoday.entities.Projectile;
+import fringeoftoday.entities.StandardEnemy;
 import fringeoftoday.floor.Direction;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
-import fringeoftoday.PlayerData;
-import fringeoftoday.entities.Player;
 import fringeoftoday.floor.Space;
-import fringeoftoday.graphics.GButton;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.Sprites;
 import starter.GButtonMD;
 
-import javax.swing.Timer;
-
 public class GamePane extends GraphicsPane implements ActionListener {
 	private MainApplication program; // you will use program to get access to
 	// all of the GraphicsProgram calls
-	public static final int BUTTON_WIDTH = MainApplication.BUTTON_WIDTH;
-	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 	public static final int HEADER_WIDTH = MainApplication.WINDOW_WIDTH / 3;
 	public static final int HEADER_HEIGHT = 196;
 	public static final String FILE_PATH = "../media/textures/";
-	public int numTimes = 0; // Timer stuff
 	public static final int DELAY_MS = 25;
 	private static final int LEVEL_ALERT_X_SIZE = 600;
 	private static final int LEVEL_ALERT_Y_SIZE = 150;
 	private static final double SPEED_EFFECT = .25; // How effective the speed upgrades are, I've found .25 to be pretty
-													// good
+	// good
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
-	
+
+	private ArrayList<GRect> minimap = new ArrayList<GRect>();
+
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
 	private int level = -1; // Work on this when we get it in
-	private GButton btnDie; // Debug, remove when done
 	private GRect minimapBox; // Minimap, left header
 	private GRect infoBox; // Center header
 	private GParagraph infoText;// Center header content
@@ -57,6 +61,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private Player player;
 	private CollisionManager collisionManager;
 	private Timer t;
+	private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
+	private GButtonMD quitPauseBtn;
 
 	public GamePane(MainApplication app) {
 		super();
@@ -70,10 +76,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		healthBox = new GRect(HEADER_WIDTH * 2, 0, HEADER_WIDTH, HEADER_HEIGHT);
 
 		// FIELD
-
-		// OTHER
-		btnDie = new GButton("DIE", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2,
-				(MainApplication.WINDOW_HEIGHT - BUTTON_HEIGHT) / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		// Room
 		room = program.getFloorManager().getSpawnRoom();
@@ -93,26 +95,14 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 
-		infoText = new GParagraph(
-		"Level: " + level
-		+ "\nMelee Damage: " + player.getMeleeDamage()
-		+ "\nRanged Damage: " + player.getRangedDamage()
-		+ "\nMove Speed: " + player.getMoveSpeed(),0,0);
+		infoText = new GParagraph("Level: " + level + "\nMelee Damage: " + player.getMeleeDamage() + "\nRanged Damage: "
+				+ player.getRangedDamage() + "\nMove Speed: " + player.getMoveSpeed(), 0, 0);
 
 		infoText.setFont(hdrFont);
 		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
-				(infoBox.getY() + infoText.getHeight()) / 2);
+				(infoBox.getY() - 50 + infoText.getHeight()) / 2);
 
 		program.add(infoText);
-	}
-
-	private void changeHealth(boolean up) {
-		if (up) {
-			player.setHealth(player.getHealth() + 1);
-		} else {
-			player.setHealth(player.getHealth() - 1);
-		}
-		healthLabel.setLabel("Health: " + player.getHealth());
 	}
 
 	private void initHealth() {
@@ -122,7 +112,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	private void drawHealth(int health) {
 		healthLabel = new GLabel("Health: " + health, HEADER_WIDTH * 2.25, HEADER_HEIGHT / 1.9);
-		healthLabel.setFont("Arial-48");
+		healthLabel.setFont(hdrFont);
 		program.add(healthLabel);
 	}
 
@@ -140,10 +130,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		createImageList();
 		showField(); // Game field
 		showPlayer();
-		// program.add(btnDie);//Testing death screen, remove when things are added
+		showEnemies();
 		initHealth();
 		infoDrawing();
 		drawLevelAlert();
+		initPausing();
 	}
 
 	@Override
@@ -151,8 +142,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		removeHeader();
 		removeField();
 		removePlayer();
+		removeEnemies();
 		removeProjectiles();
-		// program.remove(btnDie);//Testing death screen, remove when things are added
 		program.remove(healthLabel);
 		program.remove(infoText);
 	}
@@ -161,6 +152,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.add(minimapBox);
 		program.add(infoBox);
 		program.add(healthBox);
+		minimapBuilder();
 	}
 
 	public void removeHeader() {
@@ -168,6 +160,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.remove(infoBox);
 		program.remove(infoText);
 		program.remove(healthBox);
+		minimapDestructor();
+		pauseElements = new ArrayList<>();
 	}
 
 	public void showField() {
@@ -206,10 +200,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Space space = room.getSpace(i, j);
-				temp = new GImage(
-				path + space.getFilePath(),
-				(j * FloorManager.SPACE_SIZE),
-				(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
+				temp = new GImage(path + space.getFilePath(), (j * FloorManager.SPACE_SIZE),
+						(i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
 				temp.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 				space.setGObject(temp);
 			}
@@ -226,14 +218,68 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.remove(player.getGObject());
 	}
 
+	public void showEnemies() {
+		List<Enemy> enemies = program.getEntityManager().getEnemies();
+		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+				Space space = room.getSpace(i, j);
+				Enemy enemy = null;
+				switch (space.getType()) {
+				case BASIC_SPAWN:
+					enemy = new StandardEnemy();
+					enemy.setDmgMult(0.5f);
+					enemy.setFireRate(10);
+					enemy.setHealth(1);
+					enemy.setVelocity(1);
+					// TODO scaling
+					break;
+				case SHOTGUN_SPAWN:
+					break;
+				case SNIPER_SPAWN:
+					break;
+				}
+				if (enemy != null) {
+					double x = (j * FloorManager.SPACE_SIZE);
+					double y = (i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT;
+					enemy.getGObject().setLocation(x, y);
+					program.add(enemy.getGObject());
+					enemies.add(enemy);
+				}
+			}
+		}
+	}
+
+	public void removeEnemies() {
+		List<Enemy> enemies = program.getEntityManager().getEnemies();
+		for (Enemy enemy : enemies) {
+			program.remove(enemy.getGObject());
+		}
+		enemies.clear();
+	}
+
 	public void removeProjectiles() {
-		program.getEntityManager().getProjectiles().forEach(p -> program.remove(p.getGObject()));
+		List<Projectile> projectiles = program.getEntityManager().getProjectiles();
+		for (Projectile projectile : projectiles) {
+			program.remove(projectile.getGObject());
+		}
+		projectiles.clear();
 	}
 
 	public void onDeath() {// Trigger this when player is dead, should add other functions - tally score,
-							// etc.
+		// etc.
 		PlayerData.writeFile();
+		t.stop();
 		program.switchToDeath();
+	}
+
+	private void initPausing() {
+		GImage backing = new GImage("../media/pause.png");
+		pauseElements.add(backing);
+
+		quitPauseBtn = new GButtonMD("Exit to Menu", (MainApplication.WINDOW_WIDTH - 200) / 2,
+				MainApplication.getWindowHeight() / 2, 200, 100, "green");
+		pauseElements.add(quitPauseBtn);
+
 	}
 
 	@Override
@@ -245,20 +291,20 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			t.start();
 			return;
 		}
+		GObject obj = program.getElementAt(e.getX(), e.getY());
+		if (obj == quitPauseBtn) {
+			PlayerData.writeFile();
+			for (GObject o: pauseElements) {
+				program.remove(o);
+			}
+			program.switchToMenu();
+		}
 
-		// GObject obj = program.getElementAt(e.getX(), e.getY());
-		// if (obj == btnDie) {
-		// onDeath();
-		// }
-		// else {
-		// changeHealth(false);
-		// }
-		// if (player.getHealth() == 0) {
-		// onDeath();
-		// }
-		for (Projectile p : player.attack(e.getX(), e.getY())) {
-			program.getEntityManager().getProjectiles().add(p);
-			program.add(p.getGObject());
+		if (t.isRunning()) {
+			for (Projectile p : player.attack(e.getX(), e.getY())) {
+				program.getEntityManager().getProjectiles().add(p);
+				program.add(p.getGObject());
+			}
 		}
 	}
 
@@ -269,6 +315,18 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		if (dir != null) {
 			keysPressed.add(key);
 			direction = dir;
+		} else if (key == KeyEvent.VK_ESCAPE) {
+			if (t.isRunning()) {
+				for (GObject o : pauseElements) {
+					program.add(o);
+				}
+				t.stop();
+			} else {
+				for (GObject o : pauseElements) {
+					program.remove(o);
+				}
+				t.start();
+			}
 		}
 	}
 
@@ -303,7 +361,15 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		movePlayer();
 
+		enemyMove();
+
+		enemyAttack();
+
 		checkProjectileCollision();
+
+		if (player.getHealth() <= 0) {
+			onDeath();
+		}
 	}
 
 	private void movePlayer() {
@@ -332,13 +398,76 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void checkProjectileCollision() {
-		program.getEntityManager().getProjectiles().forEach((p) -> {
+		for (Projectile p : program.getEntityManager().getProjectiles()) {
 			p.move();
+			boolean collision = false;
+			if (collisionManager.isPlayerCollision(p)) {
+				collision = true;
+				player.setHealth(player.getHealth() - p.getDamage());
+				healthLabel.setLabel("Health: " + player.getHealth());
+			}
+			for (Enemy enemy : program.getEntityManager().getEnemies()) {
+				if (collisionManager.isEnemyCollision(enemy, p)) {
+					collision = true;
+					enemy.setHealth(enemy.getHealth() - p.getDamage());
+					if (enemy.getHealth() <= 0) {
+						program.remove(enemy.getGObject());
+						program.getEntityManager().getEnemies().remove(enemy);
+					}
+					break;
+				}
+			}
 			if (collisionManager.isTerrainCollision(p)) {
+				collision = true;
+			}
+			if (collision) {
 				program.getEntityManager().getProjectiles().remove(p);
 				program.remove(p.getGObject());
 			}
-		});
+		}
+	}
+
+	private void enemyAttack() {
+		GObject obj = player.getGObject();
+		double x = obj.getX() + obj.getWidth() / 2;
+		double y = obj.getY() + obj.getHeight() / 2;
+		for (Enemy enemy : program.getEntityManager().getEnemies()) {
+			for (Projectile p : enemy.attack(x, y)) {
+				program.getEntityManager().getProjectiles().add(p);
+				program.add(p.getGObject());
+			}
+		}
+	}
+
+	private void enemyMove() {
+		for (Enemy enemy : program.getEntityManager().getEnemies()) {
+			enemy.move(collisionManager, player);
+		}
+	}
+
+	private void minimapDestructor() {
+		for (GRect tile : minimap) {
+			program.remove(tile);
+		}
+	}
+
+	private void minimapBuilder() {
+		int startY = 10;
+		int startX = 10;
+		int moveX = (HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS;
+		int moveY = (HEADER_HEIGHT - 20) / FloorManager.FLOOR_ROWS;
+		for (int row = 0; row < FloorManager.FLOOR_ROWS; row++) {
+			for (int col = 0; col < FloorManager.FLOOR_COLS; col++) {
+				GRect tile = new GRect(startX, startY, moveX, moveY);
+				minimap.add(tile);
+				startX += moveX;
+			}
+			startX = 10;
+			startY += moveY;
+		}
+		for (GRect tile : minimap) {
+			program.add(tile);
+		}
 	}
 
 }
