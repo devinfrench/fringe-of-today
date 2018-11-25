@@ -24,6 +24,7 @@ import fringeoftoday.core.CollisionManager;
 import fringeoftoday.entities.Enemy;
 import fringeoftoday.entities.Player;
 import fringeoftoday.entities.Projectile;
+import fringeoftoday.entities.ShotgunEnemy;
 import fringeoftoday.entities.SniperEnemy;
 import fringeoftoday.entities.StandardEnemy;
 import fringeoftoday.floor.Direction;
@@ -235,6 +236,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					enemy.setVelocity(1);
 					break;
 				case SHOTGUN_SPAWN:
+					enemy = new ShotgunEnemy();
+					enemy.setDmgMult(0.5f);
+					enemy.setFireRate(15);
+					enemy.setHealth(1);
+					enemy.setVelocity(1);
 					break;
 				case SNIPER_SPAWN:
 					enemy = new SniperEnemy();
