@@ -63,6 +63,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private Player player;
 	private CollisionManager collisionManager;
 	private Timer t;
+	private int counter;
 	private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
 	private GButtonMD quitPauseBtn;
 
@@ -90,6 +91,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		// Timer
 		t = new Timer(DELAY_MS, this);
+		counter = 0;
 	}
 
 	private void infoDrawing() {
@@ -372,8 +374,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	// Timer loop
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		counter++;
 		movePlayer();
-
+		
+		animatePlayer();
+		
 		enemyMove();
 
 		enemyAttack();
@@ -409,7 +414,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			player.move(x, y);
 		}
 	}
-
+	
+	private void animatePlayer() {
+		
+	}
+	
 	private void checkProjectileCollision() {
 		for (Projectile p : program.getEntityManager().getProjectiles()) {
 			p.move();
