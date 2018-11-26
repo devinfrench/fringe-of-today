@@ -45,6 +45,30 @@ public class CollisionManager {
         return false;
     }
 
+    /**
+     * Returns the SpaceType if the player were to move the given x and y distances.
+     * @param x amount of movement on the x plane.
+     * @param y amount of movement on the y plane.
+     * @return the SpaceType if the player were to move the given x and y distances.
+     */
+    public SpaceType getPlayerSpaceType(double x, double y) {
+        GObject player = entityManager.getPlayer().getGObject();
+        if (player == null) {
+            return SpaceType.BLANK;
+        }
+        x = player.getX() + x + (player.getWidth() / 2);
+        y = player.getY() + y + (player.getHeight() / 2);
+        for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+            for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+                Space space = room.getSpace(i, j);
+                if (space.getGObject().contains(x, y)) {
+                    return space.getType();
+                }
+            }
+        }
+        return SpaceType.BLANK;
+    }
+
     public boolean enemyCanMove(double x, double y) {
         for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
             for (int j = 0; j < FloorManager.ROOM_COLS; j++) {

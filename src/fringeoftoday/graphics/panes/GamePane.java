@@ -478,12 +478,17 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		 */
 		x *= (5 + SPEED_EFFECT * Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 		y *= (5 + SPEED_EFFECT * Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
-		if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
-			player.move(x, y);
-			player.setIsMoving(true);
-		}
-		else {
+
+		if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.DOOR) {
 			player.setIsMoving(false);
+			// TODO go to next room
+		} else {
+			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
+				player.move(x, y);
+				player.setIsMoving(true);
+			} else {
+				player.setIsMoving(false);
+			}
 		}
 	}
 	
