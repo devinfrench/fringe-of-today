@@ -295,6 +295,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		// etc.
 		PlayerData.writeFile();
 		t.stop();
+		resetGame();
 		program.switchToDeath();
 	}
 	
@@ -373,6 +374,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			for (GObject o : pauseElements) {
 				program.remove(o);
 			}
+			resetGame();
 			program.switchToMenu();
 		}
 
@@ -715,5 +717,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		if (!room.isCleared())
 			showEnemies();
 		player.getGObject().sendToFront();
+	}
+	
+	public void resetGame(){
+		removeField();
+		FloorManager.generateNewFloor();
+		room = program.getFloorManager().getSpawnRoom();
+		collisionManager.setRoom(room);
 	}
 }
