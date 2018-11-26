@@ -69,6 +69,20 @@ public class MenuPane extends GraphicsPane {
 		btnTutorial = new GButtonMD("?", 0, 0, 100, 100);
 
 		// Audio button
+		audioStarter();
+
+		// Latest Score
+		lastRun = new GLabel("On your last run, you got to floor: " + PlayerData.getMap().get("PreviousRun"),
+				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 40);
+		lastRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
+
+		// Best Score
+		bestRun = new GLabel("On your best run, you got to floor: " + PlayerData.getMap().get("GOAT"),
+				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 15);
+		bestRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
+	}
+
+	private void audioStarter() {
 		int sounds;
 		try {
 			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
@@ -82,16 +96,6 @@ public class MenuPane extends GraphicsPane {
 			btnAudio = new GImage("../media/soundoff.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
 		}
 		btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
-
-		// Latest Score
-		lastRun = new GLabel("On your last run, you got to floor: " + PlayerData.getMap().get("PreviousRun"),
-				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 40);
-		lastRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
-
-		// Best Score
-		bestRun = new GLabel("On your best run, you got to floor: " + PlayerData.getMap().get("GOAT"),
-				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 15);
-		bestRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
 	}
 
 	@Override
@@ -139,6 +143,11 @@ public class MenuPane extends GraphicsPane {
 				PlayerData.newFile();
 				PlayerData.readPlayerFile();
 				confirm.setVisible(false);
+				AudioPlayer audio = AudioPlayer.getInstance();				
+				audio.playSound("sounds", "menumusic.mp3");
+				btnAudio.setImage("soundon.jpg");
+				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
+				PlayerData.updateMap("Sounds", 1);
 			}
 			else {
 				confirm.setVisible(true);
