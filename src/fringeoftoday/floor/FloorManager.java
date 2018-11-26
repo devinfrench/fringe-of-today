@@ -109,11 +109,11 @@ public class FloorManager {
 				switch (floorToGenerate[i][j]) {
 				case 'R':
 					ArrayList<Room> viableRooms = getViableRooms(i, j, floorToGenerate);
-					currentFloor.setRoom(i, j, viableRooms.get((int) (Math.random() * (viableRooms.size() - 1))));
+					currentFloor.setRoom(i, j, new Room(viableRooms.get((int) (Math.random() * (viableRooms.size() - 1)))));
 					break;
 
 				case 'S':
-					currentFloor.setRoom(i, j, spawnRoom);
+					currentFloor.setRoom(i, j, new Room(spawnRoom));
 					currentFloor.setSpawnRow(i);
 					currentFloor.setSpawnCol(j);
 					currentPlayerRow = i;
@@ -122,7 +122,7 @@ public class FloorManager {
 
 				case 'B':
 					currentFloor.setRoom(i, j,
-							bossRoomLayouts.get((int) (Math.random() * (bossRoomLayouts.size() - 1))));
+							new Room(bossRoomLayouts.get((int) (Math.random() * (bossRoomLayouts.size() - 1)))));
 					break;
 
 				default:
