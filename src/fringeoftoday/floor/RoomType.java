@@ -2,12 +2,12 @@ package fringeoftoday.floor;
 
 
 /**
- * Catagories of floors
+ * Catagories of rooms
  * 
  * @author Jacob Shour
  *
  */
-public enum FloorType {
+public enum RoomType {
 	/**
 	 * Standard room
 	 */
