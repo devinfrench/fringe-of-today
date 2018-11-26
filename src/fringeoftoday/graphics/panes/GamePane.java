@@ -483,21 +483,25 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			
 			//North
 			if (FloorManager.getOpenExits().contains(Exit.NORTH) && space.getNumCol() == Math.ceil(FloorManager.ROOM_COLS / 2) && space.getNumRow() < Math.ceil(FloorManager.ROOM_ROWS / 2)) {
+				playerOnMap.move(0, -(HEADER_HEIGHT - 20) / FloorManager.FLOOR_ROWS);
 				moveRoom(Exit.NORTH);
 			}
 			
 			//South
 			else if (FloorManager.getOpenExits().contains(Exit.SOUTH) && space.getNumCol() == (Math.ceil(FloorManager.ROOM_COLS / 2)) && space.getNumRow() > Math.ceil(FloorManager.ROOM_ROWS / 2)) {
+				playerOnMap.move(0, (HEADER_HEIGHT - 20) / FloorManager.FLOOR_ROWS);
 				moveRoom(Exit.SOUTH);
 			}
 			
 			//East
 			else if (FloorManager.getOpenExits().contains(Exit.EAST) && space.getNumRow() == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && space.getNumCol() > Math.ceil(FloorManager.ROOM_COLS / 2)) {
+				playerOnMap.move((HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS, 0);
 				moveRoom(Exit.EAST);
 			}
 			
 			//West
 			else if (FloorManager.getOpenExits().contains(Exit.WEST) && space.getNumRow() == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && space.getNumCol() < Math.ceil(FloorManager.ROOM_COLS / 2)) {
+				playerOnMap.move(-(HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS, 0);
 				moveRoom(Exit.WEST);
 			}
 		} else {
