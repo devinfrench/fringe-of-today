@@ -33,6 +33,7 @@ import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
 import fringeoftoday.floor.RoomType;
 import fringeoftoday.floor.Space;
+import fringeoftoday.floor.SpaceType;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.Sprites;
 import starter.GButtonMD;
@@ -303,6 +304,21 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		t.stop();
 		program.switchToDeath();
 	}
+	
+	public void clearRoom() {
+		//TODO Set room coords
+		String path;
+		
+		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+				if (FloorManager.getFloor().getRoom(1, 1).getSpace(i, j).getType() == SpaceType.DOOR) {
+					program.remove(FloorManager.getFloor().getRoom(1, 1).getSpace(i, j).getGObject());
+					FloorManager.getFloor().getRoom(1, 1).getSpace(i, j).setGObject();
+					program.add(FloorManager.getFloor().getRoom(1, 1).getSpace(i, j).getGObject());
+				}
+			}
+		}
+	}
 
 	private void initPausing() {
 		GImage backing = new GImage("../media/pause.png");
@@ -404,6 +420,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		if (player.getHealth() <= 0) {
 			onDeath();
+		}
+		
+		if (program.getEntityManager().getEnemies().size() == 0) {
+			clearRoom();
 		}
 	}
 
