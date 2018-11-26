@@ -478,25 +478,26 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.DOOR) {
 			player.setIsMoving(false);
-			//TODO
+			Space space = getPlayerSpace();
+			
 			//North
-			if (x == Math.ceil(FloorManager.ROOM_COLS / 2) && x < Math.ceil(FloorManager.ROOM_ROWS / 2)) {
-				
+			if (FloorManager.getOpenExits().contains(Exit.NORTH) && space.getNumCol() == Math.ceil(FloorManager.ROOM_COLS / 2) && space.getNumRow() < Math.ceil(FloorManager.ROOM_ROWS / 2)) {
+				moveRoom(Exit.NORTH);
 			}
 			
 			//South
-			else if (y == (Math.ceil(FloorManager.ROOM_COLS / 2)) && x > Math.ceil(FloorManager.ROOM_ROWS / 2)) {
-				
+			else if (FloorManager.getOpenExits().contains(Exit.SOUTH) && space.getNumCol() == (Math.ceil(FloorManager.ROOM_COLS / 2)) && space.getNumRow() > Math.ceil(FloorManager.ROOM_ROWS / 2)) {
+				moveRoom(Exit.SOUTH);
 			}
 			
 			//East
-			else if (x == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && y > Math.ceil(FloorManager.ROOM_COLS / 2)) {
-				
+			else if (FloorManager.getOpenExits().contains(Exit.EAST) && space.getNumRow() == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && space.getNumCol() > Math.ceil(FloorManager.ROOM_COLS / 2)) {
+				moveRoom(Exit.EAST);
 			}
 			
 			//West
-			else if (x == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && y < Math.ceil(FloorManager.ROOM_COLS / 2)) {
-				
+			else if (FloorManager.getOpenExits().contains(Exit.WEST) && space.getNumRow() == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && space.getNumCol() < Math.ceil(FloorManager.ROOM_COLS / 2)) {
+				moveRoom(Exit.WEST);
 			}
 		} else {
 			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
@@ -634,5 +635,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
         }
 		
 		return null;
+	}
+	
+	private void moveRoom(Exit exit) {
+		
 	}
 }
