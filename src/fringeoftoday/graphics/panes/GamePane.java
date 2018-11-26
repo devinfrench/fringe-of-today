@@ -29,6 +29,7 @@ import fringeoftoday.entities.ShotgunEnemy;
 import fringeoftoday.entities.SniperEnemy;
 import fringeoftoday.entities.StandardEnemy;
 import fringeoftoday.floor.Direction;
+import fringeoftoday.floor.Exit;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
 import fringeoftoday.floor.RoomType;
@@ -299,22 +300,48 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	
 	public void clearRoom() {
 		//TODO Set room coords
-		String path = variablePath(FILE_PATH);
 		Room room = FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol());
 		
-		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
-			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-				if (room.getSpace(i, j).getType() == SpaceType.DOOR) {
-					program.remove(room.getSpace(i, j).getGObject());
-					GImage openedDoor = new GImage(path + "ground.png", 
-							(j * FloorManager.SPACE_SIZE), (i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
-					openedDoor.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
-					room.getSpace(i, j).setGObject(openedDoor);
-					program.add(room.getSpace(i, j).getGObject());
-					room.getSpace(i, j).getGObject().sendToBack();
+		//North
+		if (room.getExits().contains(Exit.NORTH) && FloorManager.getCurrentPlayerRow() > 0 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() - 1, FloorManager.getCurrentPlayerCol()) != null)
+			openDoor(room.getSpace(0, (int) (Math.ceil(FloorManager.ROOM_COLS / 2))));
+		
+		//South
+		if (room.getExits().contains(Exit.SOUTH) && FloorManager.getCurrentPlayerRow() < FloorManager.ROOM_ROWS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() + 1, FloorManager.getCurrentPlayerCol()) != null)
+			openDoor(room.getSpace(FloorManager.ROOM_ROWS - 1, (int) (Math.ceil(FloorManager.ROOM_COLS / 2))));
+		
+		//East
+		if (room.getExits().contains(Exit.EAST) && FloorManager.getCurrentPlayerCol() < FloorManager.ROOM_COLS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol() + 1) != null) {
+			for (int i = FloorManager.ROOM_COLS - 1;; i--) {
+				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
+					openDoor(room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i));
+					break;
 				}
 			}
 		}
+		
+		//West
+		if (room.getExits().contains(Exit.WEST) && FloorManager.getCurrentPlayerCol() > 0 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol() - 1) != null) {
+			for (int i = 0;; i++) {
+				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
+					openDoor(room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i));
+					break;
+				}
+			}
+		}
+		
+	}
+	
+	private void openDoor(Space space) {
+		String path = variablePath(FILE_PATH);
+		
+		program.remove(space.getGObject());
+		GImage openedDoor = new GImage(path + "ground.png", 
+				(space.getNumCol() * FloorManager.SPACE_SIZE), (space.getNumRow() * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
+		openedDoor.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
+		space.setGObject(openedDoor);
+		program.add(space.getGObject());
+		space.getGObject().sendToBack();
 	}
 
 	private void initPausing() {
