@@ -17,6 +17,7 @@ import javax.swing.Timer;
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GObject;
+import acm.graphics.GOval;
 import acm.graphics.GRect;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
@@ -30,6 +31,7 @@ import fringeoftoday.entities.StandardEnemy;
 import fringeoftoday.floor.Direction;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
+import fringeoftoday.floor.RoomType;
 import fringeoftoday.floor.Space;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.Sprites;
@@ -49,16 +51,19 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
 
-	private ArrayList<GRect> minimap = new ArrayList<GRect>();
+	private ArrayList<GObject> minimap = new ArrayList<GObject>();
 
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
 	private int level = -1; // Work on this when we get it in
 	private GRect minimapBox; // Minimap, left header
+	private GImage bossIcon;
+	private GOval playerOnMap;
 	private GRect infoBox; // Center header
 	private GParagraph infoText;// Center header content
 	private GRect healthBox; // Right header
 	private GButtonMD levelAlert;
 	private GLabel healthLabel;
+	private GRect backingColor;
 	private Room room;
 	private Player player;
 	private CollisionManager collisionManager;
@@ -95,6 +100,13 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void infoDrawing() {
+		backingColor = new GRect(0, 0, MainApplication.WINDOW_WIDTH, HEADER_HEIGHT);
+		// Off black color
+//		backingColor.setFillColor(new Color(0,1,11));
+		// Pure black, which I (Alex R) prefer
+		backingColor.setFillColor(Color.BLACK);
+		backingColor.setFilled(true);
+		program.add(backingColor);
 		player.setMeleeDamage(1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")));
 		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
@@ -103,6 +115,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				+ player.getRangedDamage() + "\nMove Speed: " + player.getMoveSpeed(), 0, 0);
 
 		infoText.setFont(hdrFont);
+		infoText.setColor(Color.WHITE);
 		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
 				(infoBox.getY() - 50 + infoText.getHeight()) / 2);
 
@@ -117,6 +130,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private void drawHealth(int health) {
 		healthLabel = new GLabel("Health: " + health, HEADER_WIDTH * 2.25, HEADER_HEIGHT / 1.9);
 		healthLabel.setFont(hdrFont);
+		healthLabel.setColor(Color.WHITE);
 		program.add(healthLabel);
 	}
 
@@ -130,13 +144,13 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	@Override
 	public void showContents() {// split showContents into showHeader and showField for clarity
 		player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3);
+		infoDrawing();
 		showHeader(); // Top bar
 		createImageList();
 		showField(); // Game field
 		showPlayer();
 		showEnemies();
 		initHealth();
-		infoDrawing();
 		drawLevelAlert();
 		initPausing();
 	}
@@ -164,7 +178,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.remove(infoBox);
 		program.remove(infoText);
 		program.remove(healthBox);
+		program.remove(backingColor);
 		minimapDestructor();
+		program.remove(bossIcon);
 		pauseElements = new ArrayList<>();
 	}
 
@@ -229,7 +245,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				Space space = room.getSpace(i, j);
 				Enemy enemy = null;
 				switch (space.getType()) {
-					// TODO scaling
+				// TODO scaling
 				case BASIC_SPAWN:
 					enemy = new StandardEnemy();
 					enemy.setDmgMult(0.5f);
@@ -468,8 +484,29 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void minimapDestructor() {
-		for (GRect tile : minimap) {
+		for (GObject tile : minimap) {
 			program.remove(tile);
+		}
+	}
+
+	private void colorTile(Room r, GRect tile) {
+		if (r == null) {
+			tile.setVisible(false);
+			// Colors pending
+		} else if (r.getType() == RoomType.STANDARD) {
+			tile.setFillColor(Color.LIGHT_GRAY);
+			tile.setFilled(true);
+		} else if (r.getType() == RoomType.SPAWN) {
+			tile.setFillColor(Color.GREEN);
+			playerOnMap = new GOval(tile.getX() + (tile.getWidth()-tile.getHeight()*.75)/2, tile.getY() +tile.getHeight()*.125, tile.getHeight()*.75, tile.getHeight()*.75);
+			playerOnMap.setFillColor(Color.BLUE);
+			playerOnMap.setFilled(true);
+			tile.setFilled(true);
+		} else if (r.getType() == RoomType.BOSS) {
+			tile.setFillColor(Color.RED);
+			bossIcon = new GImage("boss_icon.png", tile.getX() + (tile.getWidth()-tile.getHeight())/2, tile.getY());
+			bossIcon.setSize(tile.getHeight(), tile.getHeight());
+			tile.setFilled(true);
 		}
 	}
 
@@ -481,15 +518,19 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		for (int row = 0; row < FloorManager.FLOOR_ROWS; row++) {
 			for (int col = 0; col < FloorManager.FLOOR_COLS; col++) {
 				GRect tile = new GRect(startX, startY, moveX, moveY);
+				Room r = FloorManager.getFloor().getRoom(row, col);
+				colorTile(r, tile);
 				minimap.add(tile);
 				startX += moveX;
 			}
 			startX = 10;
 			startY += moveY;
 		}
-		for (GRect tile : minimap) {
+		for (GObject tile : minimap) {
 			program.add(tile);
 		}
+		program.add(bossIcon);
+		program.add(playerOnMap);
 	}
 
 }
