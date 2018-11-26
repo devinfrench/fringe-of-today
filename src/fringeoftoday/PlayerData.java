@@ -26,23 +26,27 @@ public class PlayerData {
 
 			try {
 				// Fill it in with default values of 0
-				FileWriter fw = new FileWriter("../media/player.txt");
-				fw.write("Coin:0,");
-				fw.write("HPUpgrades:0,");
-				fw.write("MeleeUpgrades:0,");
-				fw.write("RangedUpgrades:0,");
-				fw.write("SpeedUpgrades:0,");
-				fw.write("PreviousRun:0,");
-				fw.write("GOAT:0,");
-				fw.write("Tutorial:0,");
-				fw.write("Sounds:1,");
-				fw.close();
+				clearFile();
 			} catch (IOException e2) {
 				System.out.println("No write");
 				e2.printStackTrace();
 			}
 		}
 		readPlayerFile();
+	}
+
+	private static void clearFile() throws IOException {
+		FileWriter fw = new FileWriter("../media/player.txt");
+		fw.write("Coin:0,");
+		fw.write("HPUpgrades:0,");
+		fw.write("MeleeUpgrades:0,");
+		fw.write("RangedUpgrades:0,");
+		fw.write("SpeedUpgrades:0,");
+		fw.write("PreviousRun:0,");
+		fw.write("GOAT:0,");
+		fw.write("Tutorial:0,");
+		fw.write("Sounds:1,");
+		fw.close();
 	}	
 	
 	public static void writeFile() {
