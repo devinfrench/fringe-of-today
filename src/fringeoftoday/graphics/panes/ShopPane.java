@@ -38,17 +38,17 @@ public class ShopPane extends GraphicsPane {
 	private GLine vertSeperator;
 
 	private GButtonMD hpBtn;
-	private GButtonMD meleeBtn;
+	private GButtonMD fireBtn;
 	private GButtonMD rangedBtn;
 	private GButtonMD speedBtn;
 
 	private GImage hpImg;
-	private GImage meleeImg;
+	private GImage fireImg;
 	private GImage rangedImg;
 	private GImage speedImg;
 
 	private GLabel hpLabel;
-	private GLabel meleeLabel;
+	private GLabel fireLabel;
 	private GLabel rangedLabel;
 	private GLabel speedLabel;
 
@@ -87,8 +87,8 @@ public class ShopPane extends GraphicsPane {
 		hpImg = new GImage(FILE_PATH + "hp_upgrade.png", MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
 
-		// Melee Image
-		meleeImg = new GImage(FILE_PATH + "melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		// Fire speed Image
+		fireImg = new GImage(FILE_PATH + "melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
 
 		// Ranged Image
@@ -114,14 +114,14 @@ public class ShopPane extends GraphicsPane {
 			hpBtn.setVisible(false);			
 		}
 
-		// Melee Damage Upgrade Button
-		int meleeCost = (Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")) + 1) * 10;
-		meleeBtn = new GButtonMD("Cost: " + meleeCost, RIGHT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
+		// Fire Speed Upgrade Button
+		int meleeCost = (Integer.parseInt(PlayerData.getMap().get("FireSpeedUpgrades")) + 1) * 10;
+		fireBtn = new GButtonMD("Cost: " + meleeCost, RIGHT_BTN, UP_BTN, BUTTON_WIDTH, BUTTON_HEIGHT);
 		if (meleeCost > Integer.parseInt(PlayerData.getMap().get("Coin"))) {
-			meleeBtn.setColor(Color.red);
+			fireBtn.setColor(Color.red);
 		}
-		if (Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")) == MAX_UPGRADES) {
-			meleeBtn.setVisible(false);			
+		if (Integer.parseInt(PlayerData.getMap().get("FireSpeedUpgrades")) == MAX_UPGRADES) {
+			fireBtn.setVisible(false);			
 		}
 
 		// Ranged Damage Upgrade Button
@@ -149,10 +149,10 @@ public class ShopPane extends GraphicsPane {
 				MainApplication.WINDOW_WIDTH / 2 - LABEL_WIDTH, MainApplication.WINDOW_HEIGHT / 8);
 		hpLabel.setFont("Terminal-24");
 
-		// Melee label to tell how much there is
-		meleeLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("MeleeUpgrades") + "/" + MAX_UPGRADES,
+		// Fire label to tell how much there is
+		fireLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("FireSpeedUpgrades") + "/" + MAX_UPGRADES,
 				MainApplication.WINDOW_WIDTH - LABEL_WIDTH, MainApplication.WINDOW_HEIGHT / 8);
-		meleeLabel.setFont("Terminal-24");
+		fireLabel.setFont("Terminal-24");
 
 		// Ranged label to tell how much there is
 		rangedLabel = new GLabel("Upgrades: " + PlayerData.getMap().get("RangedUpgrades") + "/" + MAX_UPGRADES,
@@ -177,15 +177,15 @@ public class ShopPane extends GraphicsPane {
 		program.add(horizSeparator);
 		program.add(vertSeperator);
 		program.add(hpBtn);
-		program.add(meleeBtn);
+		program.add(fireBtn);
 		program.add(rangedBtn);
 		program.add(speedBtn);
 		program.add(hpImg);
-		program.add(meleeImg);
+		program.add(fireImg);
 		program.add(rangedImg);
 		program.add(speedImg);
 		program.add(hpLabel);
-		program.add(meleeLabel);
+		program.add(fireLabel);
 		program.add(rangedLabel);
 		program.add(speedLabel);
 		coinCheat.sendToFront();
@@ -200,15 +200,15 @@ public class ShopPane extends GraphicsPane {
 		program.remove(horizSeparator);
 		program.remove(vertSeperator);
 		program.remove(hpBtn);
-		program.remove(meleeBtn);
+		program.remove(fireBtn);
 		program.remove(rangedBtn);
 		program.remove(speedBtn);
 		program.remove(hpImg);
-		program.remove(meleeImg);
+		program.remove(fireImg);
 		program.remove(rangedImg);
 		program.remove(speedImg);
 		program.remove(hpLabel);
-		program.remove(meleeLabel);
+		program.remove(fireLabel);
 		program.remove(rangedLabel);
 		program.remove(speedLabel);
 	}
@@ -217,8 +217,8 @@ public class ShopPane extends GraphicsPane {
 		String type = "";
 		if (obj == hpBtn) {
 			type = "HPUpgrades";
-		} else if (obj == meleeBtn) {
-			type = "MeleeUpgrades";
+		} else if (obj == fireBtn) {
+			type = "FireSpeedUpgrades";
 		} else if (obj == rangedBtn) {
 			type = "RangedUpgrades";
 		} else if (obj == speedBtn) {

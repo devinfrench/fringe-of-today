@@ -12,7 +12,7 @@ public class Player extends ActiveEntity {
     private static final int RANGED_ATTACK_DELAY = 500;
 
     private int money;
-    private int meleeDamage;
+    private int fireSpeed;
     private int rangedDamage;
     private int movementSpeed;
     private int maxHealth;
@@ -32,12 +32,12 @@ public class Player extends ActiveEntity {
         this.money = money;
     }
 
-    public int getMeleeDamage() {
-        return meleeDamage;
+    public int getFireSpeed() {
+        return fireSpeed;
     }
 
-    public void setMeleeDamage(int damage) {
-        this.meleeDamage = damage;
+    public void setFireDamage(int damage) {
+        this.fireSpeed = damage;
     }
 
     public int getRangedDamage() {
