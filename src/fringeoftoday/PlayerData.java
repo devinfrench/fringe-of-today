@@ -23,30 +23,29 @@ public class PlayerData {
 				System.out.println("Couldn't create file");
 				e1.printStackTrace();
 			}
-
-			try {
-				// Fill it in with default values of 0
-				clearFile();
-			} catch (IOException e2) {
-				System.out.println("No write");
-				e2.printStackTrace();
-			}
+			newFile();
 		}
 		readPlayerFile();
 	}
 
-	private static void clearFile() throws IOException {
-		FileWriter fw = new FileWriter("../media/player.txt");
-		fw.write("Coin:0,");
-		fw.write("HPUpgrades:0,");
-		fw.write("MeleeUpgrades:0,");
-		fw.write("RangedUpgrades:0,");
-		fw.write("SpeedUpgrades:0,");
-		fw.write("PreviousRun:0,");
-		fw.write("GOAT:0,");
-		fw.write("Tutorial:0,");
-		fw.write("Sounds:1,");
-		fw.close();
+	public static void newFile() {
+		try {
+			FileWriter fw = new FileWriter("../media/player.txt");
+			fw.write("Coin:0,");
+			fw.write("HPUpgrades:0,");
+			fw.write("MeleeUpgrades:0,");
+			fw.write("RangedUpgrades:0,");
+			fw.write("SpeedUpgrades:0,");
+			fw.write("PreviousRun:0,");
+			fw.write("GOAT:0,");
+			fw.write("Tutorial:0,");
+			fw.write("Sounds:1,");
+			fw.close();
+		} catch (IOException e2) {
+			System.out.println("No write");
+			e2.printStackTrace();
+		}
+
 	}	
 	
 	public static void writeFile() {

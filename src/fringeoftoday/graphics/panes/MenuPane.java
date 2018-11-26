@@ -107,7 +107,7 @@ public class MenuPane extends GraphicsPane {
 		program.remove(btnAudio);
 		program.remove(lastRun);
 		program.remove(bestRun);
-		program.add(btnNewFile);
+		program.remove(btnNewFile);
 	}
 
 	@Override
@@ -121,6 +121,9 @@ public class MenuPane extends GraphicsPane {
 			program.exitProgram();
 		} else if (obj == btnTutorial) {
 			program.switchToTutorial();
+		} else if (obj == btnNewFile) {
+			PlayerData.newFile();
+			PlayerData.readPlayerFile();
 		} else if (obj == btnAudio) {
 			AudioPlayer audio = AudioPlayer.getInstance();
 			int sounds;
