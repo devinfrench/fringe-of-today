@@ -19,6 +19,10 @@ public class CollisionManager {
         this.room = room;
     }
 
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
     public boolean playerCanMove(double x, double y) {
         GObject player = entityManager.getPlayer().getGObject();
         if (player == null) {
