@@ -9,3 +9,15 @@ X X X X W * * * * * B * W * B * * * * * W X X X X
 X X X X W ~ ~ * * * * * * * * * * * ~ ~ W X X X X
 X X X X W N ~ * * * * * * * * * * * ~ N W X X X X
 X X X X W W W W W W W W D W W W W W W W W X X X X
+
+W W W W W W W W W W W W D W W W W W W W W W W W W
+W * N ~ ~ ~ ~ ~ ~ ~ ~ W * W ~ ~ ~ ~ ~ ~ ~ ~ N * W
+W N * ~ ~ ~ ~ ~ ~ * * W * W * * ~ ~ ~ ~ ~ ~ * N W
+W ~ ~ ~ ~ ~ ~ ~ ~ * * W * W * * ~ ~ ~ ~ ~ ~ ~ ~ W
+W W W W W W W W W * * * * * * * W W W W W W W W W
+D * * * * * * * * * * * * * * * * * * * * * * * D
+W W W W W W W W W * * * * * * * W W W W W W W W W
+W ~ ~ ~ ~ ~ ~ ~ ~ * * * * * * * ~ ~ ~ ~ ~ ~ ~ ~ W
+W N * ~ ~ ~ ~ ~ ~ * * W * W * * ~ ~ ~ ~ ~ ~ * N W
+W * N ~ ~ ~ ~ ~ ~ ~ ~ W * W ~ ~ ~ ~ ~ ~ ~ ~ N * W
+W W W W W W W W W W W W D W W W W W W W W W W W W
