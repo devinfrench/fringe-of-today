@@ -25,6 +25,7 @@ public class FloorManager {
 	private static ArrayList<char[][]> floorLayouts = new ArrayList<char[][]>();
 	private static ArrayList<Room> roomLayouts = new ArrayList<Room>();
 	private static ArrayList<Room> bossRoomLayouts = new ArrayList<Room>();
+	private static ArrayList<Exit> openExits = new ArrayList<Exit>();
 	private static Floor currentFloor;
 	private static int currentPlayerRow;
 	private static int currentPlayerCol;
@@ -35,6 +36,10 @@ public class FloorManager {
 
 	public Room getSpawnRoom() {
 		return currentFloor.getRoom(currentFloor.getSpawnRow(), currentFloor.getSpawnCol());
+	}
+	
+	public static ArrayList<Exit> getOpenExits() {
+		return openExits;
 	}
 	
 	public static int getCurrentPlayerRow() {
@@ -82,6 +87,10 @@ public class FloorManager {
 	 */
 	public static void addBossRoomLayout(char layout[][]) {
 		bossRoomLayouts.add(generateRoom(layout, RoomType.BOSS));
+	}
+	
+	public static void addOpenExit(Exit exit) {
+		openExits.add(exit);
 	}
 
 	/**
@@ -226,6 +235,10 @@ public class FloorManager {
 		}
 
 		return viableRooms;
+	}
+	
+	public static void resetOpenExits() {
+		openExits = new ArrayList<Exit>();
 	}
 
 	/*
