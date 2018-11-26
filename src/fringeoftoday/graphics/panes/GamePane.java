@@ -307,7 +307,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 						Space space = room.getSpace(row, col);
 	
 						program.remove(space.getGObject());
-						GImage openedStairs = new GImage(FILE_PATH + "stairs.png",
+						GImage openedStairs = new GImage("../media/stairs.png",
 								(space.getNumCol() * FloorManager.SPACE_SIZE),
 								(space.getNumRow() * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
 						openedStairs.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
