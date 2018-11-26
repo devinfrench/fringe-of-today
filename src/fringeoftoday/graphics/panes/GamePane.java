@@ -247,6 +247,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					enemy.setFireRate(10);
 					enemy.setHealth(1);
 					enemy.setVelocity(1);
+					enemy.setSpriteSet("pikachu");
 					break;
 				case SHOTGUN_SPAWN:
 					enemy = new ShotgunEnemy();
