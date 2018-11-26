@@ -57,7 +57,6 @@ public class ShopPane extends GraphicsPane {
 	public ShopPane(MainApplication app) {
 		this.program = app;
 		loadFont();
-		initObjs();
 
 		// Button to cheat and add coins
 		coinCheat = new GButton("Add 10 coin", MainApplication.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2,
@@ -170,6 +169,7 @@ public class ShopPane extends GraphicsPane {
 
 	@Override
 	public void showContents() {
+		initObjs();
 		program.add(title);
 		program.add(btnBack);
 		program.add(headerSeparator);
