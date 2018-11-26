@@ -70,7 +70,7 @@ public class FloorManager {
 	public static void addFloorLayout(char layout[][]) {
 		char[][] temp = new char[FLOOR_ROWS][FLOOR_COLS];
 		for (int i = 0; i < FLOOR_ROWS; i++) {
-			for (int j = 0; j < FLOOR_ROWS; j++) {
+			for (int j = 0; j < FLOOR_COLS; j++) {
 				temp[i][j] = layout[i][j];
 			}
 		}
