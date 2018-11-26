@@ -59,6 +59,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private GRect healthBox; // Right header
 	private GButtonMD levelAlert;
 	private GLabel healthLabel;
+	private GRect backingColor;
 	private Room room;
 	private Player player;
 	private CollisionManager collisionManager;
@@ -93,6 +94,13 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void infoDrawing() {
+		backingColor = new GRect(0,0,MainApplication.WINDOW_WIDTH,HEADER_HEIGHT);
+		// Off black color
+//		backingColor.setFillColor(new Color(0,1,11));
+		// Pure black, which I (Alex R) prefer
+		backingColor.setFillColor(Color.BLACK);
+		backingColor.setFilled(true);
+		program.add(backingColor);
 		player.setMeleeDamage(1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")));
 		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
@@ -101,6 +109,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				+ player.getRangedDamage() + "\nMove Speed: " + player.getMoveSpeed(), 0, 0);
 
 		infoText.setFont(hdrFont);
+		infoText.setColor(Color.WHITE);
 		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
 				(infoBox.getY() - 50 + infoText.getHeight()) / 2);
 
@@ -115,6 +124,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private void drawHealth(int health) {
 		healthLabel = new GLabel("Health: " + health, HEADER_WIDTH * 2.25, HEADER_HEIGHT / 1.9);
 		healthLabel.setFont(hdrFont);
+		healthLabel.setColor(Color.WHITE);
 		program.add(healthLabel);
 	}
 
@@ -128,13 +138,13 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	@Override
 	public void showContents() {// split showContents into showHeader and showField for clarity
 		player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3);
+		infoDrawing();
 		showHeader(); // Top bar
 		createImageList();
 		showField(); // Game field
 		showPlayer();
 		showEnemies();
 		initHealth();
-		infoDrawing();
 		drawLevelAlert();
 		initPausing();
 	}
@@ -148,6 +158,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		removeProjectiles();
 		program.remove(healthLabel);
 		program.remove(infoText);
+		program.remove(backingColor);
 	}
 
 	public void showHeader() {
@@ -466,7 +477,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	
 	private void colorTile(Room r, GRect tile) {
 		if (r != null) {
-			tile.setFillColor(Color.GRAY);
+			tile.setFillColor(Color.WHITE);
 			tile.setFilled(true);
 		}
 		else {
