@@ -55,6 +55,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
 	private int level = -1; // Work on this when we get it in
 	private GRect minimapBox; // Minimap, left header
+	private GImage bossIcon;
 	private GRect infoBox; // Center header
 	private GParagraph infoText;// Center header content
 	private GRect healthBox; // Right header
@@ -175,6 +176,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.remove(healthBox);
 		program.remove(backingColor);
 		minimapDestructor();
+		program.remove(bossIcon);
 		pauseElements = new ArrayList<>();
 	}
 
@@ -488,6 +490,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			tile.setFilled(true);
 		} else if (r.getType() == RoomType.BOSS) {
 			tile.setFillColor(Color.RED);
+			bossIcon = new GImage("boss_icon.png", tile.getX() + (tile.getWidth()-tile.getHeight())/2, tile.getY());
+			bossIcon.setSize(tile.getHeight(), tile.getHeight());
 			tile.setFilled(true);
 		}
 	}
@@ -511,6 +515,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		for (GObject tile : minimap) {
 			program.add(tile);
 		}
+		program.add(bossIcon);
 	}
 
 }
