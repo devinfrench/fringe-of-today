@@ -458,7 +458,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		double y = 0;
 		if (direction == Direction.NORTH) {
 			y = -1;
-			player.setFacing("north");
+			player.setFacing("north");//Sets facing for player rendering
 		} else if (direction == Direction.SOUTH) {
 			y = 1;
 			player.setFacing("south");
@@ -504,12 +504,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		} else {
 			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 				player.move(x, y);
-				player.setIsMoving(true);
+				player.setIsMoving(true);//Sets player move state
 			} else {
 				player.setIsMoving(false);
 			}
 		}
-		animatePlayer();
+		animatePlayer();//Animating player
 	}
 	
 	private void animatePlayer() {
