@@ -428,6 +428,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		y *= (5 + SPEED_EFFECT * Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 		if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 			player.move(x, y);
+			player.setIsMoving(true);
+		}
+		else {
+			player.setIsMoving(false);
 		}
 	}
 	
