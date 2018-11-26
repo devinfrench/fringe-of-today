@@ -584,6 +584,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		for (GObject tile : minimap) {
 			program.remove(tile);
 		}
+		minimap.clear();
 	}
 
 	private void colorTile(Room r, GRect tile) {
