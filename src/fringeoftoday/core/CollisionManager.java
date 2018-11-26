@@ -51,8 +51,8 @@ public class CollisionManager {
 
     /**
      * Returns the SpaceType if the player were to move the given x and y distances.
-     * @param x amount of movement on the x plane.
-     * @param y amount of movement on the y plane.
+     * @param x amount of movement on the x axis.
+     * @param y amount of movement on the y axis.
      * @return the SpaceType if the player were to move the given x and y distances.
      */
     public SpaceType getPlayerSpaceType(double x, double y) {
