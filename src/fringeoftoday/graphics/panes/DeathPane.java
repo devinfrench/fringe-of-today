@@ -37,7 +37,7 @@ public class DeathPane extends GraphicsPane {
 
 	private void makeDeathMessage() {
 		coins = PlayerData.getMap().get("Coin");	//Pulls the coinage from the map
-		deathMessage = new GParagraph("Highest level: "+level+", Coins: "+coins+", Killed by: "+killer+"\n\nPress any key to continue", 0,0);
+		deathMessage = new GParagraph("Highest level: "+level+", Coins: "+coins+", Killed by: "+killer+"\n", 0,0);
 		deathMessage.setColor(Color.WHITE);
 		deathMessage.setFont(txtFont);
 		deathMessage.move((MainApplication.WINDOW_WIDTH-deathMessage.getWidth())/2, 600);
