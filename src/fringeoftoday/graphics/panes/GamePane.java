@@ -552,16 +552,20 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	private void animatePlayer() {
 		if (player.getIsMoving()) {
-			if (counter % 6 < 3) {
-				((GImage) player.getGObject())
-						.setImage("../media/sprites/player_walking_" + player.getFacing() + "_1.png");
-			} else {
-				((GImage) player.getGObject())
-						.setImage("../media/sprites/player_walking_" + player.getFacing() + "_2.png");
+			if(counter%7==0) {
+				((GImage)player.getGObject()).setImage("../media/sprites/player/player_walking_"+player.getFacing()+"_1.png");
 			}
-		} else {
+			else if(counter%7==3){
+				((GImage)player.getGObject()).setImage("../media/sprites/player/player_standing_"+player.getFacing()+".png");
+				
+			}
+			else if(counter%7==6) {
+				((GImage)player.getGObject()).setImage("../media/sprites/player/player_walking_"+player.getFacing()+"_2.png");
+			}
+		}
+		else {
+			((GImage)player.getGObject()).setImage("../media/sprites/player/player_standing_"+player.getFacing()+".png");
 
-			((GImage) player.getGObject()).setImage("../media/sprites/player_standing_" + player.getFacing() + ".png");
 		}
 	}
 
