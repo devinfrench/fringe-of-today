@@ -346,7 +346,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		openedDoor.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 		space.setGObject(openedDoor);
 		program.add(space.getGObject());
-		space.getGObject().sendToBack();
+		player.getGObject().sendToFront();
 	}
 
 	private void initPausing() {
