@@ -24,6 +24,14 @@ public class Room {
 		cleared = false;
 		this.type = type;
 	}
+	
+	public Room(Room copiedRoom) {
+		this.roomLayout = copiedRoom.roomLayout;
+		this.exits = copiedRoom.exits;
+		this.directions = copiedRoom.directions;
+		this.type = copiedRoom.type;
+		this.cleared = copiedRoom.cleared;
+	}
 
 	public Space getSpace(int row, int col) {
 		return roomLayout[row][col];
