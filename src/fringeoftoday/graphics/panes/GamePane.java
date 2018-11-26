@@ -303,18 +303,23 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		Room room = FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol());
 		
 		//North
-		if (room.getExits().contains(Exit.NORTH) && FloorManager.getCurrentPlayerRow() > 0 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() - 1, FloorManager.getCurrentPlayerCol()) != null)
+		if (room.getExits().contains(Exit.NORTH) && FloorManager.getCurrentPlayerRow() > 0 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() - 1, FloorManager.getCurrentPlayerCol()) != null) {
 			openDoor(room.getSpace(0, (int) (Math.ceil(FloorManager.ROOM_COLS / 2))));
+			FloorManager.addOpenExit(Exit.NORTH);
+		}
 		
 		//South
-		if (room.getExits().contains(Exit.SOUTH) && FloorManager.getCurrentPlayerRow() < FloorManager.ROOM_ROWS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() + 1, FloorManager.getCurrentPlayerCol()) != null)
+		if (room.getExits().contains(Exit.SOUTH) && FloorManager.getCurrentPlayerRow() < FloorManager.ROOM_ROWS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() + 1, FloorManager.getCurrentPlayerCol()) != null) {
 			openDoor(room.getSpace(FloorManager.ROOM_ROWS - 1, (int) (Math.ceil(FloorManager.ROOM_COLS / 2))));
+			FloorManager.addOpenExit(Exit.SOUTH);
+		}
 		
 		//East
 		if (room.getExits().contains(Exit.EAST) && FloorManager.getCurrentPlayerCol() < FloorManager.ROOM_COLS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol() + 1) != null) {
 			for (int i = FloorManager.ROOM_COLS - 1;; i--) {
 				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
 					openDoor(room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i));
+					FloorManager.addOpenExit(Exit.EAST);
 					break;
 				}
 			}
@@ -325,6 +330,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			for (int i = 0;; i++) {
 				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
 					openDoor(room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i));
+					FloorManager.addOpenExit(Exit.WEST);
 					break;
 				}
 			}
