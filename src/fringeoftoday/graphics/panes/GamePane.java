@@ -207,15 +207,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		int cols = FloorManager.ROOM_COLS;
 		GImage temp;
 
-		String path = FILE_PATH;
-		if (FloorManager.getFloor().getLevel() <= 5)
-			path = path + "RockPath/";
-		else if (FloorManager.getFloor().getLevel() >= 6 && FloorManager.getFloor().getLevel() <= 10)
-			path = path + "SealedRuin/";
-		else if (FloorManager.getFloor().getLevel() >= 11 && FloorManager.getFloor().getLevel() <= 15)
-			path = path + "SteamCave/";
-		else
-			path = path + "DarkCrater/";
+		String path = variablePath(FILE_PATH);
 
 		room.setFilePaths();
 
@@ -307,7 +299,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	
 	public void clearRoom() {
 		//TODO Set room coords
-		String path;
+		String path = variablePath(FILE_PATH);;
 		
 		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
 			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
@@ -558,4 +550,16 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.add(playerOnMap);
 	}
 
+	private String variablePath(String path) {
+		if (FloorManager.getFloor().getLevel() <= 5)
+			path = path + "RockPath/";
+		else if (FloorManager.getFloor().getLevel() >= 6 && FloorManager.getFloor().getLevel() <= 10)
+			path = path + "SealedRuin/";
+		else if (FloorManager.getFloor().getLevel() >= 11 && FloorManager.getFloor().getLevel() <= 15)
+			path = path + "SteamCave/";
+		else
+			path = path + "DarkCrater/";
+		
+		return path;
+	}
 }
