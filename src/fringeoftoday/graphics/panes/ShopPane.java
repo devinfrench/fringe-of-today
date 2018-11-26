@@ -88,7 +88,7 @@ public class ShopPane extends GraphicsPane {
 				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
 
 		// Fire speed Image
-		fireImg = new GImage(FILE_PATH + "melee_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
+		fireImg = new GImage(FILE_PATH + "firing_speed_upgrade.png", 3 * MainApplication.WINDOW_WIDTH / 4 - IMAGE_SIZE / 2,
 				12 * MainApplication.WINDOW_HEIGHT / 22 - IMAGE_SIZE * 1.5);
 
 		// Ranged Image
