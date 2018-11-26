@@ -295,6 +295,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		// etc.
 		PlayerData.writeFile();
 		t.stop();
+		resetGame();
 		program.switchToDeath();
 	}
 	
@@ -345,7 +346,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		openedDoor.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 		space.setGObject(openedDoor);
 		program.add(space.getGObject());
-		space.getGObject().sendToBack();
+		player.getGObject().sendToFront();
 	}
 
 	private void initPausing() {
@@ -373,6 +374,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			for (GObject o : pauseElements) {
 				program.remove(o);
 			}
+			resetGame();
 			program.switchToMenu();
 		}
 
@@ -444,12 +446,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		checkProjectileCollision();
 
-		if (player.getHealth() <= 0) {
-			onDeath();
-		}
-		
 		if (program.getEntityManager().getEnemies().size() == 0) {
 			clearRoom();
+		}
+		
+		if (player.getHealth() <= 0) {
+			onDeath();
 		}
 	}
 
@@ -586,6 +588,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		for (GObject tile : minimap) {
 			program.remove(tile);
 		}
+		minimap.clear();
 	}
 
 	private void colorTile(Room r, GRect tile) {
@@ -719,5 +722,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		if (!room.isCleared())
 			showEnemies();
 		player.getGObject().sendToFront();
+	}
+	
+	public void resetGame(){
+		removeField();
+		FloorManager.generateNewFloor();
+		room = program.getFloorManager().getSpawnRoom();
+		collisionManager.setRoom(room);
 	}
 }

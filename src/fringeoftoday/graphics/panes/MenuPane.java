@@ -31,6 +31,7 @@ public class MenuPane extends GraphicsPane {
 	private GImage btnAudio;
 	private GLabel lastRun;
 	private GLabel bestRun;
+	private GButtonMD btnNewFile;
 
 	public MenuPane(MainApplication app) {
 		super();
@@ -42,6 +43,9 @@ public class MenuPane extends GraphicsPane {
 		// Play button
 		btnPlay = new GButtonMD("Play", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 400, BUTTON_WIDTH,
 				BUTTON_HEIGHT, "blue");
+		
+		// New file button
+		btnNewFile = new GButtonMD("NEW", (MainApplication.WINDOW_WIDTH+BUTTON_WIDTH+20) / 2, 400, BUTTON_HEIGHT, BUTTON_HEIGHT, "blue");
 
 		// Shop button
 		btnShop = new GButtonMD("Shop", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 550, BUTTON_WIDTH,
@@ -90,6 +94,7 @@ public class MenuPane extends GraphicsPane {
 		program.add(btnAudio);
 		program.add(lastRun);
 		program.add(bestRun);
+		program.add(btnNewFile);
 	}
 
 	@Override
@@ -102,6 +107,7 @@ public class MenuPane extends GraphicsPane {
 		program.remove(btnAudio);
 		program.remove(lastRun);
 		program.remove(bestRun);
+		program.remove(btnNewFile);
 	}
 
 	@Override
@@ -115,6 +121,9 @@ public class MenuPane extends GraphicsPane {
 			program.exitProgram();
 		} else if (obj == btnTutorial) {
 			program.switchToTutorial();
+		} else if (obj == btnNewFile) {
+			PlayerData.newFile();
+			PlayerData.readPlayerFile();
 		} else if (obj == btnAudio) {
 			AudioPlayer audio = AudioPlayer.getInstance();
 			int sounds;
