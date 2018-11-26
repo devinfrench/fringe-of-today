@@ -56,7 +56,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private ArrayList<GObject> minimap = new ArrayList<GObject>();
 
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
-	private int level = -1; // Work on this when we get it in
+	private int level = 1; // Work on this when we get it in
 	private GRect minimapBox; // Minimap, left header
 	private GImage bossIcon;
 	private GOval playerOnMap;
@@ -539,7 +539,16 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				playerOnMap.move(-(HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS, 0);
 				moveRoom(Exit.WEST);
 			}
-		} else {
+		} 
+		else if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.STAIRS) {
+			level++;
+			resetGame();
+			showField();
+			player.getGObject().setLocation(Math.ceil(FloorManager.ROOM_COLS / 2) * FloorManager.SPACE_SIZE, Math.ceil(FloorManager.ROOM_ROWS / 2) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			player.getGObject().sendToFront();
+			drawLevelAlert();
+		} 
+		else {
 			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 				player.move(x, y);
 				player.setIsMoving(true);// Sets player move state
