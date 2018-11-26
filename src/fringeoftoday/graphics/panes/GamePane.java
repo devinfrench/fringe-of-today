@@ -94,7 +94,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void infoDrawing() {
-		backingColor = new GRect(0,0,MainApplication.WINDOW_WIDTH,HEADER_HEIGHT);
+		backingColor = new GRect(0, 0, MainApplication.WINDOW_WIDTH, HEADER_HEIGHT);
 		// Off black color
 //		backingColor.setFillColor(new Color(0,1,11));
 		// Pure black, which I (Alex R) prefer
@@ -158,7 +158,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		removeProjectiles();
 		program.remove(healthLabel);
 		program.remove(infoText);
-		program.remove(backingColor);
 	}
 
 	public void showHeader() {
@@ -173,6 +172,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.remove(infoBox);
 		program.remove(infoText);
 		program.remove(healthBox);
+		program.remove(backingColor);
 		minimapDestructor();
 		pauseElements = new ArrayList<>();
 	}
@@ -238,7 +238,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				Space space = room.getSpace(i, j);
 				Enemy enemy = null;
 				switch (space.getType()) {
-					// TODO scaling
+				// TODO scaling
 				case BASIC_SPAWN:
 					enemy = new StandardEnemy();
 					enemy.setDmgMult(0.5f);
@@ -474,13 +474,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			program.remove(tile);
 		}
 	}
-	
+
 	private void colorTile(Room r, GRect tile) {
 		if (r != null) {
 			tile.setFillColor(Color.WHITE);
 			tile.setFilled(true);
-		}
-		else {
+		} else {
 			tile.setVisible(false);
 		}
 	}
