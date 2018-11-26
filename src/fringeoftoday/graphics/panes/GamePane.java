@@ -306,13 +306,13 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		}
 		
 		//South
-		if (room.getExits().contains(Exit.SOUTH) && FloorManager.getCurrentPlayerRow() < FloorManager.ROOM_ROWS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() + 1, FloorManager.getCurrentPlayerCol()) != null) {
+		if (room.getExits().contains(Exit.SOUTH) && FloorManager.getCurrentPlayerRow() < FloorManager.FLOOR_ROWS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() + 1, FloorManager.getCurrentPlayerCol()) != null) {
 			openDoor(room.getSpace(FloorManager.ROOM_ROWS - 1, (int) (Math.ceil(FloorManager.ROOM_COLS / 2))));
 			FloorManager.addOpenExit(Exit.SOUTH);
 		}
 		
 		//East
-		if (room.getExits().contains(Exit.EAST) && FloorManager.getCurrentPlayerCol() < FloorManager.ROOM_COLS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol() + 1) != null) {
+		if (room.getExits().contains(Exit.EAST) && FloorManager.getCurrentPlayerCol() < FloorManager.FLOOR_COLS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol() + 1) != null) {
 			for (int i = FloorManager.ROOM_COLS - 1;; i--) {
 				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
 					openDoor(room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i));
@@ -638,6 +638,65 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 	
 	private void moveRoom(Exit exit) {
+		int temp;
+		FloorManager.resetOpenExits();
+		removeField();
 		
+		switch(exit) {
+		case NORTH:
+			FloorManager.setCurrentPlayerRow(FloorManager.getCurrentPlayerRow() - 1);
+			break;
+			
+		case SOUTH:
+			FloorManager.setCurrentPlayerRow(FloorManager.getCurrentPlayerRow() + 1);
+			break;
+			
+		case EAST:
+			FloorManager.setCurrentPlayerCol(FloorManager.getCurrentPlayerCol() + 1);
+			break;
+			
+		case WEST:
+			FloorManager.setCurrentPlayerCol(FloorManager.getCurrentPlayerCol() - 1);
+			break;
+		}
+		
+		room = FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol());
+		collisionManager.setRoom(room);
+		
+		switch(exit) {
+		case NORTH:
+			player.getGObject().setLocation((Math.ceil(FloorManager.ROOM_COLS / 2)) * FloorManager.SPACE_SIZE, (FloorManager.ROOM_ROWS - 2) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			break;
+			
+		case SOUTH:
+			player.getGObject().setLocation((Math.ceil(FloorManager.ROOM_COLS / 2)) * FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			break;
+			
+		case EAST:
+			for (int i = 0;; i++) {
+				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
+					temp = i + 1;
+					break;
+				}
+			}
+			player.getGObject().setLocation(temp * FloorManager.SPACE_SIZE, (Math.ceil(FloorManager.ROOM_ROWS / 2)) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			break;
+			
+		case WEST:
+			for (int i = FloorManager.ROOM_COLS - 1;; i--) {
+				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
+					temp = i - 1;
+					break;
+				}
+			}
+			player.getGObject().setLocation(temp * FloorManager.SPACE_SIZE, (Math.ceil(FloorManager.ROOM_ROWS / 2)) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			break;
+		}
+		
+		createImageList();
+		showField();
+		if (!room.isCleared())
+			showEnemies();
+		player.getGObject().sendToFront();
 	}
 }
