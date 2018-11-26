@@ -62,6 +62,11 @@ public abstract class Enemy extends ActiveEntity {
                 if (dist < closest && collisionManager.enemyCanMove(x, y)) {
                     closest = dist;
                     p = getMovePoint(dx, dy);
+                    this.setIsMoving(true);
+                }
+                else
+                {
+                	this.setIsMoving(false);
                 }
             }
         }
