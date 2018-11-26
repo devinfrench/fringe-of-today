@@ -224,7 +224,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	public void showPlayer() {
-		Image sprite = Sprites.loadSprite("player_sprite_temp.png");
+		Image sprite = Sprites.loadSprite("../media/sprites/player_standing_south.png");
 		player.setGObject(new GImage(sprite, 24 * (FloorManager.SPACE_SIZE / 2), 16 * (FloorManager.SPACE_SIZE / 2)));
 		program.add(player.getGObject());
 	}
@@ -435,10 +435,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	// Timer loop
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		counter++;
+		counter++;		
 		movePlayer();
-		
-		animatePlayer();
 		
 		enemyMove();
 
@@ -460,12 +458,16 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		double y = 0;
 		if (direction == Direction.NORTH) {
 			y = -1;
+			player.setFacing("north");
 		} else if (direction == Direction.SOUTH) {
 			y = 1;
+			player.setFacing("south");
 		} else if (direction == Direction.WEST) {
 			x = -1;
+			player.setFacing("west");
 		} else if (direction == Direction.EAST) {
 			x = 1;
+			player.setFacing("east");
 		}
 		/*
 		 * Here the SPEED_EFFECT changes how quickly guy moves with speed upgrades. With
@@ -507,10 +509,22 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				player.setIsMoving(false);
 			}
 		}
+		animatePlayer();
 	}
 	
 	private void animatePlayer() {
-		
+		if (player.getIsMoving()) {
+			if(counter%4<2) {
+				((GImage)player.getGObject()).setImage("../media/sprites/player_walking_"+player.getFacing()+"_1.png");
+			}
+			else {
+				((GImage)player.getGObject()).setImage("../media/sprites/player_walking_"+player.getFacing()+"_2.png");
+			}
+		}
+		else {
+			
+			((GImage)player.getGObject()).setImage("../media/sprites/player_standing_"+player.getFacing()+".png");
+		}
 	}
 	
 	private void checkProjectileCollision() {
