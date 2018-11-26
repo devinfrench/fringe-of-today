@@ -26,6 +26,8 @@ public class FloorManager {
 	private static ArrayList<Room> roomLayouts = new ArrayList<Room>();
 	private static ArrayList<Room> bossRoomLayouts = new ArrayList<Room>();
 	private static Floor currentFloor;
+	private static int currentPlayerRow;
+	private static int currentPlayerCol;
 
 	public static Floor getFloor() {
 		return currentFloor;
@@ -34,9 +36,25 @@ public class FloorManager {
 	public Room getSpawnRoom() {
 		return currentFloor.getRoom(currentFloor.getSpawnRow(), currentFloor.getSpawnCol());
 	}
+	
+	public static int getCurrentPlayerRow() {
+		return currentPlayerRow;
+	}
+	
+	public static int getCurrentPlayerCol() {
+		return currentPlayerCol;
+	}
 
 	public static void setSpawnRoom(char layout[][]) {
 		spawnRoom = generateRoom(layout, RoomType.SPAWN);
+	}
+	
+	public static void setCurrentPlayerRow(int row) {
+		currentPlayerRow = row;
+	}
+	
+	public static void setCurrentPlayerCol(int col) {
+		currentPlayerCol = col;
 	}
 
 	/**
@@ -89,6 +107,8 @@ public class FloorManager {
 					currentFloor.setRoom(i, j, spawnRoom);
 					currentFloor.setSpawnRow(i);
 					currentFloor.setSpawnCol(j);
+					currentPlayerRow = i;
+					currentPlayerCol = j;
 					break;
 
 				case 'B':
