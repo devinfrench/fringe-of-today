@@ -224,7 +224,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	public void showPlayer() {
-		Image sprite = Sprites.loadSprite("../media/sprites/player_standing_south.png");
+		Image sprite = Sprites.loadSprite("../media/sprites/player/player_standing_south.png");
 		player.setGObject(new GImage(sprite, 24 * (FloorManager.SPACE_SIZE / 2), 16 * (FloorManager.SPACE_SIZE / 2)));
 		program.add(player.getGObject());
 	}
