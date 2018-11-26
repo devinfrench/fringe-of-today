@@ -36,7 +36,7 @@ public class FloorManager {
 	}
 
 	public static void setSpawnRoom(char layout[][]) {
-		spawnRoom = generateRoom(layout);
+		spawnRoom = generateRoom(layout, RoomType.SPAWN);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class FloorManager {
 	 * @param layout - Layout to add
 	 */
 	public static void addRoomLayout(char layout[][]) {
-		roomLayouts.add(generateRoom(layout));
+		roomLayouts.add(generateRoom(layout, RoomType.STANDARD));
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class FloorManager {
 	 * @param layout - Layout to add
 	 */
 	public static void addBossRoomLayout(char layout[][]) {
-		bossRoomLayouts.add(generateRoom(layout));
+		bossRoomLayouts.add(generateRoom(layout, RoomType.BOSS));
 	}
 
 	/**
@@ -109,8 +109,8 @@ public class FloorManager {
 	 * @param layout - The char array that determines the layout of a room
 	 * @return A new room generated from the layout
 	 */
-	public static Room generateRoom(char layout[][]) {
-		Room r = new Room();
+	public static Room generateRoom(char layout[][], RoomType type) {
+		Room r = new Room(type);
 
 		for (int i = 0; i < ROOM_ROWS; i++) {
 			for (int j = 0; j < ROOM_COLS; j++) {
