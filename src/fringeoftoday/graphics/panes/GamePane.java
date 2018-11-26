@@ -17,6 +17,7 @@ import javax.swing.Timer;
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GObject;
+import acm.graphics.GOval;
 import acm.graphics.GRect;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
@@ -56,6 +57,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private int level = -1; // Work on this when we get it in
 	private GRect minimapBox; // Minimap, left header
 	private GImage bossIcon;
+	private GOval playerOnMap;
 	private GRect infoBox; // Center header
 	private GParagraph infoText;// Center header content
 	private GRect healthBox; // Right header
@@ -487,6 +489,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			tile.setFilled(true);
 		} else if (r.getType() == RoomType.SPAWN) {
 			tile.setFillColor(Color.GREEN);
+			playerOnMap = new GOval(tile.getX() + (tile.getWidth()-tile.getHeight()*.75)/2, tile.getY() +tile.getHeight()*.125, tile.getHeight()*.75, tile.getHeight()*.75);
+			playerOnMap.setFillColor(Color.BLUE);
+			playerOnMap.setFilled(true);
 			tile.setFilled(true);
 		} else if (r.getType() == RoomType.BOSS) {
 			tile.setFillColor(Color.RED);
@@ -516,6 +521,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			program.add(tile);
 		}
 		program.add(bossIcon);
+		program.add(playerOnMap);
 	}
 
 }
