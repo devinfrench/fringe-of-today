@@ -446,12 +446,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		checkProjectileCollision();
 
-		if (player.getHealth() <= 0) {
-			onDeath();
-		}
-		
 		if (program.getEntityManager().getEnemies().size() == 0) {
 			clearRoom();
+		}
+		
+		if (player.getHealth() <= 0) {
+			onDeath();
 		}
 	}
 
