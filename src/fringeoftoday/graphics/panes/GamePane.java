@@ -298,22 +298,46 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		resetGame();
 		program.switchToDeath();
 	}
-	
+
 	public void clearRoom() {
-		//North
-		if (room.getExits().contains(Exit.NORTH) && FloorManager.getCurrentPlayerRow() > 0 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() - 1, FloorManager.getCurrentPlayerCol()) != null) {
+		if (room.getType() == RoomType.BOSS) {
+			for (int row = 0; row < FloorManager.ROOM_ROWS; row++) {
+				for (int col = 0; col < FloorManager.ROOM_COLS; col++) {
+					if (room.getSpace(row, col).getType() == SpaceType.STAIRS) {
+						Space space = room.getSpace(row, col);
+	
+						program.remove(space.getGObject());
+						GImage openedStairs = new GImage(FILE_PATH + "stairs.png",
+								(space.getNumCol() * FloorManager.SPACE_SIZE),
+								(space.getNumRow() * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
+						openedStairs.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
+						space.setGObject(openedStairs);
+						program.add(space.getGObject());
+						player.getGObject().sendToFront();
+					}
+				}
+			}
+		}
+
+		// North
+		if (room.getExits().contains(Exit.NORTH) && FloorManager.getCurrentPlayerRow() > 0 && FloorManager.getFloor()
+				.getRoom(FloorManager.getCurrentPlayerRow() - 1, FloorManager.getCurrentPlayerCol()) != null) {
 			openDoor(room.getSpace(0, (int) (Math.ceil(FloorManager.ROOM_COLS / 2))));
 			FloorManager.addOpenExit(Exit.NORTH);
 		}
-		
-		//South
-		if (room.getExits().contains(Exit.SOUTH) && FloorManager.getCurrentPlayerRow() < FloorManager.FLOOR_ROWS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() + 1, FloorManager.getCurrentPlayerCol()) != null) {
+
+		// South
+		if (room.getExits().contains(Exit.SOUTH) && FloorManager.getCurrentPlayerRow() < FloorManager.FLOOR_ROWS - 1
+				&& FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow() + 1,
+						FloorManager.getCurrentPlayerCol()) != null) {
 			openDoor(room.getSpace(FloorManager.ROOM_ROWS - 1, (int) (Math.ceil(FloorManager.ROOM_COLS / 2))));
 			FloorManager.addOpenExit(Exit.SOUTH);
 		}
-		
-		//East
-		if (room.getExits().contains(Exit.EAST) && FloorManager.getCurrentPlayerCol() < FloorManager.FLOOR_COLS - 1 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol() + 1) != null) {
+
+		// East
+		if (room.getExits().contains(Exit.EAST) && FloorManager.getCurrentPlayerCol() < FloorManager.FLOOR_COLS - 1
+				&& FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(),
+						FloorManager.getCurrentPlayerCol() + 1) != null) {
 			for (int i = FloorManager.ROOM_COLS - 1;; i--) {
 				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
 					openDoor(room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i));
@@ -322,9 +346,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				}
 			}
 		}
-		
-		//West
-		if (room.getExits().contains(Exit.WEST) && FloorManager.getCurrentPlayerCol() > 0 && FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol() - 1) != null) {
+
+		// West
+		if (room.getExits().contains(Exit.WEST) && FloorManager.getCurrentPlayerCol() > 0 && FloorManager.getFloor()
+				.getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol() - 1) != null) {
 			for (int i = 0;; i++) {
 				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
 					openDoor(room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i));
@@ -333,16 +358,16 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				}
 			}
 		}
-		
+
 		room.setCleared(true);
 	}
-	
+
 	private void openDoor(Space space) {
 		String path = variablePath(FILE_PATH);
-		
+
 		program.remove(space.getGObject());
-		GImage openedDoor = new GImage(path + "ground.png", 
-				(space.getNumCol() * FloorManager.SPACE_SIZE), (space.getNumRow() * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
+		GImage openedDoor = new GImage(path + "ground.png", (space.getNumCol() * FloorManager.SPACE_SIZE),
+				(space.getNumRow() * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
 		openedDoor.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
 		space.setGObject(openedDoor);
 		program.add(space.getGObject());
@@ -437,9 +462,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	// Timer loop
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		counter++;		
+		counter++;
 		movePlayer();
-		
+
 		enemyMove();
 
 		enemyAttack();
@@ -449,7 +474,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		if (program.getEntityManager().getEnemies().size() == 0) {
 			clearRoom();
 		}
-		
+
 		if (player.getHealth() <= 0) {
 			onDeath();
 		}
@@ -460,7 +485,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		double y = 0;
 		if (direction == Direction.NORTH) {
 			y = -1;
-			player.setFacing("north");//Sets facing for player rendering
+			player.setFacing("north");// Sets facing for player rendering
 		} else if (direction == Direction.SOUTH) {
 			y = 1;
 			player.setFacing("south");
@@ -482,56 +507,64 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.DOOR) {
 			Space space = getPlayerSpace();
-			
-			//North
-			if (FloorManager.getOpenExits().contains(Exit.NORTH) && space.getNumCol() == Math.ceil(FloorManager.ROOM_COLS / 2) && space.getNumRow() < Math.ceil(FloorManager.ROOM_ROWS / 2)) {
+
+			// North
+			if (FloorManager.getOpenExits().contains(Exit.NORTH)
+					&& space.getNumCol() == Math.ceil(FloorManager.ROOM_COLS / 2)
+					&& space.getNumRow() < Math.ceil(FloorManager.ROOM_ROWS / 2)) {
 				playerOnMap.move(0, -(HEADER_HEIGHT - 20) / FloorManager.FLOOR_ROWS);
 				moveRoom(Exit.NORTH);
 			}
-			
-			//South
-			else if (FloorManager.getOpenExits().contains(Exit.SOUTH) && space.getNumCol() == (Math.ceil(FloorManager.ROOM_COLS / 2)) && space.getNumRow() > Math.ceil(FloorManager.ROOM_ROWS / 2)) {
+
+			// South
+			else if (FloorManager.getOpenExits().contains(Exit.SOUTH)
+					&& space.getNumCol() == (Math.ceil(FloorManager.ROOM_COLS / 2))
+					&& space.getNumRow() > Math.ceil(FloorManager.ROOM_ROWS / 2)) {
 				playerOnMap.move(0, (HEADER_HEIGHT - 20) / FloorManager.FLOOR_ROWS);
 				moveRoom(Exit.SOUTH);
 			}
-			
-			//East
-			else if (FloorManager.getOpenExits().contains(Exit.EAST) && space.getNumRow() == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && space.getNumCol() > Math.ceil(FloorManager.ROOM_COLS / 2)) {
+
+			// East
+			else if (FloorManager.getOpenExits().contains(Exit.EAST)
+					&& space.getNumRow() == (Math.ceil(FloorManager.ROOM_ROWS / 2))
+					&& space.getNumCol() > Math.ceil(FloorManager.ROOM_COLS / 2)) {
 				playerOnMap.move((HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS, 0);
 				moveRoom(Exit.EAST);
 			}
-			
-			//West
-			else if (FloorManager.getOpenExits().contains(Exit.WEST) && space.getNumRow() == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && space.getNumCol() < Math.ceil(FloorManager.ROOM_COLS / 2)) {
+
+			// West
+			else if (FloorManager.getOpenExits().contains(Exit.WEST)
+					&& space.getNumRow() == (Math.ceil(FloorManager.ROOM_ROWS / 2))
+					&& space.getNumCol() < Math.ceil(FloorManager.ROOM_COLS / 2)) {
 				playerOnMap.move(-(HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS, 0);
 				moveRoom(Exit.WEST);
 			}
 		} else {
 			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 				player.move(x, y);
-				player.setIsMoving(true);//Sets player move state
+				player.setIsMoving(true);// Sets player move state
 			} else {
 				player.setIsMoving(false);
 			}
 		}
-		animatePlayer();//Animating player
+		animatePlayer();// Animating player
 	}
-	
+
 	private void animatePlayer() {
 		if (player.getIsMoving()) {
-			if(counter%6<3) {
-				((GImage)player.getGObject()).setImage("../media/sprites/player_walking_"+player.getFacing()+"_1.png");
+			if (counter % 6 < 3) {
+				((GImage) player.getGObject())
+						.setImage("../media/sprites/player_walking_" + player.getFacing() + "_1.png");
+			} else {
+				((GImage) player.getGObject())
+						.setImage("../media/sprites/player_walking_" + player.getFacing() + "_2.png");
 			}
-			else {
-				((GImage)player.getGObject()).setImage("../media/sprites/player_walking_"+player.getFacing()+"_2.png");
-			}
-		}
-		else {
-			
-			((GImage)player.getGObject()).setImage("../media/sprites/player_standing_"+player.getFacing()+".png");
+		} else {
+
+			((GImage) player.getGObject()).setImage("../media/sprites/player_standing_" + player.getFacing() + ".png");
 		}
 	}
-	
+
 	private void checkProjectileCollision() {
 		for (Projectile p : program.getEntityManager().getProjectiles()) {
 			p.move();
@@ -596,13 +629,14 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			tile.setFilled(true);
 		} else if (r.getType() == RoomType.SPAWN) {
 			tile.setFillColor(Color.GREEN);
-			playerOnMap = new GOval(tile.getX() + (tile.getWidth()-tile.getHeight()*.75)/2, tile.getY() +tile.getHeight()*.125, tile.getHeight()*.75, tile.getHeight()*.75);
+			playerOnMap = new GOval(tile.getX() + (tile.getWidth() - tile.getHeight() * .75) / 2,
+					tile.getY() + tile.getHeight() * .125, tile.getHeight() * .75, tile.getHeight() * .75);
 			playerOnMap.setFillColor(Color.BLUE);
 			playerOnMap.setFilled(true);
 			tile.setFilled(true);
 		} else if (r.getType() == RoomType.BOSS) {
 			tile.setFillColor(Color.RED);
-			bossIcon = new GImage("boss_icon.png", tile.getX() + (tile.getWidth()-tile.getHeight())/2, tile.getY());
+			bossIcon = new GImage("boss_icon.png", tile.getX() + (tile.getWidth() - tile.getHeight()) / 2, tile.getY());
 			bossIcon.setSize(tile.getHeight(), tile.getHeight());
 			tile.setFilled(true);
 		}
@@ -640,58 +674,60 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			path = path + "SteamCave/";
 		else
 			path = path + "DarkCrater/";
-		
+
 		return path;
 	}
-	
+
 	private Space getPlayerSpace() {
 		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
-            for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-                Space space = room.getSpace(i, j);
-                if (space.getGObject().contains(player.getX(), player.getY())) {
-                   return space;
-                }
-            }
-        }
-		
+			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+				Space space = room.getSpace(i, j);
+				if (space.getGObject().contains(player.getX(), player.getY())) {
+					return space;
+				}
+			}
+		}
+
 		return null;
 	}
-	
+
 	private void moveRoom(Exit exit) {
 		int temp;
 		FloorManager.resetOpenExits();
 		removeField();
-		
-		switch(exit) {
+
+		switch (exit) {
 		case NORTH:
 			FloorManager.setCurrentPlayerRow(FloorManager.getCurrentPlayerRow() - 1);
 			break;
-			
+
 		case SOUTH:
 			FloorManager.setCurrentPlayerRow(FloorManager.getCurrentPlayerRow() + 1);
 			break;
-			
+
 		case EAST:
 			FloorManager.setCurrentPlayerCol(FloorManager.getCurrentPlayerCol() + 1);
 			break;
-			
+
 		case WEST:
 			FloorManager.setCurrentPlayerCol(FloorManager.getCurrentPlayerCol() - 1);
 			break;
 		}
-		
+
 		room = FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol());
 		collisionManager.setRoom(room);
-		
-		switch(exit) {
+
+		switch (exit) {
 		case NORTH:
-			player.getGObject().setLocation((Math.ceil(FloorManager.ROOM_COLS / 2)) * FloorManager.SPACE_SIZE, (FloorManager.ROOM_ROWS - 2) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			player.getGObject().setLocation((Math.ceil(FloorManager.ROOM_COLS / 2)) * FloorManager.SPACE_SIZE,
+					(FloorManager.ROOM_ROWS - 2) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
 			break;
-			
+
 		case SOUTH:
-			player.getGObject().setLocation((Math.ceil(FloorManager.ROOM_COLS / 2)) * FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			player.getGObject().setLocation((Math.ceil(FloorManager.ROOM_COLS / 2)) * FloorManager.SPACE_SIZE,
+					FloorManager.SPACE_SIZE + HEADER_HEIGHT);
 			break;
-			
+
 		case EAST:
 			for (int i = 0;; i++) {
 				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
@@ -699,9 +735,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					break;
 				}
 			}
-			player.getGObject().setLocation(temp * FloorManager.SPACE_SIZE, (Math.ceil(FloorManager.ROOM_ROWS / 2)) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			player.getGObject().setLocation(temp * FloorManager.SPACE_SIZE,
+					(Math.ceil(FloorManager.ROOM_ROWS / 2)) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
 			break;
-			
+
 		case WEST:
 			for (int i = FloorManager.ROOM_COLS - 1;; i--) {
 				if (room.getSpace((int) (Math.ceil(FloorManager.ROOM_ROWS / 2)), i).getType() == SpaceType.DOOR) {
@@ -709,18 +746,19 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					break;
 				}
 			}
-			player.getGObject().setLocation(temp * FloorManager.SPACE_SIZE, (Math.ceil(FloorManager.ROOM_ROWS / 2)) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			player.getGObject().setLocation(temp * FloorManager.SPACE_SIZE,
+					(Math.ceil(FloorManager.ROOM_ROWS / 2)) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
 			break;
 		}
-		
+
 		createImageList();
 		showField();
 		if (!room.isCleared())
 			showEnemies();
 		player.getGObject().sendToFront();
 	}
-	
-	public void resetGame(){
+
+	public void resetGame() {
 		removeField();
 		FloorManager.generateNewFloor();
 		room = program.getFloorManager().getSpawnRoom();
