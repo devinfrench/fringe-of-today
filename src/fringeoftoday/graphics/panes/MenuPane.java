@@ -32,6 +32,7 @@ public class MenuPane extends GraphicsPane {
 	private GLabel lastRun;
 	private GLabel bestRun;
 	private GButtonMD btnNewFile;
+	private GLabel confirm;
 
 	public MenuPane(MainApplication app) {
 		super();
@@ -43,9 +44,18 @@ public class MenuPane extends GraphicsPane {
 		// Play button
 		btnPlay = new GButtonMD("Play", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 400, BUTTON_WIDTH,
 				BUTTON_HEIGHT, "blue");
-		
+
 		// New file button
-		btnNewFile = new GButtonMD("NEW", (MainApplication.WINDOW_WIDTH+BUTTON_WIDTH+20) / 2, 400, BUTTON_HEIGHT, BUTTON_HEIGHT, "blue");
+		btnNewFile = new GButtonMD("NEW", (MainApplication.WINDOW_WIDTH + BUTTON_WIDTH + 20) / 2, 400, BUTTON_HEIGHT,
+				BUTTON_HEIGHT, "blue");
+
+		// Confirm text, so the file won't be deleted the first time
+		confirm = new GLabel("Click again to PERMINATELY delete you player file",
+				0, 400 + BUTTON_HEIGHT*1.33);
+		confirm.setFont("Arial-24");
+		confirm.move(MainApplication.WINDOW_WIDTH/2 - confirm.getWidth()/2, 0);
+		confirm.setColor(Color.RED);
+		confirm.setVisible(false);
 
 		// Shop button
 		btnShop = new GButtonMD("Shop", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 550, BUTTON_WIDTH,
@@ -59,19 +69,7 @@ public class MenuPane extends GraphicsPane {
 		btnTutorial = new GButtonMD("?", 0, 0, 100, 100);
 
 		// Audio button
-		int sounds;
-		try {
-			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
-		}catch(NumberFormatException e) {
-			PlayerData.updateMap("Sounds", 1);
-			sounds = 1;
-		}
-		if (sounds == 1) {
-			btnAudio = new GImage("../media/soundon.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
-		} else {
-			btnAudio = new GImage("../media/soundoff.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
-		}
-		btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
+		audioStarter();
 
 		// Latest Score
 		lastRun = new GLabel("On your last run, you got to floor: " + PlayerData.getMap().get("PreviousRun"),
@@ -82,6 +80,22 @@ public class MenuPane extends GraphicsPane {
 		bestRun = new GLabel("On your best run, you got to floor: " + PlayerData.getMap().get("GOAT"),
 				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 15);
 		bestRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
+	}
+
+	private void audioStarter() {
+		int sounds;
+		try {
+			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
+		} catch (NumberFormatException e) {
+			PlayerData.updateMap("Sounds", 1);
+			sounds = 1;
+		}
+		if (sounds == 1) {
+			btnAudio = new GImage("../media/soundon.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
+		} else {
+			btnAudio = new GImage("../media/soundoff.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
+		}
+		btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
 	}
 
 	@Override
@@ -95,6 +109,8 @@ public class MenuPane extends GraphicsPane {
 		program.add(lastRun);
 		program.add(bestRun);
 		program.add(btnNewFile);
+		program.add(confirm);
+		confirm.setVisible(false);
 	}
 
 	@Override
@@ -108,6 +124,7 @@ public class MenuPane extends GraphicsPane {
 		program.remove(lastRun);
 		program.remove(bestRun);
 		program.remove(btnNewFile);
+		program.remove(confirm);
 	}
 
 	@Override
@@ -122,8 +139,19 @@ public class MenuPane extends GraphicsPane {
 		} else if (obj == btnTutorial) {
 			program.switchToTutorial();
 		} else if (obj == btnNewFile) {
-			PlayerData.newFile();
-			PlayerData.readPlayerFile();
+			if (confirm.isVisible()) {
+				PlayerData.newFile();
+				PlayerData.readPlayerFile();
+				confirm.setVisible(false);
+				AudioPlayer audio = AudioPlayer.getInstance();				
+				audio.playSound("sounds", "menumusic.mp3");
+				btnAudio.setImage("soundon.jpg");
+				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
+				PlayerData.updateMap("Sounds", 1);
+			}
+			else {
+				confirm.setVisible(true);
+			}
 		} else if (obj == btnAudio) {
 			AudioPlayer audio = AudioPlayer.getInstance();
 			int sounds;

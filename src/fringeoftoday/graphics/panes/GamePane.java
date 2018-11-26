@@ -109,11 +109,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		backingColor.setFillColor(Color.BLACK);
 		backingColor.setFilled(true);
 		program.add(backingColor);
-		player.setMeleeDamage(1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")));
+		player.setFireDamage(1 + Integer.parseInt(PlayerData.getMap().get("FireSpeedUpgrades")));
 		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 
-		infoText = new GParagraph("Level: " + level + "\nMelee Damage: " + player.getMeleeDamage() + "\nRanged Damage: "
+		infoText = new GParagraph("Level: " + level + "\nFiring Speed: " + player.getFireSpeed() + "\nRanged Damage: "
 				+ player.getRangedDamage() + "\nMove Speed: " + player.getMoveSpeed(), 0, 0);
 
 		infoText.setFont(hdrFont);
