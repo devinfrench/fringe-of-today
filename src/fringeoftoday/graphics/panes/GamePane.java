@@ -56,7 +56,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private ArrayList<GObject> minimap = new ArrayList<GObject>();
 
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
-	private int level = -1; // Work on this when we get it in
+	private int level = 1; // Work on this when we get it in
 	private GRect minimapBox; // Minimap, left header
 	private GImage bossIcon;
 	private GOval playerOnMap;
@@ -109,11 +109,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		backingColor.setFillColor(Color.BLACK);
 		backingColor.setFilled(true);
 		program.add(backingColor);
-		player.setMeleeDamage(1 + Integer.parseInt(PlayerData.getMap().get("MeleeUpgrades")));
+		player.setFireDamage(1 + Integer.parseInt(PlayerData.getMap().get("FireSpeedUpgrades")));
 		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
 		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 
-		infoText = new GParagraph("Level: " + level + "\nMelee Damage: " + player.getMeleeDamage() + "\nRanged Damage: "
+		infoText = new GParagraph("Level: " + level + "\nFiring Speed: " + player.getFireSpeed() + "\nRanged Damage: "
 				+ player.getRangedDamage() + "\nMove Speed: " + player.getMoveSpeed(), 0, 0);
 
 		infoText.setFont(hdrFont);
@@ -297,6 +297,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		PlayerData.writeFile();
 		t.stop();
 		resetGame();
+		level = 1;
 		program.switchToDeath();
 	}
 
@@ -401,6 +402,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				program.remove(o);
 			}
 			resetGame();
+			level = 1;
 			program.switchToMenu();
 		}
 
@@ -540,7 +542,16 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				playerOnMap.move(-(HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS, 0);
 				moveRoom(Exit.WEST);
 			}
-		} else {
+		} 
+		else if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.STAIRS) {
+			level++;
+			resetGame();
+			showField();
+			player.getGObject().setLocation(Math.ceil(FloorManager.ROOM_COLS / 2) * FloorManager.SPACE_SIZE, Math.ceil(FloorManager.ROOM_ROWS / 2) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			player.getGObject().sendToFront();
+			drawLevelAlert();
+		} 
+		else {
 			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 				player.move(x, y);
 				player.setIsMoving(true);// Sets player move state

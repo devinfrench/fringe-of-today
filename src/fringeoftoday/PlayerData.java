@@ -33,7 +33,7 @@ public class PlayerData {
 			FileWriter fw = new FileWriter("../media/player.txt");
 			fw.write("Coin:0,");
 			fw.write("HPUpgrades:0,");
-			fw.write("MeleeUpgrades:0,");
+			fw.write("FireSpeedUpgrades:0,");
 			fw.write("RangedUpgrades:0,");
 			fw.write("SpeedUpgrades:0,");
 			fw.write("PreviousRun:0,");
@@ -54,7 +54,7 @@ public class PlayerData {
 			FileWriter fw = new FileWriter("../media/player.txt");
 			fw.write("Coin:"+ playerInfo.get("Coin") + ",");
 			fw.write("HPUpgrades:"+ playerInfo.get("HPUpgrades") +",");
-			fw.write("MeleeUpgrades:"+ playerInfo.get("MeleeUpgrades") +",");
+			fw.write("FireSpeedUpgrades:"+ playerInfo.get("FireSpeedUpgrades") +",");
 			fw.write("RangedUpgrades:"+ playerInfo.get("RangedUpgrades") +",");
 			fw.write("SpeedUpgrades:"+ playerInfo.get("SpeedUpgrades") +",");
 			fw.write("PreviousRun:"+playerInfo.get("PreviousRun")+",");
