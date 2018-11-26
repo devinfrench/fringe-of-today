@@ -336,6 +336,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			}
 		}
 		
+		room.setCleared(true);
 	}
 	
 	private void openDoor(Space space) {
