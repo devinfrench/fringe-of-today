@@ -479,7 +479,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		y *= (5 + SPEED_EFFECT * Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
 
 		if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.DOOR) {
-			player.setIsMoving(false);
 			Space space = getPlayerSpace();
 			
 			//North
@@ -514,7 +513,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	
 	private void animatePlayer() {
 		if (player.getIsMoving()) {
-			if(counter%4<2) {
+			if(counter%6<3) {
 				((GImage)player.getGObject()).setImage("../media/sprites/player_walking_"+player.getFacing()+"_1.png");
 			}
 			else {
