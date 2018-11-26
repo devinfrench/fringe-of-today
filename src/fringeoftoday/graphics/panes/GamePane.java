@@ -296,6 +296,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		PlayerData.writeFile();
 		t.stop();
 		resetGame();
+		level = 1;
 		program.switchToDeath();
 	}
 
@@ -400,6 +401,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				program.remove(o);
 			}
 			resetGame();
+			level = 1;
 			program.switchToMenu();
 		}
 
