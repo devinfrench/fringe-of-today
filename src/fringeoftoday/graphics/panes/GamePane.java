@@ -299,14 +299,19 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	
 	public void clearRoom() {
 		//TODO Set room coords
-		String path = variablePath(FILE_PATH);;
+		String path = variablePath(FILE_PATH);
+		Room room = FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol());
 		
 		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
 			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-				if (FloorManager.getFloor().getRoom(1, 1).getSpace(i, j).getType() == SpaceType.DOOR) {
-					program.remove(FloorManager.getFloor().getRoom(1, 1).getSpace(i, j).getGObject());
-					FloorManager.getFloor().getRoom(1, 1).getSpace(i, j).setGObject();
-					program.add(FloorManager.getFloor().getRoom(1, 1).getSpace(i, j).getGObject());
+				if (room.getSpace(i, j).getType() == SpaceType.DOOR) {
+					program.remove(room.getSpace(i, j).getGObject());
+					GImage openedDoor = new GImage(path + "ground.png", 
+							(j * FloorManager.SPACE_SIZE), (i * FloorManager.SPACE_SIZE) + HEADER_HEIGHT);
+					openedDoor.setSize(FloorManager.SPACE_SIZE, FloorManager.SPACE_SIZE);
+					room.getSpace(i, j).setGObject(openedDoor);
+					program.add(room.getSpace(i, j).getGObject());
+					room.getSpace(i, j).getGObject().sendToBack();
 				}
 			}
 		}
