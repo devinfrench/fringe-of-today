@@ -39,6 +39,7 @@ public class CollisionManager {
                         case BASIC_SPAWN:
                         case SHOTGUN_SPAWN:
                         case SNIPER_SPAWN:
+                        case STAIRS:
                             return true;
                         default:
                             return  false;
