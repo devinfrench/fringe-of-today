@@ -181,6 +181,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.remove(backingColor);
 		minimapDestructor();
 		program.remove(bossIcon);
+		program.remove(playerOnMap);
 		pauseElements = new ArrayList<>();
 	}
 
