@@ -5,12 +5,14 @@ import acm.graphics.GObject;
 public class Entity {
 
     private GObject gObj;
-
+    private boolean isMoving;
+    
     public Entity() {
     }
 
     public Entity(GObject gObj) {
         this.gObj = gObj;
+        this.isMoving = false;
     }
 
     /**
@@ -62,5 +64,12 @@ public class Entity {
     public void setGObject(GObject gObj) {
         this.gObj = gObj;
     }
-
+    
+    public void setIsMoving(boolean isMoving) {
+    	this.isMoving = isMoving;
+    }
+    
+    public boolean getIsMoving() {
+    	return isMoving;
+    }
 }
