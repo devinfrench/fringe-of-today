@@ -30,6 +30,7 @@ import fringeoftoday.entities.StandardEnemy;
 import fringeoftoday.floor.Direction;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
+import fringeoftoday.floor.RoomType;
 import fringeoftoday.floor.Space;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.Sprites;
@@ -49,7 +50,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
 
-	private ArrayList<GRect> minimap = new ArrayList<GRect>();
+	private ArrayList<GObject> minimap = new ArrayList<GObject>();
 
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
 	private int level = -1; // Work on this when we get it in
@@ -470,17 +471,24 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void minimapDestructor() {
-		for (GRect tile : minimap) {
+		for (GObject tile : minimap) {
 			program.remove(tile);
 		}
 	}
 
 	private void colorTile(Room r, GRect tile) {
-		if (r != null) {
-			tile.setFillColor(Color.WHITE);
-			tile.setFilled(true);
-		} else {
+		if (r == null) {
 			tile.setVisible(false);
+			// Colors pending
+		} else if (r.getType() == RoomType.STANDARD) {
+			tile.setFillColor(Color.LIGHT_GRAY);
+			tile.setFilled(true);
+		} else if (r.getType() == RoomType.SPAWN) {
+			tile.setFillColor(Color.GREEN);
+			tile.setFilled(true);
+		} else if (r.getType() == RoomType.BOSS) {
+			tile.setFillColor(Color.RED);
+			tile.setFilled(true);
 		}
 	}
 
@@ -500,7 +508,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			startX = 10;
 			startY += moveY;
 		}
-		for (GRect tile : minimap) {
+		for (GObject tile : minimap) {
 			program.add(tile);
 		}
 	}
