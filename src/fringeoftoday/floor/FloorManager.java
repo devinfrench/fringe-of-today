@@ -68,7 +68,13 @@ public class FloorManager {
 	 * @param layout - Layout to add
 	 */
 	public static void addFloorLayout(char layout[][]) {
-		floorLayouts.add(layout);
+		char[][] temp = new char[FLOOR_ROWS][FLOOR_COLS];
+		for (int i = 0; i < FLOOR_ROWS; i++) {
+			for (int j = 0; j < FLOOR_ROWS; j++) {
+				temp[i][j] = layout[i][j];
+			}
+		}
+		floorLayouts.add(temp);
 	}
 
 	/**
