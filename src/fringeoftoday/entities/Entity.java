@@ -6,13 +6,17 @@ public class Entity {
 
     private GObject gObj;
     private boolean isMoving;
+    private String facing;
     
     public Entity() {
+    	this.isMoving = false;
+        this.facing = "south";
     }
 
     public Entity(GObject gObj) {
         this.gObj = gObj;
         this.isMoving = false;
+        this.facing = "south";
     }
 
     /**
@@ -71,5 +75,13 @@ public class Entity {
     
     public boolean getIsMoving() {
     	return isMoving;
+    }
+    
+    public void setFacing(String facing) {
+    	this.facing = facing;
+    }
+    
+    public String getFacing() {
+    	return facing;
     }
 }
