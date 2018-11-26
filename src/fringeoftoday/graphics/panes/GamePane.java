@@ -478,7 +478,26 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.DOOR) {
 			player.setIsMoving(false);
-			// TODO go to next room
+			//TODO
+			//North
+			if (x == Math.ceil(FloorManager.ROOM_COLS / 2) && x < Math.ceil(FloorManager.ROOM_ROWS / 2)) {
+				
+			}
+			
+			//South
+			else if (y == (Math.ceil(FloorManager.ROOM_COLS / 2)) && x > Math.ceil(FloorManager.ROOM_ROWS / 2)) {
+				
+			}
+			
+			//East
+			else if (x == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && y > Math.ceil(FloorManager.ROOM_COLS / 2)) {
+				
+			}
+			
+			//West
+			else if (x == (Math.ceil(FloorManager.ROOM_ROWS / 2)) && y < Math.ceil(FloorManager.ROOM_COLS / 2)) {
+				
+			}
 		} else {
 			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 				player.move(x, y);
@@ -602,5 +621,18 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			path = path + "DarkCrater/";
 		
 		return path;
+	}
+	
+	private Space getPlayerSpace() {
+		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+            for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+                Space space = room.getSpace(i, j);
+                if (space.getGObject().contains(player.getX(), player.getY())) {
+                   return space;
+                }
+            }
+        }
+		
+		return null;
 	}
 }
