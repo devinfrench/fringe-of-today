@@ -138,7 +138,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	private void drawLevelAlert() {
 		levelAlert = new GButtonMD("Level " + level, (MainApplication.WINDOW_WIDTH - LEVEL_ALERT_X_SIZE) / 2,
-				(MainApplication.WINDOW_HEIGHT) / 2, LEVEL_ALERT_X_SIZE, LEVEL_ALERT_Y_SIZE, "blue");
+				(MainApplication.WINDOW_HEIGHT) / 3, LEVEL_ALERT_X_SIZE, LEVEL_ALERT_Y_SIZE, "blue");
 		levelAlert.setVisible(true);
 		program.add(levelAlert);
 		levelAlert.sendToFront();
@@ -558,7 +558,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			t.stop();
 			showField();
 			drawLevelAlert();
-			levelAlert.sendToFront();
 			removeHeader();
 			showHeader();
 			initPausing();
