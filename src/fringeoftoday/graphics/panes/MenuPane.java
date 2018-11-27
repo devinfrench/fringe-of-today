@@ -50,7 +50,7 @@ public class MenuPane extends GraphicsPane {
 				BUTTON_HEIGHT, "blue");
 
 		// Confirm text, so the file won't be deleted the first time
-		confirm = new GLabel("Click again to PERMINATELY delete you player file", 0, 400 + BUTTON_HEIGHT * 1.33);
+		confirm = new GLabel("Click again to PERMINATELY delete your player file", 0, 400 + BUTTON_HEIGHT * 1.33);
 		confirm.setFont("Arial-24");
 		confirm.move(MainApplication.WINDOW_WIDTH / 2 - confirm.getWidth() / 2, 0);
 		confirm.setColor(Color.RED);
