@@ -429,6 +429,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			if (t.isRunning()) {
 				for (GObject o : pauseElements) {
 					program.add(o);
+					
 				}
 				t.stop();
 			} else {
@@ -561,6 +562,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			levelAlert.sendToFront();
 			removeHeader();
 			showHeader();
+			initPausing();
 		} else {
 			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 				player.move(x, y);
