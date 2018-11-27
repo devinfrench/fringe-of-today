@@ -147,7 +147,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	@Override
 	public void showContents() {// split showContents into showHeader and showField for clarity
 		player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3);
-		infoDrawing();
 		initHealth();
 		showHeader(); // Top bar
 		createImageList();
