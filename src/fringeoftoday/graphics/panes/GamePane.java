@@ -547,6 +547,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		else if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.STAIRS) {
 			level++;
 			resetGame();
+			createImageList();
 			showField();
 			player.getGObject().setLocation(Math.ceil(FloorManager.ROOM_COLS / 2) * FloorManager.SPACE_SIZE, Math.ceil(FloorManager.ROOM_ROWS / 2) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
 			player.getGObject().sendToFront();
@@ -683,11 +684,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private String variablePath(String path) {
-		if (FloorManager.getFloor().getLevel() <= 5)
+		if (level <= 5)
 			path = path + "RockPath/";
-		else if (FloorManager.getFloor().getLevel() >= 6 && FloorManager.getFloor().getLevel() <= 10)
+		else if (level >= 6 && level <= 10)
 			path = path + "SealedRuin/";
-		else if (FloorManager.getFloor().getLevel() >= 11 && FloorManager.getFloor().getLevel() <= 15)
+		else if (level >= 11 && level <= 15)
 			path = path + "SteamCave/";
 		else
 			path = path + "DarkCrater/";
@@ -779,6 +780,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void resetGame() {
 		removeField();
 		FloorManager.generateNewFloor();
+		FloorManager.resetOpenExits();
 		room = program.getFloorManager().getSpawnRoom();
 		collisionManager.setRoom(room);
 	}
