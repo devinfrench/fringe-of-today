@@ -31,7 +31,7 @@ public class TutorialPane extends GraphicsPane {
 		moveInstructions = new GParagraph("To move, use the\n\"WASD\" keys", MainApplication.WINDOW_WIDTH / 6 + 50,
 				2 * MainApplication.WINDOW_HEIGHT / 3);
 		moveInstructions.setFont("Arial-24");
-		attackInstructions = new GParagraph("To fire, use the Left Mouse Button\nTo swing your sword,\nuse the Right Mouse Button",
+		attackInstructions = new GParagraph("To fire, use either mouse button",
 				4 * MainApplication.WINDOW_WIDTH / 6 , 2 * MainApplication.WINDOW_HEIGHT / 3);
 		attackInstructions.setFont("Arial-24");
 		pressToContinue = new GLabel("Press any key or mouse button to continue...", MainApplication.WINDOW_WIDTH / 2 - 250,
