@@ -248,6 +248,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					enemy.setFireRate(10);
 					enemy.setHealth(1);
 					enemy.setVelocity(1);
+					enemy.setSpriteSet("pikachu");
 					break;
 				case SHOTGUN_SPAWN:
 					enemy = new ShotgunEnemy();
@@ -295,6 +296,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void onDeath() {// Trigger this when player is dead, should add other functions - tally score,
 		// etc.
 		PlayerData.writeFile();
+		direction = null;
 		t.stop();
 		resetGame();
 		level = 1;
@@ -703,14 +705,15 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	private Space getPlayerSpace() {
 		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
-			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-				Space space = room.getSpace(i, j);
-				if (space.getGObject().contains(player.getX(), player.getY())) {
-					return space;
-				}
-			}
-		}
-
+            for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+                Space space = room.getSpace(i, j);
+                double x = player.getX() + FloorManager.SPACE_SIZE / 2;
+                double y = player.getY() + FloorManager.SPACE_SIZE / 2;
+                if (space.getGObject().contains(x, y)) {
+                   return space;
+                }
+            }
+        }
 		return null;
 	}
 
