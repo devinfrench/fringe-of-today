@@ -50,10 +50,9 @@ public class MenuPane extends GraphicsPane {
 				BUTTON_HEIGHT, "blue");
 
 		// Confirm text, so the file won't be deleted the first time
-		confirm = new GLabel("Click again to PERMINATELY delete you player file",
-				0, 400 + BUTTON_HEIGHT*1.33);
+		confirm = new GLabel("Click again to PERMINATELY delete you player file", 0, 400 + BUTTON_HEIGHT * 1.33);
 		confirm.setFont("Arial-24");
-		confirm.move(MainApplication.WINDOW_WIDTH/2 - confirm.getWidth()/2, 0);
+		confirm.move(MainApplication.WINDOW_WIDTH / 2 - confirm.getWidth() / 2, 0);
 		confirm.setColor(Color.RED);
 		confirm.setVisible(false);
 
@@ -80,9 +79,8 @@ public class MenuPane extends GraphicsPane {
 		lastRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
 
 		// Best Score
-		if(Integer.parseInt(PlayerData.getMap().get("PreviousRun")) > Integer.parseInt(PlayerData.getMap().get("GOAT"))) {
-			PlayerData.updateMap("GOAT", Integer.parseInt(PlayerData.getMap().get("PreviousRun")));
-		}
+		PlayerData.updateMap("GOAT", Math.max(Integer.parseInt(PlayerData.getMap().get("PreviousRun")),
+				Integer.parseInt(PlayerData.getMap().get("GOAT"))));
 		bestRun = new GLabel("On your best run, you got to floor: " + PlayerData.getMap().get("GOAT"),
 				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 15);
 		bestRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
@@ -150,7 +148,7 @@ public class MenuPane extends GraphicsPane {
 				PlayerData.newFile();
 				PlayerData.readPlayerFile();
 				confirm.setVisible(false);
-				AudioPlayer audio = AudioPlayer.getInstance();				
+				AudioPlayer audio = AudioPlayer.getInstance();
 				audio.playSound("sounds", "menumusic.mp3");
 				btnAudio.setImage("soundon.jpg");
 				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
@@ -158,8 +156,7 @@ public class MenuPane extends GraphicsPane {
 				program.remove(bestRun);
 				program.remove(lastRun);
 				scoreboard();
-			}
-			else {
+			} else {
 				confirm.setVisible(true);
 			}
 		} else if (obj == btnAudio) {
