@@ -71,15 +71,23 @@ public class MenuPane extends GraphicsPane {
 		// Audio button
 		audioStarter();
 
+	}
+
+	private void scoreboard() {
 		// Latest Score
 		lastRun = new GLabel("On your last run, you got to floor: " + PlayerData.getMap().get("PreviousRun"),
 				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 40);
 		lastRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
 
 		// Best Score
+		if(Integer.parseInt(PlayerData.getMap().get("PreviousRun")) > Integer.parseInt(PlayerData.getMap().get("GOAT"))) {
+			PlayerData.updateMap("GOAT", Integer.parseInt(PlayerData.getMap().get("PreviousRun")));
+		}
 		bestRun = new GLabel("On your best run, you got to floor: " + PlayerData.getMap().get("GOAT"),
 				MainApplication.WINDOW_WIDTH - 450, MainApplication.WINDOW_HEIGHT - 15);
 		bestRun.setFont(new Font("PKMN Mystery Dungeon", 0, 40));
+		program.add(lastRun);
+		program.add(bestRun);
 	}
 
 	private void audioStarter() {
@@ -106,11 +114,10 @@ public class MenuPane extends GraphicsPane {
 		program.add(btnExit);
 		program.add(btnTutorial);
 		program.add(btnAudio);
-		program.add(lastRun);
-		program.add(bestRun);
 		program.add(btnNewFile);
 		program.add(confirm);
 		confirm.setVisible(false);
+		scoreboard();
 	}
 
 	@Override
@@ -148,6 +155,9 @@ public class MenuPane extends GraphicsPane {
 				btnAudio.setImage("soundon.jpg");
 				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
 				PlayerData.updateMap("Sounds", 1);
+				program.remove(bestRun);
+				program.remove(lastRun);
+				scoreboard();
 			}
 			else {
 				confirm.setVisible(true);

@@ -11,6 +11,7 @@ import fringeoftoday.graphics.GParagraph;
 import starter.GButtonMD;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
+import fringeoftoday.entities.Player;
 
 public class DeathPane extends GraphicsPane {
 	private MainApplication program; 
@@ -19,9 +20,10 @@ public class DeathPane extends GraphicsPane {
 	public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
 	
 	//TODO: connect variables to actual values
-	private int level = -1;
+	private String level = "-1";
 	private String coins;
 	private String killer = "a frog";
+	private Player player;
 	
 	private Font txtFont = new Font("PKMN Mystery Dungeon", 0, 40);
 	private GImage deathScreen; 
@@ -36,6 +38,7 @@ public class DeathPane extends GraphicsPane {
 	}
 
 	private void makeDeathMessage() {
+		level = PlayerData.getMap().get("PreviousRun");
 		coins = PlayerData.getMap().get("Coin");	//Pulls the coinage from the map
 		deathMessage = new GParagraph("Highest level: "+level+", Coins: "+coins+", Killed by: "+killer+"\n", 0,0);
 		deathMessage.setColor(Color.WHITE);

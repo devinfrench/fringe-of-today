@@ -300,6 +300,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		direction = null;
 		t.stop();
 		resetGame();
+		PlayerData.updateMap("PreviousRun", level);
 		level = 1;
 		program.switchToDeath();
 	}
@@ -405,6 +406,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				program.remove(o);
 			}
 			resetGame();
+			PlayerData.updateMap("PreviousRun", level);
 			level = 1;
 			program.switchToMenu();
 		}
