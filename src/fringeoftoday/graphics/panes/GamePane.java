@@ -141,6 +141,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				(MainApplication.WINDOW_HEIGHT) / 2, LEVEL_ALERT_X_SIZE, LEVEL_ALERT_Y_SIZE, "blue");
 		levelAlert.setVisible(true);
 		program.add(levelAlert);
+		levelAlert.sendToFront();
 	}
 
 	@Override
@@ -306,7 +307,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				for (int col = 0; col < FloorManager.ROOM_COLS; col++) {
 					if (room.getSpace(row, col).getType() == SpaceType.STAIRS) {
 						Space space = room.getSpace(row, col);
-	
+
 						program.remove(space.getGObject());
 						GImage openedStairs = new GImage("../media/stairs.png",
 								(space.getNumCol() * FloorManager.SPACE_SIZE),
@@ -541,16 +542,20 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				playerOnMap.move(-(HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS, 0);
 				moveRoom(Exit.WEST);
 			}
-		} 
-		else if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.STAIRS) {
+		} else if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.STAIRS) {
 			level++;
 			resetGame();
 			showField();
-			player.getGObject().setLocation(Math.ceil(FloorManager.ROOM_COLS / 2) * FloorManager.SPACE_SIZE, Math.ceil(FloorManager.ROOM_ROWS / 2) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
-			player.getGObject().sendToFront();
+			player.getGObject().setLocation(Math.ceil(FloorManager.ROOM_COLS / 2) * FloorManager.SPACE_SIZE,
+					Math.ceil(FloorManager.ROOM_ROWS / 2) * FloorManager.SPACE_SIZE + HEADER_HEIGHT);
+			// player.getGObject().sendToFront();
+			t.stop();
+			showField();
 			drawLevelAlert();
-		} 
-		else {
+			levelAlert.sendToFront();
+			minimapDestructor();
+			minimapBuilder();
+		} else {
 			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 				player.move(x, y);
 				player.setIsMoving(true);// Sets player move state
@@ -563,19 +568,20 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	private void animatePlayer() {
 		if (player.getIsMoving()) {
-			if(counter%7==0) {
-				((GImage)player.getGObject()).setImage("../media/sprites/player/player_walking_"+player.getFacing()+"_1.png");
+			if (counter % 7 == 0) {
+				((GImage) player.getGObject())
+						.setImage("../media/sprites/player/player_walking_" + player.getFacing() + "_1.png");
+			} else if (counter % 7 == 3) {
+				((GImage) player.getGObject())
+						.setImage("../media/sprites/player/player_standing_" + player.getFacing() + ".png");
+
+			} else if (counter % 7 == 6) {
+				((GImage) player.getGObject())
+						.setImage("../media/sprites/player/player_walking_" + player.getFacing() + "_2.png");
 			}
-			else if(counter%7==3){
-				((GImage)player.getGObject()).setImage("../media/sprites/player/player_standing_"+player.getFacing()+".png");
-				
-			}
-			else if(counter%7==6) {
-				((GImage)player.getGObject()).setImage("../media/sprites/player/player_walking_"+player.getFacing()+"_2.png");
-			}
-		}
-		else {
-			((GImage)player.getGObject()).setImage("../media/sprites/player/player_standing_"+player.getFacing()+".png");
+		} else {
+			((GImage) player.getGObject())
+					.setImage("../media/sprites/player/player_standing_" + player.getFacing() + ".png");
 
 		}
 	}
@@ -632,6 +638,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		for (GObject tile : minimap) {
 			program.remove(tile);
 		}
+		program.remove(playerOnMap);
+		program.remove(bossIcon);
 		minimap.clear();
 	}
 
