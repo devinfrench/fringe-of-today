@@ -546,6 +546,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				playerOnMap.move(-(HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS, 0);
 				moveRoom(Exit.WEST);
 			}
+			removeProjectiles();
 		} else if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.STAIRS) {
 			level++;
 			FloorManager.resetOpenExits();
