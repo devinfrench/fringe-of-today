@@ -546,6 +546,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			}
 		} else if (room.isCleared() && collisionManager.getPlayerSpaceType(x, y) == SpaceType.STAIRS) {
 			level++;
+			FloorManager.resetOpenExits();
 			resetGame();
 			showField();
 			player.getGObject().setLocation(Math.ceil(FloorManager.ROOM_COLS / 2) * FloorManager.SPACE_SIZE,
