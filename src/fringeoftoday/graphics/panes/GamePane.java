@@ -148,12 +148,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	public void showContents() {// split showContents into showHeader and showField for clarity
 		player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3);
 		infoDrawing();
+		initHealth();
 		showHeader(); // Top bar
 		createImageList();
 		showField(); // Game field
 		showPlayer();
 		showEnemies();
-		initHealth();
 		drawLevelAlert();
 		initPausing();
 	}
@@ -171,6 +171,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	public void showHeader() {
 		program.add(minimapBox);
+		infoDrawing();
+		drawHealth(player.getHealth());
 		program.add(infoBox);
 		program.add(healthBox);
 		minimapBuilder();
@@ -556,8 +558,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			showField();
 			drawLevelAlert();
 			levelAlert.sendToFront();
-			minimapDestructor();
-			minimapBuilder();
+			removeHeader();
+			showHeader();
 		} else {
 			if ((x != 0 || y != 0) && collisionManager.playerCanMove(x, y)) {
 				player.move(x, y);
