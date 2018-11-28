@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
 public abstract class Enemy extends ActiveEntity {
 
     private float dmgMult;
-    private int fireRate;
+    private double fireRate;
     private double velocity;
 
     public float getDmgMult() {
@@ -23,12 +23,12 @@ public abstract class Enemy extends ActiveEntity {
         this.dmgMult = dmgMult;
     }
 
-    public int getFireRate() {
+    public double getFireRate() {
         return fireRate;
     }
 
-    public void setFireRate(int fireRate) {
-        this.fireRate = fireRate;
+    public void setFireRate(double d) {
+        this.fireRate = d;
     }
     
     public double getVelocity() {

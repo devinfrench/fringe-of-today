@@ -22,6 +22,11 @@ public class SniperEnemy extends Enemy {
         setGObject(new GImage(sprite));
         lastAttackTime = System.currentTimeMillis() + FIRST_ATTACK_DELAY;
     }
+    
+    @Override
+    public String toString() {
+    	return "Sharpshooter";
+    }
 
     @Override
     public Projectile[] attack(double targetX, double targetY) {
@@ -35,7 +40,7 @@ public class SniperEnemy extends Enemy {
         Projectile p = new Projectile(sprite);
         p.setAngle(Math.atan2(targetX - p.getX(), targetY - p.getY()));
         p.setVelocity(4);
-        p.setPlayer(false);
+        p.setSource(this);
         p.setDamage((int) (BASE_DAMAGE * getDmgMult()));
         lastAttackTime = System.currentTimeMillis();
         return new Projectile[] { p };

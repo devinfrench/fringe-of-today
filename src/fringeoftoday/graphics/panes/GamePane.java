@@ -23,6 +23,7 @@ import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
 import fringeoftoday.core.CollisionManager;
 import fringeoftoday.entities.Enemy;
+import fringeoftoday.entities.Entity;
 import fringeoftoday.entities.Player;
 import fringeoftoday.entities.Projectile;
 import fringeoftoday.entities.ShotgunEnemy;
@@ -49,6 +50,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private static final int LEVEL_ALERT_X_SIZE = 600;
 	private static final int LEVEL_ALERT_Y_SIZE = 150;
 	private static final double SPEED_EFFECT = .25; // How effective the speed upgrades are, I've found .25 to be pretty
+	private static final int CAP_LEVEL = 11;
 	// good
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
@@ -73,6 +75,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private int counter;
 	private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
 	private GButtonMD quitPauseBtn;
+	private Entity killer;
 
 	public GamePane(MainApplication app) {
 		super();
@@ -242,28 +245,40 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				Space space = room.getSpace(i, j);
 				Enemy enemy = null;
 				switch (space.getType()) {
-				// TODO scaling
 				case BASIC_SPAWN:
 					enemy = new StandardEnemy();
-					enemy.setDmgMult(0.5f);
-					enemy.setFireRate(10);
-					enemy.setHealth(1);
+					enemy.setDmgMult(level * 0.5f);
+					enemy.setFireRate(10 - (.5*(level-1)));
+					if (level > CAP_LEVEL) {
+						enemy.setDmgMult(CAP_LEVEL + (level -CAP_LEVEL) * 0.25f);
+						enemy.setFireRate(5);
+					}
+					enemy.setHealth(1*level);
 					enemy.setVelocity(1);
 					enemy.setSpriteSet("pikachu");
 					break;
 				case SHOTGUN_SPAWN:
 					enemy = new ShotgunEnemy();
-					enemy.setDmgMult(0.5f);
-					enemy.setFireRate(15);
-					enemy.setHealth(1);
-					enemy.setVelocity(1);
+					enemy.setDmgMult(level * 0.5f);
+					enemy.setFireRate(15 - (.25*(level-1)));
+					enemy.setVelocity(1 + 0.05*(level-1));
+					if (level > CAP_LEVEL) {
+						enemy.setDmgMult(CAP_LEVEL + (level -CAP_LEVEL) * 0.25f);
+						enemy.setFireRate(7.5);
+						enemy.setVelocity(1.5);
+					}
+					enemy.setHealth(2*level);
 					enemy.setSpriteSet("pikachu");
 					break;
 				case SNIPER_SPAWN:
 					enemy = new SniperEnemy();
-					enemy.setDmgMult(1.0f);
+					enemy.setDmgMult(level * 1.0f);
 					enemy.setFireRate(15);
-					enemy.setHealth(1);
+					if (level > CAP_LEVEL) {
+						enemy.setDmgMult(CAP_LEVEL + (level -CAP_LEVEL)* 0.5f);
+						enemy.setFireRate(7.5);
+					}
+					enemy.setHealth(1*level);
 					enemy.setSpriteSet("pikachu");
 					break;
 				default:
@@ -296,15 +311,14 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		projectiles.clear();
 	}
 
-	public void onDeath() {// Trigger this when player is dead, should add other functions - tally score,
-		// etc.
+	public void onDeath() {
 		PlayerData.writeFile();
 		direction = null;
 		t.stop();
 		resetGame();
 		PlayerData.updateMap("PreviousRun", level);
 		level = 1;
-		program.switchToDeath();
+		program.switchToDeath(killer);
 	}
 
 	public void clearRoom() {
@@ -628,6 +642,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				collision = true;
 				player.setHealth(player.getHealth() - p.getDamage());
 				healthLabel.setLabel("Health: " + player.getHealth());
+				killer = p.getSource();
 			}
 			for (Enemy enemy : program.getEntityManager().getEnemies()) {
 				if (collisionManager.isEnemyCollision(enemy, p)) {
@@ -636,6 +651,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					if (enemy.getHealth() <= 0) {
 						program.remove(enemy.getGObject());
 						program.getEntityManager().getEnemies().remove(enemy);
+						PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) + 1);
 					}
 					break;
 				}
@@ -651,11 +667,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void enemyAttack() {
-		GObject obj = player.getGObject();
-		double x = obj.getX() + obj.getWidth() / 2;
-		double y = obj.getY() + obj.getHeight() / 2;
 		for (Enemy enemy : program.getEntityManager().getEnemies()) {
-			for (Projectile p : enemy.attack(x, y)) {
+			for (Projectile p : enemy.attack(player.getCenterX(), player.getCenterY())) {
 				program.getEntityManager().getProjectiles().add(p);
 				program.add(p.getGObject());
 			}
@@ -724,11 +737,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private String variablePath(String path) {
-		if (level <= 5)
+		if (level <= 3)
 			path = path + "RockPath/";
-		else if (level >= 6 && level <= 10)
+		else if (level >= 4 && level <= 6)
 			path = path + "SealedRuin/";
-		else if (level >= 11 && level <= 15)
+		else if (level >= 7 && level <= 9)
 			path = path + "SteamCave/";
 		else
 			path = path + "DarkCrater/";

@@ -3,6 +3,7 @@ package fringeoftoday.core;
 import acm.graphics.GObject;
 import fringeoftoday.entities.Enemy;
 import fringeoftoday.entities.EntityManager;
+import fringeoftoday.entities.Player;
 import fringeoftoday.entities.Projectile;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
@@ -24,30 +25,17 @@ public class CollisionManager {
     }
 
     public boolean playerCanMove(double x, double y) {
-        GObject player = entityManager.getPlayer().getGObject();
-        if (player == null) {
-            return false;
+        SpaceType type = getPlayerSpaceType(x, y);
+        switch (type) {
+            case GROUND:
+            case BASIC_SPAWN:
+            case SHOTGUN_SPAWN:
+            case SNIPER_SPAWN:
+            case STAIRS:
+                return true;
+            default:
+                return  false;
         }
-        x = player.getX() + x + (player.getWidth() / 2);
-        y = player.getY() + y + (player.getHeight() / 2);
-        for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
-            for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-                Space space = room.getSpace(i, j);
-                if (space.getGObject().contains(x, y)) {
-                    switch (space.getType()) {
-                        case GROUND:
-                        case BASIC_SPAWN:
-                        case SHOTGUN_SPAWN:
-                        case SNIPER_SPAWN:
-                        case STAIRS:
-                            return true;
-                        default:
-                            return  false;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     /**
@@ -57,12 +45,12 @@ public class CollisionManager {
      * @return the SpaceType if the player were to move the given x and y distances.
      */
     public SpaceType getPlayerSpaceType(double x, double y) {
-        GObject player = entityManager.getPlayer().getGObject();
+        Player player = entityManager.getPlayer();
         if (player == null) {
             return SpaceType.BLANK;
         }
-        x = player.getX() + x + (player.getWidth() / 2);
-        y = player.getY() + y + (player.getHeight() / 2);
+        x = player.getCenterX() + x;
+        y = player.getCenterY() + y;
         for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
             for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
                 Space space = room.getSpace(i, j);
@@ -95,12 +83,8 @@ public class CollisionManager {
     }
 
     public boolean isTerrainCollision(Projectile p) {
-        GObject sprite = p.getGObject();
-        if (sprite == null) {
-            return true;
-        }
-        double x = sprite.getX() + (sprite.getWidth() / 2);
-        double y = sprite.getY() + (sprite.getHeight() / 2);
+        double x = p.getCenterX();
+        double y = p.getCenterY();
         for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
             for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
                 Space space = room.getSpace(i, j);
@@ -117,30 +101,24 @@ public class CollisionManager {
     }
 
     public boolean isPlayerCollision(Projectile p) {
-        if (p.isPlayer()) {
+        if (p.getSource() instanceof Player) {
             return false;
         }
-        GObject sprite = p.getGObject();
         GObject player = entityManager.getPlayer().getGObject();
-        if (sprite == null || player == null) {
+        if (player == null) {
             return false;
         }
-        double x = sprite.getX() + (sprite.getWidth() / 2);
-        double y = sprite.getY() + (sprite.getHeight() / 2);
-        return player.getBounds().contains(x, y);
+        return player.getBounds().contains(p.getCenterX(), p.getCenterY());
     }
 
     public boolean isEnemyCollision(Enemy enemy, Projectile p) {
-        if (!p.isPlayer()) {
+        if (!(p.getSource() instanceof Player)) {
             return false;
         }
-        GObject pSprite = p.getGObject();
-        GObject eSprite = enemy.getGObject();
-        if (pSprite == null || eSprite == null) {
+        GObject obj = enemy.getGObject();
+        if (obj == null) {
             return false;
         }
-        double x = pSprite.getX() + (pSprite.getWidth() / 2);
-        double y = pSprite.getY() + (pSprite.getHeight() / 2);
-        return eSprite.contains(x, y);
+        return obj.contains(p.getCenterX(), p.getCenterY());
     }
 }
