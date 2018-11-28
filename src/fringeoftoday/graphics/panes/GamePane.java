@@ -643,11 +643,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void enemyAttack() {
-		GObject obj = player.getGObject();
-		double x = obj.getX() + obj.getWidth() / 2;
-		double y = obj.getY() + obj.getHeight() / 2;
 		for (Enemy enemy : program.getEntityManager().getEnemies()) {
-			for (Projectile p : enemy.attack(x, y)) {
+			for (Projectile p : enemy.attack(player.getCenterX(), player.getCenterY())) {
 				program.getEntityManager().getProjectiles().add(p);
 				program.add(p.getGObject());
 			}

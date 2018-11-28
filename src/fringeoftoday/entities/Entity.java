@@ -55,6 +55,22 @@ public class Entity {
         }
     }
 
+    public double getCenterX() {
+        GObject obj = getGObject();
+        if (obj != null) {
+            return obj.getX() + (obj.getWidth() / 2) ;
+        }
+        return 0;
+    }
+
+    public double getCenterY() {
+        GObject obj = getGObject();
+        if (obj != null) {
+            return obj.getY() + (obj.getHeight() / 2);
+        }
+        return 0;
+    }
+
     public void move(double x, double y) {
         if (gObj != null) {
             gObj.move(x, y);
