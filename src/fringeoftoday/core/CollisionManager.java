@@ -3,6 +3,7 @@ package fringeoftoday.core;
 import acm.graphics.GObject;
 import fringeoftoday.entities.Enemy;
 import fringeoftoday.entities.EntityManager;
+import fringeoftoday.entities.Player;
 import fringeoftoday.entities.Projectile;
 import fringeoftoday.floor.FloorManager;
 import fringeoftoday.floor.Room;
@@ -117,7 +118,7 @@ public class CollisionManager {
     }
 
     public boolean isPlayerCollision(Projectile p) {
-        if (p.isPlayer()) {
+        if (p.getSource() instanceof Player) {
             return false;
         }
         GObject sprite = p.getGObject();
@@ -131,7 +132,7 @@ public class CollisionManager {
     }
 
     public boolean isEnemyCollision(Enemy enemy, Projectile p) {
-        if (!p.isPlayer()) {
+        if (!(p.getSource() instanceof Player)) {
             return false;
         }
         GObject pSprite = p.getGObject();

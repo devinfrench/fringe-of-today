@@ -21,3 +21,15 @@ W ~ ~ ~ ~ ~ ~ ~ ~ * * W * W * * ~ ~ ~ ~ ~ ~ ~ ~ W
 W N * ~ ~ ~ ~ ~ ~ * * W * W * * ~ ~ ~ ~ ~ ~ * N W
 W * N ~ ~ ~ ~ ~ ~ ~ ~ W * W ~ ~ ~ ~ ~ ~ ~ ~ N * W
 W W W W W W W W W W W W D W W W W W W W W W W W W
+
+W W W W W W W W W W W W D W W W W W W W W W W W W
+W ~ ~ ~ * H * ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ * H * ~ ~ ~ W
+W ~ ~ ~ * * * ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ * * * ~ ~ ~ W
+W ~ ~ ~ ~ ~ ~ ~ ~ ~ W W * W W ~ ~ ~ ~ ~ ~ ~ ~ ~ W
+W ~ ~ ~ ~ ~ ~ ~ ~ ~ W * * * W ~ ~ ~ ~ ~ ~ ~ ~ ~ W
+D * * * * * * * * * * H S H * * * * * * * * * * D
+W ~ ~ ~ ~ ~ ~ ~ ~ ~ W * * * W ~ ~ ~ ~ ~ ~ ~ ~ ~ W
+W ~ ~ ~ ~ ~ ~ ~ ~ ~ W W * W W ~ ~ ~ ~ ~ ~ ~ ~ ~ W
+W ~ ~ ~ * * * ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ * * * ~ ~ ~ W
+W ~ ~ ~ * H * ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ * H * ~ ~ ~ W
+W W W W W W W W W W W W D W W W W W W W W W W W W

@@ -23,6 +23,7 @@ import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
 import fringeoftoday.core.CollisionManager;
 import fringeoftoday.entities.Enemy;
+import fringeoftoday.entities.Entity;
 import fringeoftoday.entities.Player;
 import fringeoftoday.entities.Projectile;
 import fringeoftoday.entities.ShotgunEnemy;
@@ -74,6 +75,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private int counter;
 	private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
 	private GButtonMD quitPauseBtn;
+	private Entity killer;
 
 	public GamePane(MainApplication app) {
 		super();
@@ -315,7 +317,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		resetGame();
 		PlayerData.updateMap("PreviousRun", level);
 		level = 1;
-		program.switchToDeath();
+		program.switchToDeath(killer);
 	}
 
 	public void clearRoom() {
@@ -616,6 +618,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				collision = true;
 				player.setHealth(player.getHealth() - p.getDamage());
 				healthLabel.setLabel("Health: " + player.getHealth());
+				killer = p.getSource();
 			}
 			for (Enemy enemy : program.getEntityManager().getEnemies()) {
 				if (collisionManager.isEnemyCollision(enemy, p)) {
@@ -624,6 +627,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					if (enemy.getHealth() <= 0) {
 						program.remove(enemy.getGObject());
 						program.getEntityManager().getEnemies().remove(enemy);
+						PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) + 1);
 					}
 					break;
 				}
@@ -711,11 +715,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private String variablePath(String path) {
-		if (level <= 5)
+		if (level <= 3)
 			path = path + "RockPath/";
-		else if (level >= 6 && level <= 10)
+		else if (level >= 4 && level <= 6)
 			path = path + "SealedRuin/";
-		else if (level >= 11 && level <= 15)
+		else if (level >= 7 && level <= 9)
 			path = path + "SteamCave/";
 		else
 			path = path + "DarkCrater/";
