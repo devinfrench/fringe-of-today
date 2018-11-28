@@ -309,8 +309,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		projectiles.clear();
 	}
 
-	public void onDeath() {// Trigger this when player is dead, should add other functions - tally score,
-		// etc.
+	public void onDeath() {
 		PlayerData.writeFile();
 		direction = null;
 		t.stop();
