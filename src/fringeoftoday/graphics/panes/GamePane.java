@@ -67,6 +67,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private GRect healthBox; // Right header
 	private GButtonMD levelAlert;
 	private GLabel healthLabel;
+	private GImage btnAudio;
 	private GRect backingColor;
 	private Room room;
 	private Player player;
