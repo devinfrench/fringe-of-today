@@ -23,6 +23,7 @@ import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
 import fringeoftoday.core.CollisionManager;
 import fringeoftoday.entities.Enemy;
+import fringeoftoday.entities.Entity;
 import fringeoftoday.entities.Player;
 import fringeoftoday.entities.Projectile;
 import fringeoftoday.entities.ShotgunEnemy;
@@ -73,6 +74,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private int counter;
 	private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
 	private GButtonMD quitPauseBtn;
+	private Entity killer;
 
 	public GamePane(MainApplication app) {
 		super();
@@ -302,7 +304,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		resetGame();
 		PlayerData.updateMap("PreviousRun", level);
 		level = 1;
-		program.switchToDeath();
+		program.switchToDeath(killer);
 	}
 
 	public void clearRoom() {
@@ -603,6 +605,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				collision = true;
 				player.setHealth(player.getHealth() - p.getDamage());
 				healthLabel.setLabel("Health: " + player.getHealth());
+				killer = p.getSource();
 			}
 			for (Enemy enemy : program.getEntityManager().getEnemies()) {
 				if (collisionManager.isEnemyCollision(enemy, p)) {

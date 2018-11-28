@@ -7,7 +7,7 @@ public class Projectile extends Entity {
     private int damage;
     private double angle;
     private double velocity;
-    private boolean isPlayer;
+    private Entity source;
 
     public Projectile(GObject gObj) {
         super(gObj);
@@ -39,19 +39,19 @@ public class Projectile extends Entity {
     }
 
     /**
-     * Determines whether or not the projectile originated from the player.
-     * @return true if player projectile, false otherwise.
+     * Gets the source entity that created the projectile.
+     * @return the source entity
      */
-    public boolean isPlayer() {
-        return isPlayer;
+    public Entity getSource() {
+        return source;
     }
 
     /**
      * Sets the source of the projectile.
-     * @param player true if the player shot the projectile.
+     * @param source the entity that created the projectile.
      */
-    public void setPlayer(boolean player) {
-        isPlayer = player;
+    public void setSource(Entity source) {
+        this.source = source;
     }
 
     public void move() {
