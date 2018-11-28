@@ -257,12 +257,14 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					enemy.setFireRate(15);
 					enemy.setHealth(1);
 					enemy.setVelocity(1);
+					enemy.setSpriteSet("pikachu");
 					break;
 				case SNIPER_SPAWN:
 					enemy = new SniperEnemy();
 					enemy.setDmgMult(1.0f);
 					enemy.setFireRate(15);
 					enemy.setHealth(1);
+					enemy.setSpriteSet("pikachu");
 					break;
 				default:
 					break;
@@ -594,6 +596,29 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		}
 	}
+	
+	private void animateEnemy(Enemy enemy) {
+		if (enemy.getIsMoving()) {
+		
+			if (counter%15==0) {
+				((GImage) enemy.getGObject())
+						.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_walking_"+enemy.getFacing()+"_1.png");
+			} else if (counter % 15 == 7) {
+				((GImage) enemy.getGObject())
+				.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_standing_" + enemy.getFacing() + ".png");
+
+			} else if (counter % 15 == 14) {
+				((GImage) enemy.getGObject())
+				.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_walking_" + enemy.getFacing() + "_2.png");
+			}
+		//enemy is always moving
+		
+		} else {
+			((GImage) enemy.getGObject())
+					.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_standing_" + enemy.getFacing() + ".png");
+		}
+		
+	}
 
 	private void checkProjectileCollision() {
 		for (Projectile p : program.getEntityManager().getProjectiles()) {
@@ -640,6 +665,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private void enemyMove() {
 		for (Enemy enemy : program.getEntityManager().getEnemies()) {
 			enemy.move(collisionManager, player);
+			animateEnemy(enemy);
 		}
 	}
 
