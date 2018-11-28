@@ -698,11 +698,11 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private String variablePath(String path) {
-		if (level <= 5)
+		if (level <= 3)
 			path = path + "RockPath/";
-		else if (level >= 6 && level <= 10)
+		else if (level >= 4 && level <= 6)
 			path = path + "SealedRuin/";
-		else if (level >= 11 && level <= 15)
+		else if (level >= 7 && level <= 9)
 			path = path + "SteamCave/";
 		else
 			path = path + "DarkCrater/";
