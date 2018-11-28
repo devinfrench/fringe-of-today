@@ -22,7 +22,7 @@ public class ShotgunEnemy extends Enemy {
 
     public ShotgunEnemy() {
         projectileImage = Sprites.loadSprite(PROJECTILE_IMAGE_PATH);
-        Image sprite = Sprites.loadSprite("enemy_sprite_temp.png");
+        Image sprite = Sprites.loadSprite("../media/sprites/pikachu/pikachu_standing_" + this.getFacing() + ".png");
         setGObject(new GImage(sprite));
         lastAttackTime = System.currentTimeMillis() + FIRST_ATTACK_DELAY;
     }

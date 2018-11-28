@@ -62,23 +62,21 @@ public abstract class Enemy extends ActiveEntity {
                 if (dist < closest && collisionManager.enemyCanMove(x, y)) {
                     closest = dist;
                     p = getMovePoint(dx, dy);
+                    
                     this.setIsMoving(true);
-                    if (dx == 0 && dy < 0) {
+                    
+                    if (Math.round(p.getX()) == 0 && Math.round(p.getY()) < 0) {
                     	this.setFacing("north");
                     }
-                    else if (dx == 0 && dy > 0) {
+                    else if (Math.round(p.getX()) == 0 && Math.round(p.getY()) > 0) {
                     	this.setFacing("south");
                     }
-                    else if (dx < 0 && dy == 0) {
+                    else if (Math.round(p.getX()) < 0 && Math.round(p.getY()) == 0) {
                     	this.setFacing("west");
                     }
-                    else if (dx > 0 && dy == 0) {
+                    else if (Math.round(p.getX()) > 0 && Math.round(p.getY()) == 0) {
                     	this.setFacing("east");
                     }
-                }
-                else
-                {
-                	this.setIsMoving(false);
                 }
             }
         }

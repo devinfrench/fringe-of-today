@@ -269,6 +269,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 						enemy.setVelocity(1.5);
 					}
 					enemy.setHealth(2*level);
+					enemy.setSpriteSet("pikachu");
 					break;
 				case SNIPER_SPAWN:
 					enemy = new SniperEnemy();
@@ -279,6 +280,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 						enemy.setFireRate(7.5);
 					}
 					enemy.setHealth(1*level);
+					enemy.setSpriteSet("pikachu");
 					break;
 				default:
 					break;
@@ -310,8 +312,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		projectiles.clear();
 	}
 
-	public void onDeath() {// Trigger this when player is dead, should add other functions - tally score,
-		// etc.
+	public void onDeath() {
 		PlayerData.writeFile();
 		direction = null;
 		t.stop();
@@ -610,6 +611,29 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 		}
 	}
+	
+	private void animateEnemy(Enemy enemy) {
+		if (enemy.getIsMoving()) {
+		
+			if (counter%15==0) {
+				((GImage) enemy.getGObject())
+						.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_walking_"+enemy.getFacing()+"_1.png");
+			} else if (counter % 15 == 7) {
+				((GImage) enemy.getGObject())
+				.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_standing_" + enemy.getFacing() + ".png");
+
+			} else if (counter % 15 == 14) {
+				((GImage) enemy.getGObject())
+				.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_walking_" + enemy.getFacing() + "_2.png");
+			}
+		//enemy is always moving
+		
+		} else {
+			((GImage) enemy.getGObject())
+					.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_standing_" + enemy.getFacing() + ".png");
+		}
+		
+	}
 
 	private void checkProjectileCollision() {
 		for (Projectile p : program.getEntityManager().getProjectiles()) {
@@ -644,11 +668,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	}
 
 	private void enemyAttack() {
-		GObject obj = player.getGObject();
-		double x = obj.getX() + obj.getWidth() / 2;
-		double y = obj.getY() + obj.getHeight() / 2;
 		for (Enemy enemy : program.getEntityManager().getEnemies()) {
-			for (Projectile p : enemy.attack(x, y)) {
+			for (Projectile p : enemy.attack(player.getCenterX(), player.getCenterY())) {
 				program.getEntityManager().getProjectiles().add(p);
 				program.add(p.getGObject());
 			}
@@ -658,6 +679,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private void enemyMove() {
 		for (Enemy enemy : program.getEntityManager().getEnemies()) {
 			enemy.move(collisionManager, player);
+			animateEnemy(enemy);
 		}
 	}
 

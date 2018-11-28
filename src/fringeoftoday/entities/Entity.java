@@ -28,16 +28,6 @@ public class Entity {
     }
 
     /**
-     * Sets the x-coordinate of the GObject and updates the GObject's location
-     * @param x the x-coordinate to move to.
-     */
-    public void setX(double x) {
-        if (gObj != null) {
-            gObj.setLocation(x, 0);
-        }
-    }
-
-    /**
      * Gets the y-coordinate of the GObject
      * @return the y-coordinate of the GObject or 0 if GObject is null
      */
@@ -45,14 +35,20 @@ public class Entity {
         return gObj != null ? gObj.getY() : 0;
     }
 
-    /**
-     * Sets the y-coordinate of the GObject and updates the GObject's location
-     * @param y the x-coordinate to move to.
-     */
-    public void setY(double y) {
-        if (gObj != null) {
-            gObj.setLocation(0, y);
+    public double getCenterX() {
+        GObject obj = getGObject();
+        if (obj != null) {
+            return obj.getX() + (obj.getWidth() / 2) ;
         }
+        return 0;
+    }
+
+    public double getCenterY() {
+        GObject obj = getGObject();
+        if (obj != null) {
+            return obj.getY() + (obj.getHeight() / 2);
+        }
+        return 0;
     }
 
     public void move(double x, double y) {
