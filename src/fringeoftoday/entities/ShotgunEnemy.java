@@ -26,6 +26,11 @@ public class ShotgunEnemy extends Enemy {
         setGObject(new GImage(sprite));
         lastAttackTime = System.currentTimeMillis() + FIRST_ATTACK_DELAY;
     }
+    
+    @Override
+    public String toString() {
+    	return "Brawler";
+    }
 
     @Override
     public Projectile[] attack(double targetX, double targetY) {
@@ -41,7 +46,7 @@ public class ShotgunEnemy extends Enemy {
             Projectile p = new Projectile(sprite);
             p.setAngle(Math.atan2((targetX + (i * SPREAD)) - p.getX(), (targetY + (i * SPREAD)) - p.getY()));
             p.setVelocity(2.5);
-            p.setPlayer(false);
+            p.setSource(this);
             p.setDamage((int) (BASE_DAMAGE * getDmgMult()));
             projectiles.add(p);
         }

@@ -86,7 +86,7 @@ public class Player extends ActiveEntity {
 		GImage sprite = new GImage(projectileImage, x, y);
 		Projectile p = new Projectile(sprite);
 		p.setAngle(Math.atan2(targetX - p.getX(), targetY - p.getY()));
-		p.setPlayer(true);
+		p.setSource(this);
 		p.setDamage(rangedDamage);
 		lastAttackTime = System.currentTimeMillis();
 		return new Projectile[] { p };

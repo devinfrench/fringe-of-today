@@ -3,11 +3,8 @@ package fringeoftoday;
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.*;
-
 import fringeoftoday.audio.AudioPlayer;
+import fringeoftoday.entities.Entity;
 import fringeoftoday.entities.EntityManager;
 import fringeoftoday.graphics.GraphicsApplication;
 import fringeoftoday.graphics.panes.MenuPane;
@@ -102,7 +99,8 @@ public class MainApplication extends GraphicsApplication {
 
 	}
 
-	public void switchToDeath() {
+	public void switchToDeath(Entity killer) {
+		deathPane.setKiller(killer);
 		switchToScreen(deathPane);
 	}
 
