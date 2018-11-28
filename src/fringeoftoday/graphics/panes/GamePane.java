@@ -614,6 +614,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 					if (enemy.getHealth() <= 0) {
 						program.remove(enemy.getGObject());
 						program.getEntityManager().getEnemies().remove(enemy);
+						PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) + 1);
 					}
 					break;
 				}
