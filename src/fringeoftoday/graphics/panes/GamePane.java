@@ -49,6 +49,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private static final int LEVEL_ALERT_X_SIZE = 600;
 	private static final int LEVEL_ALERT_Y_SIZE = 150;
 	private static final double SPEED_EFFECT = .25; // How effective the speed upgrades are, I've found .25 to be pretty
+	private static final int CAP_LEVEL = 11;
 	// good
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
@@ -242,27 +243,39 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				Space space = room.getSpace(i, j);
 				Enemy enemy = null;
 				switch (space.getType()) {
-				// TODO scaling
 				case BASIC_SPAWN:
 					enemy = new StandardEnemy();
-					enemy.setDmgMult(0.5f);
-					enemy.setFireRate(10);
-					enemy.setHealth(1);
+					enemy.setDmgMult(level * 0.5f);
+					enemy.setFireRate(10 - (.5*(level-1)));
+					if (level > CAP_LEVEL) {
+						enemy.setDmgMult(CAP_LEVEL + (level -CAP_LEVEL) * 0.25f);
+						enemy.setFireRate(5);
+					}
+					enemy.setHealth(1*level);
 					enemy.setVelocity(1);
 					enemy.setSpriteSet("pikachu");
 					break;
 				case SHOTGUN_SPAWN:
 					enemy = new ShotgunEnemy();
-					enemy.setDmgMult(0.5f);
-					enemy.setFireRate(15);
-					enemy.setHealth(1);
-					enemy.setVelocity(1);
+					enemy.setDmgMult(level * 0.5f);
+					enemy.setFireRate(15 - (.25*(level-1)));
+					enemy.setVelocity(1 + 0.05*(level-1));
+					if (level > CAP_LEVEL) {
+						enemy.setDmgMult(CAP_LEVEL + (level -CAP_LEVEL) * 0.25f);
+						enemy.setFireRate(7.5);
+						enemy.setVelocity(1.5);
+					}
+					enemy.setHealth(2*level);
 					break;
 				case SNIPER_SPAWN:
 					enemy = new SniperEnemy();
-					enemy.setDmgMult(1.0f);
+					enemy.setDmgMult(level * 1.0f);
 					enemy.setFireRate(15);
-					enemy.setHealth(1);
+					if (level > CAP_LEVEL) {
+						enemy.setDmgMult(CAP_LEVEL + (level -CAP_LEVEL)* 0.5f);
+						enemy.setFireRate(7.5);
+					}
+					enemy.setHealth(1*level);
 					break;
 				default:
 					break;
