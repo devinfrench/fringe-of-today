@@ -1,5 +1,4 @@
-package starter;
-
+package fringeoftoday.graphics;
 
 /*
  * File: GButton.java
@@ -15,31 +14,36 @@ import java.awt.Color;
 import java.awt.Font;
 
 import acm.graphics.GCompound;
+import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GRoundRect;
 
-public class GButton extends GCompound {
-	private GRoundRect rect;
+public class GButtonMD extends GCompound {
+	private static final String FILE_PATH = "../media/buttonMD/box";
+	private static final String FILE_END = ".png";
+
+	private GImage rect;
 	private GLabel message;
+	private String color;
 
 	public static final int BUFFER = 20;
 
-	public GButton(String label, double x, double y, double width, double height) {
-		this(label, x, y, width, height, Color.white);
+	public GButtonMD(String string, int x, int y, int width, int height) {
+		this(string, x, y, width, height, "blue");
 	}
 
-	public GButton(String label, double x, double y, double width, double height, int r, int g, int b) {
-		this(label, x, y, width, height, new Color(r, g, b));
-	}
-
-	public GButton(String label, double x, double y, double width, double height, Color col) {
+	public GButtonMD(String label, int x, int y, int width, int height, String color) {
 		super();
 		setLocation(x, y);
-		rect = new GRoundRect(0, 0, width, height);
-		rect.setFilled(true);
-		rect.setFillColor(col);
+		if (width == height) {
+			color = color + "SQR";
+		}
+		rect = new GImage(FILE_PATH + color + FILE_END, 0, 0);
+		rect.setSize(width, height);
 		add(rect);
 		message = new GLabel(label);
+		message.setFont(new Font("PKMN Mystery Dungeon", 0, 0));
+		message.setColor(Color.WHITE);
 		sizeLabelFont(message, width - BUFFER, height - BUFFER);
 		double centerX = width / 2 - message.getWidth() / 2;
 		double centerY = height / 2 + message.getAscent() / 4;
@@ -58,14 +62,14 @@ public class GButton extends GCompound {
 			size = f.getSize();
 			label.setFont(new Font(name, style, size + 1));
 		}
-		label.setFont(new Font(name, style, size - 1));
-	}
-
-	public void setFillColor(Color col) {
-		rect.setFillColor(col);
+		label.setFont(new Font(name, style, (int) (size/1.75)));
 	}
 
 	public void setColor(Color col) {
 		message.setColor(col);
+	}
+	
+	public GLabel getLabel() {
+		return message;
 	}
 }

@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 import fringeoftoday.graphics.GParagraph;
-import starter.GButtonMD;
+import fringeoftoday.graphics.GButtonMD;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
 import fringeoftoday.entities.Entity;

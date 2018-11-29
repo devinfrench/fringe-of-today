@@ -2,10 +2,7 @@ package fringeoftoday.graphics.panes;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
 import acm.graphics.GObject;
 import acm.graphics.GImage;
@@ -13,9 +10,7 @@ import acm.graphics.GLabel;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
 import fringeoftoday.audio.AudioPlayer;
-import fringeoftoday.graphics.GButton;
-import fringeoftoday.graphics.panes.GraphicsPane;
-import starter.GButtonMD;
+import fringeoftoday.graphics.GButtonMD;
 
 public class MenuPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to

@@ -10,9 +10,8 @@ import acm.graphics.GLine;
 import acm.graphics.GObject;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
-import fringeoftoday.entities.Player;
 import fringeoftoday.graphics.GButton;
-import starter.GButtonMD;
+import fringeoftoday.graphics.GButtonMD;
 
 public class ShopPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to

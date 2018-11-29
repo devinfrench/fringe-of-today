@@ -38,7 +38,7 @@ import fringeoftoday.floor.Space;
 import fringeoftoday.floor.SpaceType;
 import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.Sprites;
-import starter.GButtonMD;
+import fringeoftoday.graphics.GButtonMD;
 
 /**
  * Handles rendering the game screen and all gameplay-related tasks
