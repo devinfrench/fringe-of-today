@@ -149,6 +149,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
         drawHealth(player.getHealth());
         program.add(infoBox);
         program.add(healthBox);
+        program.add(healthLabel);
         minimapBuilder();
     }
 
@@ -219,7 +220,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
         healthLabel = new GLabel("Health: " + health, HEADER_WIDTH * 2.25, HEADER_HEIGHT / 1.9);
         healthLabel.setFont(hdrFont);
         healthLabel.setColor(Color.WHITE);
-        program.add(healthLabel);
     }
 
     /**
@@ -427,8 +427,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
         removePlayer();
         removeEnemies();
         removeProjectiles();
-        program.remove(healthLabel);
-        program.remove(infoText);
     }
 
     /**
@@ -440,6 +438,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
         program.remove(infoBox);
         program.remove(infoText);
         program.remove(healthBox);
+        program.remove(healthLabel);
         program.remove(backingColor);
         minimapDestructor();
         program.remove(bossIcon);
