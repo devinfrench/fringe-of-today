@@ -22,10 +22,10 @@ public class SniperEnemy extends Enemy {
         setGObject(new GImage(sprite));
         lastAttackTime = System.currentTimeMillis() + FIRST_ATTACK_DELAY;
     }
-    
+
     @Override
     public String toString() {
-    	return "Sharpshooter";
+        return "Sharpshooter";
     }
 
     @Override
@@ -43,13 +43,13 @@ public class SniperEnemy extends Enemy {
         p.setSource(this);
         p.setDamage((int) (BASE_DAMAGE * getDmgMult()));
         lastAttackTime = System.currentTimeMillis();
-        return new Projectile[] { p };
+        return new Projectile[]{p};
     }
 
-	@Override
-	public void move(CollisionManager collisionManager, Entity target) {
-		return; // sniper enemy cannot move
-	}
-    
-    
+    @Override
+    public void move(CollisionManager collisionManager, Entity target) {
+        return; // sniper enemy cannot move
+    }
+
+
 }

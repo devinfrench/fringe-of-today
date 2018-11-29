@@ -34,12 +34,13 @@ public class CollisionManager {
             case STAIRS:
                 return true;
             default:
-                return  false;
+                return false;
         }
     }
 
     /**
      * Returns the SpaceType if the player were to move the given x and y distances.
+     *
      * @param x amount of movement on the x axis.
      * @param y amount of movement on the y axis.
      * @return the SpaceType if the player were to move the given x and y distances.
@@ -74,7 +75,7 @@ public class CollisionManager {
                         case SNIPER_SPAWN:
                             return true;
                         default:
-                            return  false;
+                            return false;
                     }
                 }
             }

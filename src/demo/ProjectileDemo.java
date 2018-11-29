@@ -1,6 +1,14 @@
 package demo;
 
-import java.awt.Image;
+import acm.graphics.GImage;
+import acm.graphics.GLabel;
+import acm.graphics.GObject;
+import acm.program.GraphicsProgram;
+import fringeoftoday.entities.Projectile;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,17 +16,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.Timer;
-
-import acm.graphics.GImage;
-import acm.graphics.GLabel;
-import acm.graphics.GObject;
-import acm.program.GraphicsProgram;
-import fringeoftoday.entities.Projectile;
-
 public class ProjectileDemo extends GraphicsProgram {
-	
+
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
     public static final double VELOCITY = 5.0;
@@ -27,6 +26,16 @@ public class ProjectileDemo extends GraphicsProgram {
     private List<Projectile> projectiles;
     private GLabel count;
     private Image sprite;
+
+    public static BufferedImage loadSprite(String file) {
+        BufferedImage sprite = null;
+        try {
+            sprite = ImageIO.read(new File(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sprite;
+    }
 
     public void run() {
         projectiles = new CopyOnWriteArrayList<>();
@@ -48,16 +57,6 @@ public class ProjectileDemo extends GraphicsProgram {
             });
         });
         timer.start();
-    }
-
-    public static BufferedImage loadSprite(String file) {
-        BufferedImage sprite = null;
-        try {
-            sprite = ImageIO.read(new File(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return sprite;
     }
 
     @Override

@@ -10,66 +10,62 @@ package fringeoftoday.graphics;
  * as well as the color of the text.
  */
 
-import java.awt.Color;
-import java.awt.Font;
-
 import acm.graphics.GCompound;
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
-import acm.graphics.GRoundRect;
+
+import java.awt.*;
 
 public class GButtonMD extends GCompound {
-	private static final String FILE_PATH = "../media/buttonMD/box";
-	private static final String FILE_END = ".png";
+    public static final int BUFFER = 20;
+    private static final String FILE_PATH = "../media/buttonMD/box";
+    private static final String FILE_END = ".png";
+    private GImage rect;
+    private GLabel message;
+    private String color;
 
-	private GImage rect;
-	private GLabel message;
-	private String color;
+    public GButtonMD(String string, int x, int y, int width, int height) {
+        this(string, x, y, width, height, "blue");
+    }
 
-	public static final int BUFFER = 20;
+    public GButtonMD(String label, int x, int y, int width, int height, String color) {
+        super();
+        setLocation(x, y);
+        if (width == height) {
+            color = color + "SQR";
+        }
+        rect = new GImage(FILE_PATH + color + FILE_END, 0, 0);
+        rect.setSize(width, height);
+        add(rect);
+        message = new GLabel(label);
+        message.setFont(new Font("PKMN Mystery Dungeon", 0, 0));
+        message.setColor(Color.WHITE);
+        sizeLabelFont(message, width - BUFFER, height - BUFFER);
+        double centerX = width / 2 - message.getWidth() / 2;
+        double centerY = height / 2 + message.getAscent() / 4;
+        add(message, centerX, centerY);
+    }
 
-	public GButtonMD(String string, int x, int y, int width, int height) {
-		this(string, x, y, width, height, "blue");
-	}
+    private void sizeLabelFont(GLabel label, double width, double height) {
+        int size, style;
+        String name;
+        Font f = label.getFont();
+        name = f.getFontName();
+        style = f.getStyle();
+        size = f.getSize();
+        while (label.getWidth() < width && label.getHeight() < height) {
+            f = label.getFont();
+            size = f.getSize();
+            label.setFont(new Font(name, style, size + 1));
+        }
+        label.setFont(new Font(name, style, (int) (size / 1.75)));
+    }
 
-	public GButtonMD(String label, int x, int y, int width, int height, String color) {
-		super();
-		setLocation(x, y);
-		if (width == height) {
-			color = color + "SQR";
-		}
-		rect = new GImage(FILE_PATH + color + FILE_END, 0, 0);
-		rect.setSize(width, height);
-		add(rect);
-		message = new GLabel(label);
-		message.setFont(new Font("PKMN Mystery Dungeon", 0, 0));
-		message.setColor(Color.WHITE);
-		sizeLabelFont(message, width - BUFFER, height - BUFFER);
-		double centerX = width / 2 - message.getWidth() / 2;
-		double centerY = height / 2 + message.getAscent() / 4;
-		add(message, centerX, centerY);
-	}
+    public void setColor(Color col) {
+        message.setColor(col);
+    }
 
-	private void sizeLabelFont(GLabel label, double width, double height) {
-		int size, style;
-		String name;
-		Font f = label.getFont();
-		name = f.getFontName();
-		style = f.getStyle();
-		size = f.getSize();
-		while (label.getWidth() < width && label.getHeight() < height) {
-			f = label.getFont();
-			size = f.getSize();
-			label.setFont(new Font(name, style, size + 1));
-		}
-		label.setFont(new Font(name, style, (int) (size/1.75)));
-	}
-
-	public void setColor(Color col) {
-		message.setColor(col);
-	}
-	
-	public GLabel getLabel() {
-		return message;
-	}
+    public GLabel getLabel() {
+        return message;
+    }
 }
