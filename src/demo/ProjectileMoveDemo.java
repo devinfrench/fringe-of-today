@@ -1,3 +1,5 @@
+package demo;
+
 import acm.graphics.GLabel;
 import acm.graphics.GObject;
 import acm.graphics.GOval;

@@ -1,3 +1,5 @@
+package demo;
+
 import java.awt.Color;
 
 import javax.swing.Timer;
