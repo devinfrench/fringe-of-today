@@ -40,35 +40,40 @@ import fringeoftoday.graphics.GParagraph;
 import fringeoftoday.graphics.Sprites;
 import starter.GButtonMD;
 
+/**
+ * Handles rendering the game screen and all gameplay-related tasks
+ * @author Devin French
+ * @author Alexander Ng
+ * @author Alex Reynen
+ * @author Jacob Shour
+ */
 public class GamePane extends GraphicsPane implements ActionListener {
-	private MainApplication program; // you will use program to get access to
-	// all of the GraphicsProgram calls
+	private MainApplication program;  // Used to access MainApplication methods
+	
 	public static final int HEADER_WIDTH = MainApplication.WINDOW_WIDTH / 3;
 	public static final int HEADER_HEIGHT = 196;
 	public static final String FILE_PATH = "../media/textures/";
 	public static final int DELAY_MS = 25;
 	private static final int LEVEL_ALERT_X_SIZE = 600;
 	private static final int LEVEL_ALERT_Y_SIZE = 150;
-	private static final double SPEED_EFFECT = .25; // How effective the speed upgrades are, I've found .25 to be pretty
+	private static final double SPEED_EFFECT = .25;  // Effectiveness of speed upgrades
 	private static final int CAP_LEVEL = 11;
-	// good
+	
 	public Direction direction;
 	private Set<Integer> keysPressed = new HashSet<>();
-
 	private ArrayList<GObject> minimap = new ArrayList<GObject>();
-
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
-	private int level = 1; // Work on this when we get it in
-	private GRect minimapBox; // Minimap, left header
+	private int level = 1;        // Current floor depth
+	private GRect minimapBox;     // Left header (minimap)
 	private GImage bossIcon;
 	private GOval playerOnMap;
-	private GRect infoBox; // Center header
-	private GParagraph infoText;// Center header content
-	private GRect healthBox; // Right header
+	private GRect infoBox;        // Center header
+	private GParagraph infoText;  // Center header content
+	private GRect healthBox;      // Right header
 	private GButtonMD levelAlert;
 	private GLabel healthLabel;
 	private GRect backingColor;
-	private Room room;
+	private Room room;            // Current room
 	private Player player;
 	private CollisionManager collisionManager;
 	private Timer t;
@@ -77,18 +82,22 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private GButtonMD quitPauseBtn;
 	private Entity killer;
 
+	
+	// =========== CONSTRUCTOR =========== //
+	
+	/**
+	 * Main initialization function
+	 * @param app Provides access to MainApplication methods
+	 */
 	public GamePane(MainApplication app) {
 		super();
 		program = app;
 		loadFont();
-		// HEADER
+		
+		// Header
 		minimapBox = new GRect(0, 0, HEADER_WIDTH, HEADER_HEIGHT);
-
 		infoBox = new GRect(HEADER_WIDTH, 0, HEADER_WIDTH, HEADER_HEIGHT);
-
 		healthBox = new GRect(HEADER_WIDTH * 2, 0, HEADER_WIDTH, HEADER_HEIGHT);
-
-		// FIELD
 
 		// Room
 		room = program.getFloorManager().getSpawnRoom();
@@ -104,51 +113,17 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		counter = 0;
 	}
 
-	private void infoDrawing() {
-		backingColor = new GRect(0, 0, MainApplication.WINDOW_WIDTH, HEADER_HEIGHT);
-		// Off black color
-//		backingColor.setFillColor(new Color(0,1,11));
-		// Pure black, which I (Alex R) prefer
-		backingColor.setFillColor(Color.BLACK);
-		backingColor.setFilled(true);
-		program.add(backingColor);
-		player.setFireDamage(1 + Integer.parseInt(PlayerData.getMap().get("FireSpeedUpgrades")));
-		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
-		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
-
-		infoText = new GParagraph("Level: " + level + "\nFiring Speed: " + player.getFireSpeed() + "\nRanged Damage: "
-				+ player.getRangedDamage() + "\nMove Speed: " + player.getMoveSpeed(), 0, 0);
-
-		infoText.setFont(hdrFont);
-		infoText.setColor(Color.WHITE);
-		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
-				(infoBox.getY() - 50 + infoText.getHeight()) / 2);
-
-		program.add(infoText);
-	}
-
-	private void initHealth() {
-		player.setHealth(player.getMaxHealth());
-		drawHealth(player.getHealth());
-	}
-
-	private void drawHealth(int health) {
-		healthLabel = new GLabel("Health: " + health, HEADER_WIDTH * 2.25, HEADER_HEIGHT / 1.9);
-		healthLabel.setFont(hdrFont);
-		healthLabel.setColor(Color.WHITE);
-		program.add(healthLabel);
-	}
-
-	private void drawLevelAlert() {
-		levelAlert = new GButtonMD("Level " + level, (MainApplication.WINDOW_WIDTH - LEVEL_ALERT_X_SIZE) / 2,
-				(MainApplication.WINDOW_HEIGHT) / 3, LEVEL_ALERT_X_SIZE, LEVEL_ALERT_Y_SIZE, "blue");
-		levelAlert.setVisible(true);
-		program.add(levelAlert);
-		levelAlert.sendToFront();
-	}
-
+	
+	// =========== SHOW METHODS ============ //
+	/*
+	 * Methods that handle initialization and rendering of elements
+	 */
+	
+	/**
+	 * Renders all game elements
+	 */
 	@Override
-	public void showContents() {// split showContents into showHeader and showField for clarity
+	public void showContents() {
 		player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3);
 		initHealth();
 		showHeader(); // Top bar
@@ -159,18 +134,18 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		drawLevelAlert();
 		initPausing();
 	}
-
-	@Override
-	public void hideContents() {
-		removeHeader();
-		removeField();
-		removePlayer();
-		removeEnemies();
-		removeProjectiles();
-		program.remove(healthLabel);
-		program.remove(infoText);
+	
+	/**
+	 * Initializes player health
+	 */
+	private void initHealth() {
+		player.setHealth(player.getMaxHealth());
+		drawHealth(player.getHealth());
 	}
-
+	
+	/**
+	 * Renders header
+	 */
 	public void showHeader() {
 		program.add(minimapBox);
 		infoDrawing();
@@ -179,35 +154,79 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.add(healthBox);
 		minimapBuilder();
 	}
-
-	public void removeHeader() {
-		program.remove(minimapBox);
-		program.remove(infoBox);
-		program.remove(infoText);
-		program.remove(healthBox);
-		program.remove(backingColor);
-		minimapDestructor();
-		program.remove(bossIcon);
-		program.remove(playerOnMap);
-		pauseElements = new ArrayList<>();
-	}
-
-	public void showField() {
-		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
-			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-				program.add(room.getSpace(i, j).getGObject());
+	
+	/**
+	 * Renders minimap
+	 * @author Alex Reynen
+	 */
+	private void minimapBuilder() {
+		int startY = 10;
+		int startX = 10;
+		int moveX = (HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS;
+		int moveY = (HEADER_HEIGHT - 20) / FloorManager.FLOOR_ROWS;
+		for (int row = 0; row < FloorManager.FLOOR_ROWS; row++) {
+			for (int col = 0; col < FloorManager.FLOOR_COLS; col++) {
+				GRect tile = new GRect(startX, startY, moveX, moveY);
+				Room r = FloorManager.getFloor().getRoom(row, col);
+				colorTile(r, tile);
+				minimap.add(tile);
+				startX += moveX;
 			}
+			startX = 10;
+			startY += moveY;
+		}
+		for (GObject tile : minimap) {
+			program.add(tile);
+		}
+		program.add(bossIcon);
+		program.add(playerOnMap);
+	}
+	
+	
+	/**
+	 * Helper method for minimapBuilder(); colors minimap tiles
+	 * @param r Room linked to the tile
+	 * @param tile Tile to color
+	 * @author Alex Reynen
+	 */
+	private void colorTile(Room r, GRect tile) {
+		if (r == null) {
+			tile.setVisible(false);
+		} else if (r.getType() == RoomType.STANDARD) {
+			tile.setFillColor(Color.LIGHT_GRAY);
+			tile.setFilled(true);
+		} else if (r.getType() == RoomType.SPAWN) {
+			tile.setFillColor(Color.GREEN);
+			playerOnMap = new GOval(tile.getX() + (tile.getWidth() - tile.getHeight() * .75) / 2,
+					tile.getY() + tile.getHeight() * .125, tile.getHeight() * .75, tile.getHeight() * .75);
+			playerOnMap.setFillColor(Color.BLUE);
+			playerOnMap.setFilled(true);
+			tile.setFilled(true);
+		} else if (r.getType() == RoomType.BOSS) {
+			tile.setFillColor(Color.RED);
+			bossIcon = new GImage("boss_icon.png", tile.getX() + (tile.getWidth() - tile.getHeight()) / 2, tile.getY());
+			bossIcon.setSize(tile.getHeight(), tile.getHeight());
+			tile.setFilled(true);
 		}
 	}
-
-	public void removeField() {
-		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
-			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-				program.remove(room.getSpace(i, j).getGObject());
-			}
-		}
+	
+	/**
+	 * Renders health tracker
+	 * @param health Player health
+	 */
+	
+	private void drawHealth(int health) {
+		healthLabel = new GLabel("Health: " + health, HEADER_WIDTH * 2.25, HEADER_HEIGHT / 1.9);
+		healthLabel.setFont(hdrFont);
+		healthLabel.setColor(Color.WHITE);
+		program.add(healthLabel);
 	}
-
+	
+	/**
+	 * Sets GOBjects stored in the current room's spaces to proper images
+	 * @author Jacob Shour
+	 */
+	
 	public void createImageList() {
 		int rows = FloorManager.ROOM_ROWS;
 		int cols = FloorManager.ROOM_COLS;
@@ -228,15 +247,54 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		}
 	}
 
+	
+	
+	/**
+	 * Selects a tileset for an image based on floor level
+	 * @param path Image path to build off of
+	 * @return Image path, now with tileset
+	 * @author Jacob Shour
+	 */
+	private String variablePath(String path) {
+		if (level <= 3)
+			path = path + "RockPath/";
+		else if (level >= 4 && level <= 6)
+			path = path + "SealedRuin/";
+		else if (level >= 7 && level <= 9)
+			path = path + "SteamCave/";
+		else
+			path = path + "DarkCrater/";
+
+		return path;
+	}
+	
+	
+	/**
+	 * Renders the current room
+	 */
+	public void showField() {
+		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+				program.add(room.getSpace(i, j).getGObject());
+			}
+		}
+	}
+	
+	/**
+	 * Renders the player
+	 */
+
 	public void showPlayer() {
 		Image sprite = Sprites.loadSprite("../media/sprites/player/player_standing_south.png");
 		player.setGObject(new GImage(sprite, 24 * (FloorManager.SPACE_SIZE / 2), 16 * (FloorManager.SPACE_SIZE / 2)));
 		program.add(player.getGObject());
 	}
-
-	public void removePlayer() {
-		program.remove(player.getGObject());
-	}
+	
+	/**
+	 * Spawns in and renders enemies; applies stat scaling to enemies based on floor level
+	 * @author Devin French (rendering)
+	 * @author Alex Reynen (scaling)
+	 */
 
 	public void showEnemies() {
 		List<Enemy> enemies = program.getEntityManager().getEnemies();
@@ -294,7 +352,137 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			}
 		}
 	}
+	
+	/**
+	 * Renders upgrade info box
+	 * @author Alex Reynen
+	 */
 
+	private void infoDrawing() {
+		backingColor = new GRect(0, 0, MainApplication.WINDOW_WIDTH, HEADER_HEIGHT);
+		// Off black color
+		//backingColor.setFillColor(new Color(0,1,11));
+		// Pure black, which I (Alex R) prefer
+		backingColor.setFillColor(Color.BLACK);
+		backingColor.setFilled(true);
+		program.add(backingColor);
+		player.setFireDamage(1 + Integer.parseInt(PlayerData.getMap().get("FireSpeedUpgrades")));
+		player.setRangedDamage(1 + Integer.parseInt(PlayerData.getMap().get("RangedUpgrades")));
+		player.setMoveSpeed(1 + Integer.parseInt(PlayerData.getMap().get("SpeedUpgrades")));
+
+		infoText = new GParagraph("Level: " + level + "\nFiring Speed: " + player.getFireSpeed() + "\nRanged Damage: "
+				+ player.getRangedDamage() + "\nMove Speed: " + player.getMoveSpeed(), 0, 0);
+
+		infoText.setFont(hdrFont);
+		infoText.setColor(Color.WHITE);
+		infoText.move(infoBox.getX() + (infoBox.getWidth() - infoText.getWidth()) / 2,
+				(infoBox.getY() - 50 + infoText.getHeight()) / 2);
+
+		program.add(infoText);
+	}
+	
+	/**
+	 * Renders level banner when reaching new floor
+	 */
+
+	private void drawLevelAlert() {
+		levelAlert = new GButtonMD("Level " + level, (MainApplication.WINDOW_WIDTH - LEVEL_ALERT_X_SIZE) / 2,
+				(MainApplication.WINDOW_HEIGHT) / 3, LEVEL_ALERT_X_SIZE, LEVEL_ALERT_Y_SIZE, "blue");
+		levelAlert.setVisible(true);
+		program.add(levelAlert);
+		levelAlert.sendToFront();
+	}
+	
+	/**
+	 * Handles pause menu
+	 */
+
+	private void initPausing() {
+		GImage backing = new GImage("../media/pause.png");
+		pauseElements.add(backing);
+
+		quitPauseBtn = new GButtonMD("Exit to Menu", (MainApplication.WINDOW_WIDTH - 200) / 2,
+				MainApplication.getWindowHeight() / 2, 200, 100, "green");
+		pauseElements.add(quitPauseBtn);
+
+	}
+	
+	
+	
+	// =========== REMOVE METHODS ============ //
+	/*
+	 * Methods that handle removing elements
+	 */
+	
+	/**
+	 * Removes all game elements
+	 */
+	// ===== REMOVE METHODS ===== //
+	
+	@Override
+	public void hideContents() {
+		removeHeader();
+		removeField();
+		removePlayer();
+		removeEnemies();
+		removeProjectiles();
+		program.remove(healthLabel);
+		program.remove(infoText);
+	}
+
+	/**
+	 * Removes header
+	 */
+	
+	public void removeHeader() {
+		program.remove(minimapBox);
+		program.remove(infoBox);
+		program.remove(infoText);
+		program.remove(healthBox);
+		program.remove(backingColor);
+		minimapDestructor();
+		program.remove(bossIcon);
+		program.remove(playerOnMap);
+		pauseElements = new ArrayList<>();
+	}
+
+	/**
+	 * Removes minimap
+	 */
+	
+	private void minimapDestructor() {
+		for (GObject tile : minimap) {
+			program.remove(tile);
+		}
+		program.remove(playerOnMap);
+		program.remove(bossIcon);
+		minimap.clear();
+	}
+
+	/**
+	 * Removes room display
+	 */
+	
+	public void removeField() {
+		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+			for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+				program.remove(room.getSpace(i, j).getGObject());
+			}
+		}
+	}
+
+	/**
+	 * Removes player
+	 */
+	
+	public void removePlayer() {
+		program.remove(player.getGObject());
+	}
+
+	/**
+	 * Removes all active enemies
+	 */
+	
 	public void removeEnemies() {
 		List<Enemy> enemies = program.getEntityManager().getEnemies();
 		for (Enemy enemy : enemies) {
@@ -303,6 +491,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		enemies.clear();
 	}
 
+	/**
+	 * Removes all active projectiles
+	 */
+	
 	public void removeProjectiles() {
 		List<Projectile> projectiles = program.getEntityManager().getProjectiles();
 		for (Projectile projectile : projectiles) {
@@ -310,17 +502,43 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		}
 		projectiles.clear();
 	}
+	
+	
+	
+	// ===== TIMER ACTIONS ====== //
+	/*
+	 * Methods performed constantly by the timer
+	 */
 
-	public void onDeath() {
-		PlayerData.writeFile();
-		direction = null;
-		t.stop();
-		resetGame();
-		PlayerData.updateMap("PreviousRun", level);
-		level = 1;
-		program.switchToDeath(killer);
+	/**
+	 * Actions run constantly by the timer
+	 */
+	// ===== TIMER ACTIONS ===== //
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		counter++;
+		movePlayer();
+		enemyMove();
+		enemyAttack();
+		checkProjectileCollision();
+		
+		// Clears room if all enemies defeated
+		if (program.getEntityManager().getEnemies().size() == 0) {
+			clearRoom();
+		}
+		
+		// Game over
+		if (player.getHealth() <= 0) {
+			onDeath();
+		}
 	}
 
+	/**
+	 * Opens all doors (and stairs) that can be legally opened in the current room
+	 * @author Jacob Shour
+	 */
+	
 	public void clearRoom() {
 		if (room.getType() == RoomType.BOSS) {
 			for (int row = 0; row < FloorManager.ROOM_ROWS; row++) {
@@ -384,6 +602,12 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		room.setCleared(true);
 	}
 
+	/**
+	 * Opens a single door at the given space
+	 * @param space Space to open a door at
+	 * @author Jacob Shour
+	 */
+
 	private void openDoor(Space space) {
 		String path = variablePath(FILE_PATH);
 
@@ -395,116 +619,48 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		program.add(space.getGObject());
 		player.getGObject().sendToFront();
 	}
+	
 
-	private void initPausing() {
-		GImage backing = new GImage("../media/pause.png");
-		pauseElements.add(backing);
-
-		quitPauseBtn = new GButtonMD("Exit to Menu", (MainApplication.WINDOW_WIDTH - 200) / 2,
-				MainApplication.getWindowHeight() / 2, 200, 100, "green");
-		pauseElements.add(quitPauseBtn);
-
+	/**
+	 * Handles all needed actions on player death
+	 */
+	
+	public void onDeath() {
+		PlayerData.writeFile();
+		direction = null;
+		t.stop();
+		resetGame();
+		PlayerData.updateMap("PreviousRun", level);
+		level = 1;
+		program.switchToDeath(killer);
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// Remove Level indicator and start timer
-		if (levelAlert.isVisible()) {
-			levelAlert.setVisible(false);
-			program.remove(levelAlert);
-			t.start();
-			return;
-		}
-		GObject obj = program.getElementAt(e.getX(), e.getY());
-		if (obj == quitPauseBtn) {
-			PlayerData.writeFile();
-			for (GObject o : pauseElements) {
-				program.remove(o);
-			}
-			resetGame();
-			PlayerData.updateMap("PreviousRun", level);
-			level = 1;
-			program.switchToMenu();
-		}
+	/**
+	 * Resets several elements to prepare for returning to the menu
+	 */
 
-		if (t.isRunning()) {
-			for (Projectile p : player.attack(e.getX(), e.getY())) {
-				program.getEntityManager().getProjectiles().add(p);
-				program.add(p.getGObject());
-			}
-		}
+	public void resetGame() {
+		removeField();
+		FloorManager.generateNewFloor();
+		FloorManager.resetOpenExits();
+		room = program.getFloorManager().getSpawnRoom();
+		collisionManager.setRoom(room);
 	}
+	
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		Direction dir = getDirection(key);
-		if (dir != null) {
-			keysPressed.add(key);
-			direction = dir;
-		} else if (key == KeyEvent.VK_ESCAPE) {
-			if (t.isRunning()) {
-				for (GObject o : pauseElements) {
-					program.add(o);
-					
-				}
-				t.stop();
-			} else {
-				for (GObject o : pauseElements) {
-					program.remove(o);
-				}
-				t.start();
-			}
-		}
-	}
+	
+	// ===== PLAYER CONTROL ====== //
+	/*
+	 * Methods that handle controlling the player
+	 */
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		int key = e.getKeyCode();
-		if (keysPressed.contains(key)) {
-			keysPressed.remove(key);
-		}
-		if (keysPressed.isEmpty()) {
-			direction = null;
-		} else {
-			direction = getDirection(keysPressed.iterator().next());
-		}
-	}
-
-	private Direction getDirection(int key) {
-		if (key == KeyEvent.VK_W) {
-			return Direction.NORTH;
-		} else if (key == KeyEvent.VK_S) {
-			return Direction.SOUTH;
-		} else if (key == KeyEvent.VK_A) {
-			return Direction.WEST;
-		} else if (key == KeyEvent.VK_D) {
-			return Direction.EAST;
-		}
-		return null;
-	}
-
-	// Timer loop
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		counter++;
-		movePlayer();
-
-		enemyMove();
-
-		enemyAttack();
-
-		checkProjectileCollision();
-
-		if (program.getEntityManager().getEnemies().size() == 0) {
-			clearRoom();
-		}
-
-		if (player.getHealth() <= 0) {
-			onDeath();
-		}
-	}
-
+	/**
+	 * Moves player based on keyboard input and handles transitions between rooms and floors
+	 * @author Devin French (movement)
+	 * @author Jacob Shour (room/floor transitions)
+	 */
+	// ===== PLAYER CONTROL ===== //
+	
 	private void movePlayer() {
 		double x = 0;
 		double y = 0;
@@ -589,180 +745,14 @@ public class GamePane extends GraphicsPane implements ActionListener {
 			}
 		}
 		animatePlayer();// Animating player
-	}
+	}	
 
-	private void animatePlayer() {
-		if (player.getIsMoving()) {
-			if (counter % 7 == 0) {
-				((GImage) player.getGObject())
-						.setImage("../media/sprites/player/player_walking_" + player.getFacing() + "_1.png");
-			} else if (counter % 7 == 3) {
-				((GImage) player.getGObject())
-						.setImage("../media/sprites/player/player_standing_" + player.getFacing() + ".png");
-
-			} else if (counter % 7 == 6) {
-				((GImage) player.getGObject())
-						.setImage("../media/sprites/player/player_walking_" + player.getFacing() + "_2.png");
-			}
-		} else {
-			((GImage) player.getGObject())
-					.setImage("../media/sprites/player/player_standing_" + player.getFacing() + ".png");
-
-		}
-	}
+	/**
+	 * Moves player to an adjacent room
+	 * @param exit The direction the player left the previous room
+	 * @author Jacob Shour
+	 */
 	
-	private void animateEnemy(Enemy enemy) {
-		if (enemy.getIsMoving()) {
-		
-			if (counter%15==0) {
-				((GImage) enemy.getGObject())
-						.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_walking_"+enemy.getFacing()+"_1.png");
-			} else if (counter % 15 == 7) {
-				((GImage) enemy.getGObject())
-				.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_standing_" + enemy.getFacing() + ".png");
-
-			} else if (counter % 15 == 14) {
-				((GImage) enemy.getGObject())
-				.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_walking_" + enemy.getFacing() + "_2.png");
-			}
-		//enemy is always moving
-		
-		} else {
-			((GImage) enemy.getGObject())
-					.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_standing_" + enemy.getFacing() + ".png");
-		}
-		
-	}
-
-	private void checkProjectileCollision() {
-		for (Projectile p : program.getEntityManager().getProjectiles()) {
-			p.move();
-			boolean collision = false;
-			if (collisionManager.isPlayerCollision(p)) {
-				collision = true;
-				player.setHealth(player.getHealth() - p.getDamage());
-				healthLabel.setLabel("Health: " + player.getHealth());
-				killer = p.getSource();
-			}
-			for (Enemy enemy : program.getEntityManager().getEnemies()) {
-				if (collisionManager.isEnemyCollision(enemy, p)) {
-					collision = true;
-					enemy.setHealth(enemy.getHealth() - p.getDamage());
-					if (enemy.getHealth() <= 0) {
-						program.remove(enemy.getGObject());
-						program.getEntityManager().getEnemies().remove(enemy);
-						PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) + 1);
-					}
-					break;
-				}
-			}
-			if (collisionManager.isTerrainCollision(p)) {
-				collision = true;
-			}
-			if (collision) {
-				program.getEntityManager().getProjectiles().remove(p);
-				program.remove(p.getGObject());
-			}
-		}
-	}
-
-	private void enemyAttack() {
-		for (Enemy enemy : program.getEntityManager().getEnemies()) {
-			for (Projectile p : enemy.attack(player.getCenterX(), player.getCenterY())) {
-				program.getEntityManager().getProjectiles().add(p);
-				program.add(p.getGObject());
-			}
-		}
-	}
-
-	private void enemyMove() {
-		for (Enemy enemy : program.getEntityManager().getEnemies()) {
-			enemy.move(collisionManager, player);
-			animateEnemy(enemy);
-		}
-	}
-
-	private void minimapDestructor() {
-		for (GObject tile : minimap) {
-			program.remove(tile);
-		}
-		program.remove(playerOnMap);
-		program.remove(bossIcon);
-		minimap.clear();
-	}
-
-	private void colorTile(Room r, GRect tile) {
-		if (r == null) {
-			tile.setVisible(false);
-			// Colors pending
-		} else if (r.getType() == RoomType.STANDARD) {
-			tile.setFillColor(Color.LIGHT_GRAY);
-			tile.setFilled(true);
-		} else if (r.getType() == RoomType.SPAWN) {
-			tile.setFillColor(Color.GREEN);
-			playerOnMap = new GOval(tile.getX() + (tile.getWidth() - tile.getHeight() * .75) / 2,
-					tile.getY() + tile.getHeight() * .125, tile.getHeight() * .75, tile.getHeight() * .75);
-			playerOnMap.setFillColor(Color.BLUE);
-			playerOnMap.setFilled(true);
-			tile.setFilled(true);
-		} else if (r.getType() == RoomType.BOSS) {
-			tile.setFillColor(Color.RED);
-			bossIcon = new GImage("boss_icon.png", tile.getX() + (tile.getWidth() - tile.getHeight()) / 2, tile.getY());
-			bossIcon.setSize(tile.getHeight(), tile.getHeight());
-			tile.setFilled(true);
-		}
-	}
-
-	private void minimapBuilder() {
-		int startY = 10;
-		int startX = 10;
-		int moveX = (HEADER_WIDTH - 20) / FloorManager.FLOOR_COLS;
-		int moveY = (HEADER_HEIGHT - 20) / FloorManager.FLOOR_ROWS;
-		for (int row = 0; row < FloorManager.FLOOR_ROWS; row++) {
-			for (int col = 0; col < FloorManager.FLOOR_COLS; col++) {
-				GRect tile = new GRect(startX, startY, moveX, moveY);
-				Room r = FloorManager.getFloor().getRoom(row, col);
-				colorTile(r, tile);
-				minimap.add(tile);
-				startX += moveX;
-			}
-			startX = 10;
-			startY += moveY;
-		}
-		for (GObject tile : minimap) {
-			program.add(tile);
-		}
-		program.add(bossIcon);
-		program.add(playerOnMap);
-	}
-
-	private String variablePath(String path) {
-		if (level <= 3)
-			path = path + "RockPath/";
-		else if (level >= 4 && level <= 6)
-			path = path + "SealedRuin/";
-		else if (level >= 7 && level <= 9)
-			path = path + "SteamCave/";
-		else
-			path = path + "DarkCrater/";
-
-		return path;
-	}
-
-	private Space getPlayerSpace() {
-		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
-            for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
-                Space space = room.getSpace(i, j);
-                double x = player.getX() + FloorManager.SPACE_SIZE / 2;
-                double y = player.getY() + FloorManager.SPACE_SIZE / 2;
-                if (space.getGObject().contains(x, y)) {
-                   return space;
-                }
-            }
-        }
-		return null;
-	}
-
 	private void moveRoom(Exit exit) {
 		int temp;
 		FloorManager.resetOpenExits();
@@ -830,11 +820,247 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		player.getGObject().sendToFront();
 	}
 
-	public void resetGame() {
-		removeField();
-		FloorManager.generateNewFloor();
-		FloorManager.resetOpenExits();
-		room = program.getFloorManager().getSpawnRoom();
-		collisionManager.setRoom(room);
+	/**
+	 * Gets the player's current space
+	 * @return The space the player is present at
+	 * @author Jacob Shour
+	 */
+	
+	private Space getPlayerSpace() {
+		for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
+            for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
+                Space space = room.getSpace(i, j);
+                double x = player.getX() + FloorManager.SPACE_SIZE / 2;
+                double y = player.getY() + FloorManager.SPACE_SIZE / 2;
+                if (space.getGObject().contains(x, y)) {
+                   return space;
+                }
+            }
+        }
+		return null;
+	}
+
+	/**
+	 * Converts keyboard input into a Direction enum
+	 * @return The direction the player should move
+	 * @author Devin French
+	 */
+	
+	private Direction getDirection(int key) {
+		if (key == KeyEvent.VK_W) {
+			return Direction.NORTH;
+		} else if (key == KeyEvent.VK_S) {
+			return Direction.SOUTH;
+		} else if (key == KeyEvent.VK_A) {
+			return Direction.WEST;
+		} else if (key == KeyEvent.VK_D) {
+			return Direction.EAST;
+		}
+		return null;
+	}
+	
+	/**
+	 * Renders the walking animation as the player moves
+	 * @author Alexander Ng
+	 */
+	
+	private void animatePlayer() {
+		if (player.getIsMoving()) {
+			if (counter % 7 == 0) {
+				((GImage) player.getGObject())
+						.setImage("../media/sprites/player/player_walking_" + player.getFacing() + "_1.png");
+			} else if (counter % 7 == 3) {
+				((GImage) player.getGObject())
+						.setImage("../media/sprites/player/player_standing_" + player.getFacing() + ".png");
+
+			} else if (counter % 7 == 6) {
+				((GImage) player.getGObject())
+						.setImage("../media/sprites/player/player_walking_" + player.getFacing() + "_2.png");
+			}
+		} else {
+			((GImage) player.getGObject())
+					.setImage("../media/sprites/player/player_standing_" + player.getFacing() + ".png");
+
+		}
+	}
+	
+	/**
+	 * Handles actions on click
+	 */
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// Remove Level indicator and start timer
+		if (levelAlert.isVisible()) {
+			levelAlert.setVisible(false);
+			program.remove(levelAlert);
+			t.start();
+			return;
+		}
+		GObject obj = program.getElementAt(e.getX(), e.getY());
+		if (obj == quitPauseBtn) {
+			PlayerData.writeFile();
+			for (GObject o : pauseElements) {
+				program.remove(o);
+			}
+			resetGame();
+			PlayerData.updateMap("PreviousRun", level);
+			level = 1;
+			program.switchToMenu();
+		}
+
+		if (t.isRunning()) {
+			for (Projectile p : player.attack(e.getX(), e.getY())) {
+				program.getEntityManager().getProjectiles().add(p);
+				program.add(p.getGObject());
+			}
+		}
+	}
+	
+	/**
+	 * Handles actions on key press
+	 */
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		Direction dir = getDirection(key);
+		if (dir != null) {
+			keysPressed.add(key);
+			direction = dir;
+		} else if (key == KeyEvent.VK_ESCAPE) {
+			if (t.isRunning()) {
+				for (GObject o : pauseElements) {
+					program.add(o);
+					
+				}
+				t.stop();
+			} else {
+				for (GObject o : pauseElements) {
+					program.remove(o);
+				}
+				t.start();
+			}
+		}
+	}
+	
+	/**
+	 * Handles actions on key release
+	 */
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+		int key = e.getKeyCode();
+		if (keysPressed.contains(key)) {
+			keysPressed.remove(key);
+		}
+		if (keysPressed.isEmpty()) {
+			direction = null;
+		} else {
+			direction = getDirection(keysPressed.iterator().next());
+		}
+	}
+	
+	
+	
+	// =========== ENEMY AI ============ //
+	/*
+	 * Methods that handle how enemies behave
+	 */
+	
+	/**
+	 * Automatically moves all enemies in the room
+	 */
+	// ===== ENEMY AI ===== //
+	
+	private void enemyMove() {
+		for (Enemy enemy : program.getEntityManager().getEnemies()) {
+			enemy.move(collisionManager, player);
+			animateEnemy(enemy);
+		}
+	}
+	
+	/**
+	 * Renders the enemy walking animation as an enemy moves
+	 * @param enemy Enemy to animate
+	 * @author Alexander Ng
+	 */
+	
+	private void animateEnemy(Enemy enemy) {
+		if (enemy.getIsMoving()) {
+		
+			if (counter%15==0) {
+				((GImage) enemy.getGObject())
+						.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_walking_"+enemy.getFacing()+"_1.png");
+			} else if (counter % 15 == 7) {
+				((GImage) enemy.getGObject())
+				.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_standing_" + enemy.getFacing() + ".png");
+
+			} else if (counter % 15 == 14) {
+				((GImage) enemy.getGObject())
+				.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_walking_" + enemy.getFacing() + "_2.png");
+			}
+		// Enemy is always moving
+		
+		} else {
+			((GImage) enemy.getGObject())
+					.setImage("../media/sprites/"+enemy.getSpriteSet()+"/"+enemy.getSpriteSet()+"_standing_" + enemy.getFacing() + ".png");
+		}
+		
+	}
+	
+	/**
+	 * Makes all enemies attempt to attack the player
+	 */
+
+	private void enemyAttack() {
+		for (Enemy enemy : program.getEntityManager().getEnemies()) {
+			for (Projectile p : enemy.attack(player.getCenterX(), player.getCenterY())) {
+				program.getEntityManager().getProjectiles().add(p);
+				program.add(p.getGObject());
+			}
+		}
+	}
+	
+
+	
+	// =========== PROJECTILE HANDLING ============ //
+	
+	/**
+	 * Handles all enemy and player projectile collision
+	 * @author Devin French
+	 */
+	// ===== PROJECTILE HANDLING ===== //
+	
+	private void checkProjectileCollision() {
+		for (Projectile p : program.getEntityManager().getProjectiles()) {
+			p.move();
+			boolean collision = false;
+			if (collisionManager.isPlayerCollision(p)) {
+				collision = true;
+				player.setHealth(player.getHealth() - p.getDamage());
+				healthLabel.setLabel("Health: " + player.getHealth());
+				killer = p.getSource();
+			}
+			for (Enemy enemy : program.getEntityManager().getEnemies()) {
+				if (collisionManager.isEnemyCollision(enemy, p)) {
+					collision = true;
+					enemy.setHealth(enemy.getHealth() - p.getDamage());
+					if (enemy.getHealth() <= 0) {
+						program.remove(enemy.getGObject());
+						program.getEntityManager().getEnemies().remove(enemy);
+						PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) + 1);
+					}
+					break;
+				}
+			}
+			if (collisionManager.isTerrainCollision(p)) {
+				collision = true;
+			}
+			if (collision) {
+				program.getEntityManager().getProjectiles().remove(p);
+				program.remove(p.getGObject());
+			}
+		}
 	}
 }
