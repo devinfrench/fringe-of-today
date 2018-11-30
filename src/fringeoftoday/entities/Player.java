@@ -2,6 +2,7 @@ package fringeoftoday.entities;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
+import fringeoftoday.audio.AudioPlayer;
 import fringeoftoday.graphics.Sprites;
 
 import java.awt.*;
@@ -89,6 +90,7 @@ public class Player extends ActiveEntity {
         p.setSource(this);
         p.setDamage(rangedDamage);
         lastAttackTime = System.currentTimeMillis();
+        AudioPlayer.getInstance().playSound(AudioPlayer.MUSIC_FOLDER, "playershoot.wav");
         return new Projectile[]{p};
     }
 
