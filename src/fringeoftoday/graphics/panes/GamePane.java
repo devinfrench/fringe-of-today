@@ -7,6 +7,7 @@ import acm.graphics.GOval;
 import acm.graphics.GRect;
 import fringeoftoday.MainApplication;
 import fringeoftoday.PlayerData;
+import fringeoftoday.audio.AudioPlayer;
 import fringeoftoday.core.CollisionManager;
 import fringeoftoday.entities.Enemy;
 import fringeoftoday.entities.Entity;
@@ -128,6 +129,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
         showEnemies();
         drawLevelAlert();
         initPausing();
+        AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, "fireandflames.mp3");
     }
 
     /**
@@ -910,11 +912,13 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
                 }
                 t.stop();
+                AudioPlayer.getInstance().pauseMusic();
             } else {
                 for (GObject o : pauseElements) {
                     program.remove(o);
                 }
                 t.start();
+                AudioPlayer.getInstance().resumeMusic();
             }
         }
     }
