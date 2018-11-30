@@ -20,6 +20,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import fringeoftoday.PlayerData;
+
 public final class AudioPlayer {
     public static final String MUSIC_FOLDER = "sounds";
     private final Map<String, MediaPlayer> players;
@@ -169,7 +171,7 @@ public final class AudioPlayer {
      * @param filename filename for the sound, make sure to include the extension
      */
     public void playMusic(String folder, String filename) {
-        if (!currentMusicFolder.equals(folder) || !currentMusicFile.equals(filename) || !isMusicPlaying) {
+        if ((!currentMusicFolder.equals(folder) || !currentMusicFile.equals(filename) || !isMusicPlaying) && Integer.parseInt(PlayerData.getMap().get("Sounds")) == 1) {
             stopSound(currentMusicFolder, currentMusicFile);
             playSound(folder, filename, true);
             currentMusicFolder = folder;
