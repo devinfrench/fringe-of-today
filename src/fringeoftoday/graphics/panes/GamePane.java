@@ -113,23 +113,23 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	/*
 	 * Methods that handle initialization and rendering of elements
 	 */
-
-	/**
-	 * Renders all game elements
-	 */
-	@Override
-	public void showContents() {
-		player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3);
-		initHealth();
-		showHeader(); // Top bar
-		createImageList();
-		showField(); // Game field
-		showPlayer();
-		showEnemies();
-		drawLevelAlert();
-		initPausing();
-		AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, "fireandflames.mp3", 0.025);
-	}
+	
+    /**
+     * Renders all game elements
+     */
+    @Override
+    public void showContents() {
+        player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3);
+        initHealth();
+        showHeader(); // Top bar
+        createImageList();
+        showField(); // Game field
+        showPlayer();
+        showEnemies();
+        drawLevelAlert();
+        initPausing();
+        AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, "fireandflames.mp3", 0.05);
+    }
 
 	/**
 	 * Initializes player health

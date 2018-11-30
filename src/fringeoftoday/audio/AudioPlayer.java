@@ -88,8 +88,8 @@ public final class AudioPlayer {
         if (mPlayer == null || mPlayer.getCycleDuration().lessThanOrEqualTo(mPlayer.getCurrentTime())) {
             mPlayer = createMediaPlayer(folder, filename);
         }
-        mPlayer.play();
         mPlayer.setVolume(volume);
+        mPlayer.play();
         if (shouldLoop) {
             mPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }
