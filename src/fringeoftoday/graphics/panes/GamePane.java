@@ -922,7 +922,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 		if (dir != null) {
 			keysPressed.add(key);
 			direction = dir;
-		} else if (key == KeyEvent.VK_ESCAPE) {
+		} else if (key == KeyEvent.VK_ESCAPE && !levelAlert.isVisible()) {
 			if (t.isRunning()) {
 				for (GObject o : pauseElements) {
 					program.add(o);
