@@ -90,7 +90,7 @@ public class Player extends ActiveEntity {
         p.setSource(this);
         p.setDamage(rangedDamage);
         lastAttackTime = System.currentTimeMillis();
-        AudioPlayer.getInstance().playSound(AudioPlayer.MUSIC_FOLDER, "playershoot.wav");
+        AudioPlayer.getInstance().playSound(AudioPlayer.MUSIC_FOLDER, "playershoot.wav", false, 0.05);
         return new Projectile[]{p};
     }
 
