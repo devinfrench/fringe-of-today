@@ -335,7 +335,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
                             enemy.setFireRate(7.5);
                         }
                         enemy.setHealth(1 * level);
-                        enemy.setSpriteSet("pikachu");
+                        enemy.setSpriteSet("squirtle");
                         break;
                     default:
                         break;

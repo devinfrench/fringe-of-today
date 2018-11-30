@@ -18,7 +18,7 @@ public class SniperEnemy extends Enemy {
 
     public SniperEnemy() {
         projectileImage = Sprites.loadSprite(PROJECTILE_IMAGE_PATH);
-        Image sprite = Sprites.loadSprite("../media/sprites/pikachu/pikachu_standing_" + this.getFacing() + ".png");
+        Image sprite = Sprites.loadSprite("../media/sprites/squirtle/squirtle_standing_" + this.getFacing() + ".png");
         setGObject(new GImage(sprite));
         lastAttackTime = System.currentTimeMillis() + FIRST_ATTACK_DELAY;
     }
