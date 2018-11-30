@@ -103,7 +103,7 @@ public class MenuPane extends GraphicsPane {
 
     @Override
     public void showContents() {
-//        program.add(backing);
+        program.add(backing);
         program.add(title);
         program.add(btnPlay);
         program.add(btnShop);
