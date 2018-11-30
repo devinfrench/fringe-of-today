@@ -103,20 +103,31 @@ public class MenuPane extends GraphicsPane {
 
     @Override
     public void showContents() {
-//        program.add(backing);
+        program.add(backing);
+        program.add(btnAudio);
+        rightAudioimage();
         program.add(title);
         program.add(btnPlay);
         program.add(btnShop);
         program.add(btnExit);
         program.add(btnTutorial);
-        program.add(btnAudio);
         program.add(btnNewFile);
         program.add(confirm);
         confirm.setVisible(false);
         scoreboard();
     }
 
-    @Override
+    private void rightAudioimage() {
+    	int sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
+		if (sounds == 1) {
+			btnAudio.setImage("../media/soundon.png");
+		} else {
+			btnAudio.setImage("../media/soundoff.png");
+		}
+		btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
+	}
+
+	@Override
     public void hideContents() {
         program.remove(title);
         program.remove(btnPlay);
