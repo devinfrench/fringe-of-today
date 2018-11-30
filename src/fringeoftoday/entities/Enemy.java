@@ -1,13 +1,8 @@
 package fringeoftoday.entities;
 
-import acm.graphics.GObject;
 import acm.graphics.GPoint;
 import fringeoftoday.core.CollisionManager;
-import fringeoftoday.floor.Floor;
 import fringeoftoday.floor.FloorManager;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
 
 public abstract class Enemy extends ActiveEntity {
 
@@ -30,25 +25,25 @@ public abstract class Enemy extends ActiveEntity {
     public void setFireRate(double d) {
         this.fireRate = d;
     }
-    
+
     public double getVelocity() {
-    	return velocity;
+        return velocity;
     }
-    
+
     public void setVelocity(double velocity) {
-    	this.velocity = velocity;
+        this.velocity = velocity;
     }
-    
+
     public void move(CollisionManager collisionManager, Entity target) {
-		if (target == null || collisionManager == null) {
-			return;
-		}
-		double targetX = target.getX();
-		double targetY = target.getY();
-		double enemyX = getX();
-		double enemyY = getY();
-		double closest = Double.MAX_VALUE;
-		GPoint p = new GPoint(0, 0);
+        if (target == null || collisionManager == null) {
+            return;
+        }
+        double targetX = target.getX();
+        double targetY = target.getY();
+        double enemyX = getX();
+        double enemyY = getY();
+        double closest = Double.MAX_VALUE;
+        GPoint p = new GPoint(0, 0);
         for (int deltaX = -1; deltaX <= 1; deltaX++) {
             for (int deltaY = -1; deltaY <= 1; deltaY++) {
                 if (deltaX == 0 && deltaY == 0 || deltaX != 0 && deltaY != 0) {
@@ -62,20 +57,17 @@ public abstract class Enemy extends ActiveEntity {
                 if (dist < closest && collisionManager.enemyCanMove(x, y)) {
                     closest = dist;
                     p = getMovePoint(dx, dy);
-                    
+
                     this.setIsMoving(true);
-                    
+
                     if (Math.round(p.getX()) == 0 && Math.round(p.getY()) < 0) {
-                    	this.setFacing("north");
-                    }
-                    else if (Math.round(p.getX()) == 0 && Math.round(p.getY()) > 0) {
-                    	this.setFacing("south");
-                    }
-                    else if (Math.round(p.getX()) < 0 && Math.round(p.getY()) == 0) {
-                    	this.setFacing("west");
-                    }
-                    else if (Math.round(p.getX()) > 0 && Math.round(p.getY()) == 0) {
-                    	this.setFacing("east");
+                        this.setFacing("north");
+                    } else if (Math.round(p.getX()) == 0 && Math.round(p.getY()) > 0) {
+                        this.setFacing("south");
+                    } else if (Math.round(p.getX()) < 0 && Math.round(p.getY()) == 0) {
+                        this.setFacing("west");
+                    } else if (Math.round(p.getX()) > 0 && Math.round(p.getY()) == 0) {
+                        this.setFacing("east");
                     }
                 }
             }

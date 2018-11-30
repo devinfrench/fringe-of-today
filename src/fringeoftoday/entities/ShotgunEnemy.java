@@ -26,10 +26,10 @@ public class ShotgunEnemy extends Enemy {
         setGObject(new GImage(sprite));
         lastAttackTime = System.currentTimeMillis() + FIRST_ATTACK_DELAY;
     }
-    
+
     @Override
     public String toString() {
-    	return "Brawler";
+        return "Brawler";
     }
 
     @Override

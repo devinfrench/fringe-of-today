@@ -40,6 +40,7 @@ public class Projectile extends Entity {
 
     /**
      * Gets the source entity that created the projectile.
+     *
      * @return the source entity
      */
     public Entity getSource() {
@@ -48,6 +49,7 @@ public class Projectile extends Entity {
 
     /**
      * Sets the source of the projectile.
+     *
      * @param source the entity that created the projectile.
      */
     public void setSource(Entity source) {

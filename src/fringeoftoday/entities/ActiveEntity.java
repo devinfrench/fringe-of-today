@@ -1,13 +1,12 @@
 package fringeoftoday.entities;
 
-import acm.graphics.GObject;
 import fringeoftoday.floor.FloorManager;
 
 public abstract class ActiveEntity extends Entity {
 
     private int health;
     private String spriteSet;
-    
+
     public int getHealth() {
         return health;
     }
@@ -15,13 +14,13 @@ public abstract class ActiveEntity extends Entity {
     public void setHealth(int health) {
         this.health = health;
     }
-    
+
     public String getSpriteSet() {
-    	return spriteSet;
+        return spriteSet;
     }
-    
+
     public void setSpriteSet(String spriteSet) {
-    	this.spriteSet = spriteSet;
+        this.spriteSet = spriteSet;
     }
 
     @Override
@@ -41,7 +40,7 @@ public abstract class ActiveEntity extends Entity {
         }
         return 0;
     }
-    
+
     public abstract Projectile[] attack(double targetX, double targetY);
 
 }

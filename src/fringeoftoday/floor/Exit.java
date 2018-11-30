@@ -2,13 +2,12 @@ package fringeoftoday.floor;
 
 /**
  * Locations of exits a room can have
- * 
- * @author Jacob Shour
  *
+ * @author Jacob Shour
  */
 public enum Exit {
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST;
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST;
 }

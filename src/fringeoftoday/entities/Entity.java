@@ -7,9 +7,9 @@ public class Entity {
     private GObject gObj;
     private boolean isMoving;
     private String facing;
-    
+
     public Entity() {
-    	this.isMoving = false;
+        this.isMoving = false;
         this.facing = "south";
     }
 
@@ -21,6 +21,7 @@ public class Entity {
 
     /**
      * Gets the x-coordinate of the GObject
+     *
      * @return the x-coordinate of the GObject or 0 if GObject is null
      */
     public double getX() {
@@ -29,6 +30,7 @@ public class Entity {
 
     /**
      * Gets the y-coordinate of the GObject
+     *
      * @return the y-coordinate of the GObject or 0 if GObject is null
      */
     public double getY() {
@@ -38,7 +40,7 @@ public class Entity {
     public double getCenterX() {
         GObject obj = getGObject();
         if (obj != null) {
-            return obj.getX() + (obj.getWidth() / 2) ;
+            return obj.getX() + (obj.getWidth() / 2);
         }
         return 0;
     }
@@ -64,20 +66,20 @@ public class Entity {
     public void setGObject(GObject gObj) {
         this.gObj = gObj;
     }
-    
-    public void setIsMoving(boolean isMoving) {
-    	this.isMoving = isMoving;
-    }
-    
+
     public boolean getIsMoving() {
-    	return isMoving;
+        return isMoving;
     }
-    
-    public void setFacing(String facing) {
-    	this.facing = facing;
+
+    public void setIsMoving(boolean isMoving) {
+        this.isMoving = isMoving;
     }
-    
+
     public String getFacing() {
-    	return facing;
+        return facing;
+    }
+
+    public void setFacing(String facing) {
+        this.facing = facing;
     }
 }
