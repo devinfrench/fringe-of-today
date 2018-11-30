@@ -59,28 +59,26 @@ public class GamePane extends GraphicsPane implements ActionListener {
     private MainApplication program;  // Used to access MainApplication methods
     private Set<Integer> keysPressed = new HashSet<>();
     private ArrayList<GObject> minimap = new ArrayList<GObject>();
-    private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
-    private int level = 1;        // Current floor depth
-    private GRect minimapBox;     // Left header (minimap)
-    private GImage bossIcon;
-    private GOval playerOnMap;
-    private GRect infoBox;        // Center header
-    private GParagraph infoText;  // Center header content
-    private GRect healthBox;      // Right header
-    private GButtonMD levelAlert;
-    private GLabel healthLabel;
-    private GRect backingColor;
-    private Room room;            // Current room
-    private Player player;
-    private CollisionManager collisionManager;
-    private Timer t;
-    private int counter;
-    private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
-    private GButtonMD quitPauseBtn;
-    private Entity killer;
-
-
-    // =========== CONSTRUCTOR =========== //
+	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
+	private int level = 1; // Work on this when we get it in
+	private GRect minimapBox; // Minimap, left header
+	private GImage bossIcon;
+	private GOval playerOnMap;
+	private GRect infoBox; // Center header
+	private GParagraph infoText;// Center header content
+	private GRect healthBox; // Right header
+	private GButtonMD levelAlert;
+	private GLabel healthLabel;
+	private GImage btnAudio;
+	private GRect backingColor;
+	private Room room;
+	private Player player;
+	private CollisionManager collisionManager;
+	private Timer t;
+	private int counter;
+	private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
+	private GButtonMD quitPauseBtn;
+	private Entity killer;
 
     /**
      * Main initialization function
@@ -217,7 +215,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      *
      * @param health Player health
      */
-
     private void drawHealth(int health) {
         healthLabel = new GLabel("Health: " + health, HEADER_WIDTH * 2.25, HEADER_HEIGHT / 1.9);
         healthLabel.setFont(hdrFont);
@@ -229,7 +226,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      *
      * @author Jacob Shour
      */
-
     public void createImageList() {
         int rows = FloorManager.ROOM_ROWS;
         int cols = FloorManager.ROOM_COLS;
@@ -286,7 +282,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Renders the player
      */
-
     public void showPlayer() {
         Image sprite = Sprites.loadSprite("../media/sprites/player/player_standing_south.png");
         player.setGObject(new GImage(sprite, 24 * (FloorManager.SPACE_SIZE / 2), 16 * (FloorManager.SPACE_SIZE / 2)));
@@ -299,7 +294,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      * @author Devin French (rendering)
      * @author Alex Reynen (scaling)
      */
-
     public void showEnemies() {
         List<Enemy> enemies = program.getEntityManager().getEnemies();
         for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
@@ -341,7 +335,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
                             enemy.setFireRate(7.5);
                         }
                         enemy.setHealth(1 * level);
-                        enemy.setSpriteSet("pikachu");
+                        enemy.setSpriteSet("squirtle");
                         break;
                     default:
                         break;
@@ -362,7 +356,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      *
      * @author Alex Reynen
      */
-
     private void infoDrawing() {
         backingColor = new GRect(0, 0, MainApplication.WINDOW_WIDTH, HEADER_HEIGHT);
         // Off black color
@@ -389,7 +382,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Renders level banner when reaching new floor
      */
-
     private void drawLevelAlert() {
         levelAlert = new GButtonMD("Level " + level, (MainApplication.WINDOW_WIDTH - LEVEL_ALERT_X_SIZE) / 2,
           (MainApplication.WINDOW_HEIGHT) / 3, LEVEL_ALERT_X_SIZE, LEVEL_ALERT_Y_SIZE, "blue");
@@ -401,7 +393,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Handles pause menu
      */
-
     private void initPausing() {
         GImage backing = new GImage("../media/pause.png");
         pauseElements.add(backing);
@@ -421,7 +412,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Removes all game elements
      */
-    // ===== REMOVE METHODS ===== //
     @Override
     public void hideContents() {
         removeHeader();
@@ -434,7 +424,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Removes header
      */
-
     public void removeHeader() {
         program.remove(minimapBox);
         program.remove(infoBox);
@@ -451,7 +440,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Removes minimap
      */
-
     private void minimapDestructor() {
         for (GObject tile : minimap) {
             program.remove(tile);
@@ -464,7 +452,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Removes room display
      */
-
     public void removeField() {
         for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
             for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
@@ -476,7 +463,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Removes player
      */
-
     public void removePlayer() {
         program.remove(player.getGObject());
     }
@@ -484,7 +470,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Removes all active enemies
      */
-
     public void removeEnemies() {
         List<Enemy> enemies = program.getEntityManager().getEnemies();
         for (Enemy enemy : enemies) {
@@ -496,7 +481,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Removes all active projectiles
      */
-
     public void removeProjectiles() {
         List<Projectile> projectiles = program.getEntityManager().getProjectiles();
         for (Projectile projectile : projectiles) {
@@ -514,7 +498,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Actions run constantly by the timer
      */
-    // ===== TIMER ACTIONS ===== //
     @Override
     public void actionPerformed(ActionEvent e) {
         counter++;
@@ -539,7 +522,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      *
      * @author Jacob Shour
      */
-
     public void clearRoom() {
         if (room.getType() == RoomType.BOSS) {
             for (int row = 0; row < FloorManager.ROOM_ROWS; row++) {
@@ -609,7 +591,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      * @param space Space to open a door at
      * @author Jacob Shour
      */
-
     private void openDoor(Space space) {
         String path = variablePath(FILE_PATH);
 
@@ -626,7 +607,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Handles all needed actions on player death
      */
-
     public void onDeath() {
         PlayerData.writeFile();
         direction = null;
@@ -640,7 +620,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Resets several elements to prepare for returning to the menu
      */
-
     public void resetGame() {
         removeField();
         FloorManager.generateNewFloor();
@@ -661,7 +640,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      * @author Devin French (movement)
      * @author Jacob Shour (room/floor transitions)
      */
-    // ===== PLAYER CONTROL ===== //
     private void movePlayer() {
         double x = 0;
         double y = 0;
@@ -754,7 +732,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      * @param exit The direction the player left the previous room
      * @author Jacob Shour
      */
-
     private void moveRoom(Exit exit) {
         int temp;
         FloorManager.resetOpenExits();
@@ -828,7 +805,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      * @return The space the player is present at
      * @author Jacob Shour
      */
-
     private Space getPlayerSpace() {
         for (int i = 0; i < FloorManager.ROOM_ROWS; i++) {
             for (int j = 0; j < FloorManager.ROOM_COLS; j++) {
@@ -849,7 +825,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      * @return The direction the player should move
      * @author Devin French
      */
-
     private Direction getDirection(int key) {
         if (key == KeyEvent.VK_W) {
             return Direction.NORTH;
@@ -868,7 +843,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      *
      * @author Alexander Ng
      */
-
     private void animatePlayer() {
         if (player.getIsMoving()) {
             if (counter % 7 == 0) {
@@ -892,7 +866,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Handles actions on click
      */
-
     @Override
     public void mousePressed(MouseEvent e) {
         // Remove Level indicator and start timer
@@ -925,7 +898,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Handles actions on key press
      */
-
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -954,7 +926,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Handles actions on key release
      */
-
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
@@ -977,7 +948,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Automatically moves all enemies in the room
      */
-    // ===== ENEMY AI ===== //
     private void enemyMove() {
         for (Enemy enemy : program.getEntityManager().getEnemies()) {
             enemy.move(collisionManager, player);
@@ -991,7 +961,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      * @param enemy Enemy to animate
      * @author Alexander Ng
      */
-
     private void animateEnemy(Enemy enemy) {
         if (enemy.getIsMoving()) {
 
@@ -1018,7 +987,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
     /**
      * Makes all enemies attempt to attack the player
      */
-
     private void enemyAttack() {
         for (Enemy enemy : program.getEntityManager().getEnemies()) {
             for (Projectile p : enemy.attack(player.getCenterX(), player.getCenterY())) {
@@ -1036,7 +1004,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      *
      * @author Devin French
      */
-    // ===== PROJECTILE HANDLING ===== //
     private void checkProjectileCollision() {
         for (Projectile p : program.getEntityManager().getProjectiles()) {
             p.move();

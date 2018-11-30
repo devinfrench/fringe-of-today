@@ -81,21 +81,21 @@ public class MenuPane extends GraphicsPane {
         program.add(bestRun);
     }
 
-    private void audioStarter() {
-        int sounds;
-        try {
-            sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
-        } catch (NumberFormatException e) {
-            PlayerData.updateMap("Sounds", 1);
-            sounds = 1;
-        }
-        if (sounds == 1) {
-            btnAudio = new GImage("../media/soundon.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
-        } else {
-            btnAudio = new GImage("../media/soundoff.jpg", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
-        }
-        btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
-    }
+	private void audioStarter() {
+		int sounds;
+		try {
+			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
+		} catch (NumberFormatException e) {
+			PlayerData.updateMap("Sounds", 1);
+			sounds = 1;
+		}
+		if (sounds == 1) {
+			btnAudio = new GImage("../media/soundon.png", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
+		} else {
+			btnAudio = new GImage("../media/soundoff.png", MainApplication.WINDOW_WIDTH - BUTTON_HEIGHT, 0);
+		}
+		btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
+	}
 
     @Override
     public void showContents() {
@@ -125,50 +125,50 @@ public class MenuPane extends GraphicsPane {
         program.remove(confirm);
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        GObject obj = program.getElementAt(e.getX(), e.getY());
-        if (obj == btnPlay) {
-            program.switchToGame();
-        } else if (obj == btnShop) {
-            program.switchToShop();
-        } else if (obj == btnExit) {
-            program.exitProgram();
-        } else if (obj == btnTutorial) {
-            program.switchToTutorial();
-        } else if (obj == btnNewFile) {
-            if (confirm.isVisible()) {
-                PlayerData.newFile();
-                PlayerData.readPlayerFile();
-                confirm.setVisible(false);
-                AudioPlayer audio = AudioPlayer.getInstance();
-                audio.playSound("sounds", "menumusic.mp3");
-                btnAudio.setImage("soundon.jpg");
-                btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
-                PlayerData.updateMap("Sounds", 1);
-                program.remove(bestRun);
-                program.remove(lastRun);
-                scoreboard();
-            } else {
-                confirm.setVisible(true);
-            }
-        } else if (obj == btnAudio) {
-            AudioPlayer audio = AudioPlayer.getInstance();
-            int sounds;
-            sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
-            if (sounds == 1) {
-                audio.stopSound("sounds", "menumusic.mp3");
-                btnAudio.setImage("soundoff.jpg");
-                btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
-                PlayerData.updateMap("Sounds", 0);
-            } else {
-                audio.playSound("sounds", "menumusic.mp3");
-                btnAudio.setImage("soundon.jpg");
-                btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
-                PlayerData.updateMap("Sounds", 1);
-            }
-            PlayerData.writeFile();
-        }
+	@Override
+	public void mousePressed(MouseEvent e) {
+		GObject obj = program.getElementAt(e.getX(), e.getY());
+		if (obj == btnPlay) {
+			program.switchToGame();
+		} else if (obj == btnShop) {
+			program.switchToShop();
+		} else if (obj == btnExit) {
+			program.exitProgram();
+		} else if (obj == btnTutorial) {
+			program.switchToTutorial();
+		} else if (obj == btnNewFile) {
+			if (confirm.isVisible()) {
+				PlayerData.newFile();
+				PlayerData.readPlayerFile();
+				confirm.setVisible(false);
+				AudioPlayer audio = AudioPlayer.getInstance();
+				audio.playSound("sounds", "menumusic.mp3");
+				btnAudio.setImage("soundon.png");
+				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
+				PlayerData.updateMap("Sounds", 1);
+				program.remove(bestRun);
+				program.remove(lastRun);
+				scoreboard();
+			} else {
+				confirm.setVisible(true);
+			}
+		} else if (obj == btnAudio) {
+			AudioPlayer audio = AudioPlayer.getInstance();
+			int sounds;
+			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
+			if (sounds == 1) {
+				audio.stopSound("sounds", "menumusic.mp3");
+				btnAudio.setImage("soundoff.png");
+				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
+				PlayerData.updateMap("Sounds", 0);
+			} else {
+				audio.playSound("sounds", "menumusic.mp3");
+				btnAudio.setImage("soundon.png");
+				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
+				PlayerData.updateMap("Sounds", 1);
+			}
+			PlayerData.writeFile();
+		}
 
-    }
+	}
 }
