@@ -192,11 +192,8 @@ public class MainApplication extends GraphicsApplication {
         PlayerData.writeFile();
         System.exit(0);
     }
-
-    private void playMenuMusic() {
-        AudioPlayer audio = AudioPlayer.getInstance();
-        audio.playSound(MUSIC_FOLDER, MUSIC_MENU);
-    }
+    
+    
 
     private enum LayoutType {
         FLOOR, STANDARD, BOSS, SPAWN
