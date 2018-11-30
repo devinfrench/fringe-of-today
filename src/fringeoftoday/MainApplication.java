@@ -171,6 +171,7 @@ public class MainApplication extends GraphicsApplication {
     public void switchToGame() {
         AudioPlayer.getInstance().stopMusic();
         PlayerData.writeFile();
+        AudioPlayer.getInstance().pauseMusic();
         if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) == 0) {
             PlayerData.updateMap("Tutorial", 1);
             switchToTutorial();
