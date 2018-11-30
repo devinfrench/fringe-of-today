@@ -21,8 +21,7 @@ public class MainApplication extends GraphicsApplication {
     public static final int BUTTON_WIDTH = 200;
     public static final int BUTTON_HEIGHT = 100;
 
-    public static final String MUSIC_FOLDER = "sounds";
-    public static final String MUSIC_MENU = "menumusic.mp3";
+    public static final String MUSIC_FILE_MENU = "menumusic.mp3";
 
     private ShopPane shopPane;
     private MenuPane menu;
@@ -155,8 +154,7 @@ public class MainApplication extends GraphicsApplication {
 
     public void switchToMenu() {
         if (Integer.parseInt(PlayerData.getMap().get("Sounds")) == 1) {
-            AudioPlayer audio = AudioPlayer.getInstance();
-            audio.playSound(MUSIC_FOLDER, MUSIC_MENU, true);
+            AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, MUSIC_FILE_MENU);
         }
         switchToScreen(menu);
     }
@@ -171,8 +169,7 @@ public class MainApplication extends GraphicsApplication {
     }
 
     public void switchToGame() {
-        AudioPlayer audio = AudioPlayer.getInstance();
-        audio.stopSound(MUSIC_FOLDER, MUSIC_MENU);
+        AudioPlayer.getInstance().stopMusic();
         PlayerData.writeFile();
         if (Integer.parseInt(PlayerData.getMap().get("Tutorial")) == 0) {
             PlayerData.updateMap("Tutorial", 1);
@@ -191,11 +188,6 @@ public class MainApplication extends GraphicsApplication {
     public void exitProgram() {
         PlayerData.writeFile();
         System.exit(0);
-    }
-
-    private void playMenuMusic() {
-        AudioPlayer audio = AudioPlayer.getInstance();
-        audio.playSound(MUSIC_FOLDER, MUSIC_MENU);
     }
 
     private enum LayoutType {

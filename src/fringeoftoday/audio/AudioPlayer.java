@@ -21,7 +21,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class AudioPlayer {
+    public static final String MUSIC_FOLDER = "sounds";
     private final Map<String, MediaPlayer> players;
+    private String currentMusicFolder = "";
+    private String currentMusicFile = "";
+    private boolean isMusicPlaying;
 
     private AudioPlayer() {
         final JFXPanel fxPanel = new JFXPanel();
@@ -155,6 +159,50 @@ public final class AudioPlayer {
                 }
             }
         });
+    }
+
+    /**
+     * Loops a sound based on the folder and filename given in the parameters.
+     *
+     * @param folder   folder where the sound is inside of media, leave as empty
+     *                 string if in the main media folder
+     * @param filename filename for the sound, make sure to include the extension
+     */
+    public void playMusic(String folder, String filename) {
+        if (!currentMusicFolder.equals(folder) || !currentMusicFile.equals(filename) || !isMusicPlaying) {
+            stopSound(currentMusicFolder, currentMusicFile);
+            playSound(folder, filename, true);
+            currentMusicFolder = folder;
+            currentMusicFile = filename;
+            isMusicPlaying = true;
+        }
+    }
+
+    public void pauseMusic() {
+        Platform.runLater(new Runnable() {
+            public void run() {
+                MediaPlayer sound = findSound(currentMusicFolder, currentMusicFile);
+                if (sound != null) {
+                    sound.pause();
+                }
+            }
+        });
+    }
+
+    public void resumeMusic() {
+        Platform.runLater(new Runnable() {
+            public void run() {
+                MediaPlayer sound = findSound(currentMusicFolder, currentMusicFile);
+                if (sound != null) {
+                    sound.play();
+                }
+            }
+        });
+    }
+
+    public void stopMusic() {
+        stopSound(currentMusicFolder, currentMusicFile);
+        isMusicPlaying = false;
     }
 
     private static class AudioPlayerInit {
