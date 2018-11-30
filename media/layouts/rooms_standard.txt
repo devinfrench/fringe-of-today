@@ -106,14 +106,14 @@ X X X X W N * ~ ~ ~ ~ * * * ~ ~ ~ ~ * N W X X X X
 X X X X W * * ~ ~ ~ ~ * * * ~ ~ ~ ~ * * W X X X X
 X X X X W W W W W W W W D W W W W W W W W X X X X
 
-X X X X X X X X X X W W D W W W W W W W W W W W W
-X X W W W W W W W W W W * W * * * ~ * ~ * * * * W
+W W W W W W W W W W W W D W W W W W W W W W W W W
+W W W W W W W W W W W W * W * * * ~ * ~ * * * * W
 W W W W W W W W W W W W * W * H * ~ * ~ * * H * W
 W W W * B * * B * W W W * W * * * W * W * * * * W
 W W W ~ ~ ~ ~ ~ ~ W W W * W W W W W * W W W W W W
 D * * * * * * * * * * * * * * * * * * * * * * * D
 W W W W W W W W W * W W * W * W W W W W W W W W W
-W W W W B * * * * * * W * W * * ~ ~ ~ ~ N W W X X
-X X W W ~ ~ * * * * * W * W * * ~ ~ ~ ~ N W W X X
-X X W W N ~ B * * * * W * W * * ~ ~ ~ ~ N W W X X
-X X W W W W W W W W W W D W W W W W W W W W W X X
+W W W W B * * * * * * W * W * * ~ ~ ~ ~ N W W W W
+W W W W ~ ~ * * * * * W * W * * ~ ~ ~ ~ N W W W W
+W W W W N ~ B * * * * W * W * * ~ ~ ~ ~ N W W W W
+W W W W W W W W W W W W D W W W W W W W W W W W W
