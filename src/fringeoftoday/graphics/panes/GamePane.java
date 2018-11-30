@@ -79,6 +79,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 	private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
 	private GButtonMD quitPauseBtn;
 	private Entity killer;
+	private String floorMusicFile;
+	private String bossMusicFile;
 
     /**
      * Main initialization function
@@ -103,6 +105,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
         // Collision
         collisionManager = new CollisionManager(program.getEntityManager(), room);
+
+        // Music
+        generateMusic();
 
         // Timer
         t = new Timer(DELAY_MS, this);
@@ -129,7 +134,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
         showEnemies();
         drawLevelAlert();
         initPausing();
-        AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, "fireandflames.mp3", 0.05);
+        playMusic();
     }
 
     /**
@@ -704,6 +709,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
             level++;
             FloorManager.resetOpenExits();
             resetGame();
+            generateMusic();
+            playMusic();
             createImageList();
             showField();
             player.getGObject().setLocation(Math.ceil(FloorManager.ROOM_COLS / 2) * FloorManager.SPACE_SIZE,
@@ -757,6 +764,8 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
         room = FloorManager.getFloor().getRoom(FloorManager.getCurrentPlayerRow(), FloorManager.getCurrentPlayerCol());
         collisionManager.setRoom(room);
+
+        playMusic();
 
         switch (exit) {
             case NORTH:
@@ -1035,4 +1044,22 @@ public class GamePane extends GraphicsPane implements ActionListener {
             }
         }
     }
+
+    // =========== MUSIC HANDLING ============ //
+
+    private void generateMusic() {
+        floorMusicFile = AudioPlayer.getInstance().getFloorMusic();
+        bossMusicFile = AudioPlayer.getInstance().getBossMusic();
+        System.out.println("-- Music --");
+        System.out.println("Floor: " + floorMusicFile + " Boss: " + bossMusicFile);
+    }
+
+    private void playMusic() {
+        if (room.getType() == RoomType.BOSS) {
+            AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, bossMusicFile, 0.05);
+        } else {
+            AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, floorMusicFile, 0.06);
+        }
+    }
+
 }
