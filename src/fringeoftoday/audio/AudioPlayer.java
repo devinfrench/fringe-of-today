@@ -69,17 +69,27 @@ public final class AudioPlayer {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                playSoundWithOptions(folder, filename, shouldLoop);
+                playSoundWithOptions(folder, filename, shouldLoop, 1.0);
             }
         });
     }
 
-    private void playSoundWithOptions(String folder, String filename, boolean shouldLoop) {
+    public void playSound(String folder, String filename, boolean shouldLoop, double volume) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                playSoundWithOptions(folder, filename, shouldLoop, volume);
+            }
+        });
+    }
+
+    private void playSoundWithOptions(String folder, String filename, boolean shouldLoop, double volume) {
         MediaPlayer mPlayer = findSound(folder, filename);
         if (mPlayer == null || mPlayer.getCycleDuration().lessThanOrEqualTo(mPlayer.getCurrentTime())) {
             mPlayer = createMediaPlayer(folder, filename);
         }
         mPlayer.play();
+        mPlayer.setVolume(volume);
         if (shouldLoop) {
             mPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }
@@ -171,9 +181,14 @@ public final class AudioPlayer {
      * @param filename filename for the sound, make sure to include the extension
      */
     public void playMusic(String folder, String filename) {
-        if ((!currentMusicFolder.equals(folder) || !currentMusicFile.equals(filename) || !isMusicPlaying) && Integer.parseInt(PlayerData.getMap().get("Sounds")) == 1) {
+        playMusic(folder, filename, 1.0);
+    }
+
+    public void playMusic(String folder, String filename, double volume) {
+        if ((!currentMusicFolder.equals(folder) || !currentMusicFile.equals(filename) || !isMusicPlaying)
+          && Integer.parseInt(PlayerData.getMap().get("Sounds")) == 1) {
             stopSound(currentMusicFolder, currentMusicFile);
-            playSound(folder, filename, true);
+            playSound(folder, filename, true, volume);
             currentMusicFolder = folder;
             currentMusicFile = filename;
             isMusicPlaying = true;
