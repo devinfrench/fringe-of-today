@@ -27,7 +27,7 @@ public abstract class ActiveEntity extends Entity {
     public double getCenterX() {
         double center = super.getCenterX();
         if (center != 0) {
-            return center + (FloorManager.SPACE_SIZE * 0.25);
+            return center;
         }
         return 0;
     }
