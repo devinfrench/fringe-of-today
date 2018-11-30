@@ -26,6 +26,7 @@ public class MenuPane extends GraphicsPane {
     private GLabel bestRun;
     private GButtonMD btnNewFile;
     private GLabel confirm;
+    private GImage backing;
 
     public MenuPane(MainApplication app) {
         super();
@@ -59,6 +60,9 @@ public class MenuPane extends GraphicsPane {
 
         // Tutorial button
         btnTutorial = new GButtonMD("?", 0, 0, 100, 100);
+        
+        // Blurred backing
+        backing = new GImage("../media/backing.png");
 
         // Audio button
         audioStarter();
@@ -99,6 +103,7 @@ public class MenuPane extends GraphicsPane {
 
     @Override
     public void showContents() {
+//        program.add(backing);
         program.add(title);
         program.add(btnPlay);
         program.add(btnShop);
