@@ -10,9 +10,12 @@ import java.util.Scanner;
 
 public class PlayerData {
 
-    private static Map<String, String> playerInfo = new HashMap<String, String>();
+	// Hash Map that keeps track of all the important data needed for the game
+    private static Map<String, String> playerInfo = new HashMap<String, String>(); 
 
-
+    /*
+     * Set up the player file
+     */
     public static void playerFileSetup() {
         File playerF = new File("../media/player.txt");
         if (!playerF.exists()) {
@@ -28,6 +31,9 @@ public class PlayerData {
         readPlayerFile();
     }
 
+    /*
+     * Make a new file, in the case that one didn't exist or that one is remade
+     */
     public static void newFile() {
         try {
             FileWriter fw = new FileWriter("../media/player.txt");
@@ -48,6 +54,9 @@ public class PlayerData {
 
     }
 
+    /*
+     * Saving the file upon doing anything important
+     */
     public static void writeFile() {
         try {
             // Fill it in with default values of 0
@@ -68,6 +77,9 @@ public class PlayerData {
         }
     }
 
+   /*
+    * Read the player file to then be able to make the hash map with the values with
+    */
     public static void readPlayerFile() {
         String text = null;
         try {
@@ -78,8 +90,6 @@ public class PlayerData {
             System.out.println("Can't find the file");
             e.printStackTrace();
         }
-        //print the text:
-        //System.out.println(text);
         initalizeMap(text);
     }
 
@@ -87,15 +97,19 @@ public class PlayerData {
         return playerInfo;
     }
 
+    /*
+     * Does the work needed to make the map, including assigning it values
+     */
     private static void initalizeMap(String text) {
         String[] infoArr = text.split(":|,");
         for (int i = 0; i < infoArr.length; i = i + 2) {
             playerInfo.put(infoArr[i], infoArr[i + 1]);
         }
-        //Print the array:
-        //playerInfo.forEach((key, value) -> System.out.println(key + ":" + value));
     }
 
+    /*
+     * easy thing to call in the work to make it update properly as to keep the format and righteousness of the file
+     */
     public static void updateMap(String key, int i) {
         playerInfo.put(key, Integer.toString(i));
 

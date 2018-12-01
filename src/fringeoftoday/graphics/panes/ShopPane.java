@@ -25,8 +25,10 @@ public class ShopPane extends GraphicsPane {
     public static final int LABEL_WIDTH = 190;
     public static final String FILE_PATH = "../media/shop/";
     private MainApplication program; // you will use program to get access to
-    private int cheatCtr = 0;
+    private GButton coinCheat; // Cheat to add more coins, click the top right "coin" thing to get it
+    private int cheatCtr = 0; // Helper for the above
 
+    // lines and titles for the general stuff in the header
     private GLabel title;
     private GButtonMD btnBack;
     private GLine headerSeparator;
@@ -34,22 +36,24 @@ public class ShopPane extends GraphicsPane {
     private GLine horizSeparator;
     private GLine vertSeperator;
 
+    // The buttons to buy stuff
     private GButtonMD hpBtn;
     private GButtonMD fireBtn;
     private GButtonMD rangedBtn;
     private GButtonMD speedBtn;
 
+    // The images showing off the goods
     private GImage hpImg;
     private GImage fireImg;
     private GImage rangedImg;
     private GImage speedImg;
 
+    // The labels showing off how much is done
     private GLabel hpLabel;
     private GLabel fireLabel;
     private GLabel rangedLabel;
     private GLabel speedLabel;
 
-    private GButton coinCheat;
 
     public ShopPane(MainApplication app) {
         this.program = app;
@@ -210,6 +214,10 @@ public class ShopPane extends GraphicsPane {
         program.remove(speedLabel);
     }
 
+    /*
+     * Upgrades all the necessarily information on purchasing something:
+     * 	Removing coins, updating the label, updating the button, applying the upgrade
+     */
     private void purchase(GObject obj) {
         String type = "";
         if (obj == hpBtn) {
@@ -234,15 +242,20 @@ public class ShopPane extends GraphicsPane {
     @Override
     public void mousePressed(MouseEvent e) {
         GObject obj = program.getElementAt(e.getX(), e.getY());
+        // Return to menu
         if (obj == btnBack) {
             PlayerData.writeFile();
             program.switchToMenu();
             program.remove(coinCheat);
+            
+            // Add coins
         } else if (obj == coinCheat) {
             hideContents();
             PlayerData.updateMap("Coin", Integer.parseInt(PlayerData.getMap().get("Coin")) + 10);
             initObjs();
             showContents();
+            
+            // Add or remove the coin cheat
         } else if (obj == coinCtr) {
             if (cheatCtr % 2 == 0) {
                 program.add(coinCheat);
@@ -250,6 +263,8 @@ public class ShopPane extends GraphicsPane {
                 program.remove(coinCheat);
             }
             cheatCtr++;
+            
+            // Purchase the object of the button bought
         } else if (obj instanceof GButtonMD) {
             purchase(obj);
         }

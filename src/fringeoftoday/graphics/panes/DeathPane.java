@@ -18,10 +18,9 @@ public class DeathPane extends GraphicsPane {
     public static final int BUTTON_HEIGHT = MainApplication.BUTTON_HEIGHT;
     private MainApplication program;
     //TODO: connect variables to actual values
-    private String level = "-1";
-    private String coins;
-    private Entity killer;
-    private Player player;
+    private String level = "-1";	// The level that the player died in
+    private String coins;	// The amount of coins the player had on death
+    private Entity killer;	// The enemy that killed the player
 
     private Font txtFont = new Font("PKMN Mystery Dungeon", 0, 40);
     private GImage deathScreen;
@@ -34,10 +33,16 @@ public class DeathPane extends GraphicsPane {
         deathScreen = new GImage("deathscreen.jpg", 0, 0);
     }
 
+    /*
+     * Set the killer to the enemy type that killed the player
+     */
     public void setKiller(Entity killer) {
         this.killer = killer;
     }
 
+    /*
+     * Construct the death message from all the data needed to deliver it
+     */
     private void makeDeathMessage() {
         level = PlayerData.getMap().get("PreviousRun");
         coins = PlayerData.getMap().get("Coin");    //Pulls the coinage from the map
@@ -70,10 +75,5 @@ public class DeathPane extends GraphicsPane {
         if (obj == btnContinue) {
             program.switchToMenu();
         }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        //program.switchToMenu();
     }
 }

@@ -39,13 +39,9 @@ public class MainApplication extends GraphicsApplication {
 
     public static void importAllLayouts() {
         importLayoutsByType(LayoutType.FLOOR);
-        // System.out.println();
         importLayoutsByType(LayoutType.STANDARD);
-        // System.out.println();
         importLayoutsByType(LayoutType.BOSS);
-        // System.out.println();
         importLayoutsByType(LayoutType.SPAWN);
-
     }
 
     public static void importer(String fileLocation, int numRows, int numCols) {
@@ -61,12 +57,9 @@ public class MainApplication extends GraphicsApplication {
                     text = sc.nextLine();
                     String[] textChars = text.split(" ", numCols);
                     for (int col = 0; col < numCols; col++) {
-                        // System.out.print(textChars[col]);
                         textArr[row][col] = textChars[col].charAt(0);
                     }
-                    // System.out.println();
                 }
-                // FloorManager.printLayout(textArr, numRows, numCols, fileLocation);
                 addLayout(fileLocation, textArr);
                 if (sc.hasNextLine()) {
                     sc.nextLine();
@@ -80,23 +73,17 @@ public class MainApplication extends GraphicsApplication {
     }
 
     public static void addLayout(String fileLocation, char[][] textArr) {
-        // Souts for demoing
-        // System.out.println("\nAdding something...");
         switch (fileLocation) {
             case ("floors"):
-                // FloorManager.printLayout(textArr, FloorManager.FLOOR_ROWS, FloorManager.FLOOR_COLS, fileLocation);
                 FloorManager.addFloorLayout(textArr);
                 break;
             case ("rooms_standard"):
-                // FloorManager.printLayout(textArr, FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS, fileLocation);
                 FloorManager.addRoomLayout(textArr);
                 break;
             case ("rooms_spawn"):
-                // FloorManager.printLayout(textArr, FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS, fileLocation);
                 FloorManager.setSpawnRoom(textArr);
                 break;
             case ("rooms_boss"):
-                // FloorManager.printLayout(textArr, FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS, fileLocation);
                 FloorManager.addBossRoomLayout(textArr);
                 break;
         }

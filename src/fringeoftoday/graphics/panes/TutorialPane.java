@@ -21,22 +21,30 @@ public class TutorialPane extends GraphicsPane {
     private GImage attackKeys; // Keys to show which to mouse pressed to make to attack
 
     public TutorialPane(MainApplication app) {
-
         this.program = app;
+        
+        // Header/ General instructions for the game
         header = new GParagraph(
           "Your goal is to defeat all the enemies in a room then progress to the next.\nFind the staircase to the next floor.\nPause with `ESC`",
           MainApplication.WINDOW_WIDTH / 4, 100);
         header.setFont("Arial-24");
+        
+        // Instructions on how one should move about the game
         moveInstructions = new GParagraph("To move, use the\n\"WASD\" keys", MainApplication.WINDOW_WIDTH / 6 + 50,
           2 * MainApplication.WINDOW_HEIGHT / 3);
         moveInstructions.setFont("Arial-24");
+        
+        // Instructions on how one should go about attacking in game-play
         attackInstructions = new GParagraph("To fire, use either mouse button",
           4 * MainApplication.WINDOW_WIDTH / 6, 2 * MainApplication.WINDOW_HEIGHT / 3);
         attackInstructions.setFont("Arial-24");
+        
+        // Instructions on how to escape the tutorial menu
         pressToContinue = new GLabel("Press any key or mouse button to continue...", MainApplication.WINDOW_WIDTH / 2 - 250,
           5 * MainApplication.WINDOW_HEIGHT / 6);
         pressToContinue.setFont("Arial-24");
 
+        // Appropriate images and such placed correctly
         moveKeys = new GImage("WASD.png", MainApplication.WINDOW_WIDTH / 6, 2 * MainApplication.WINDOW_HEIGHT / 3);
         moveKeys.move(0, -1 * moveKeys.getHeight() - 100);
         attackKeys = new GImage("../media/mouse_buttons.png", 4 * MainApplication.WINDOW_WIDTH / 6 + 50, 2 * MainApplication.WINDOW_HEIGHT / 3);

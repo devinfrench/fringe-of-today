@@ -60,24 +60,24 @@ public class GamePane extends GraphicsPane implements ActionListener {
     private Set<Integer> keysPressed = new HashSet<>();
     private ArrayList<GObject> minimap = new ArrayList<GObject>();
 	private Font hdrFont = new Font("PKMN Mystery Dungeon", 0, 60);
-	private int level = 1; // Work on this when we get it in
-	private GRect minimapBox; // Minimap, left header
-	private GImage bossIcon;
-	private GOval playerOnMap;
+	private int level = 1;
+	private GRect minimapBox; // Mini-map, left header
+	private GImage bossIcon; // Icon showing which room is the boss room
+	private GOval playerOnMap; // Icon showing which room the player is in
 	private GRect infoBox; // Center header
 	private GParagraph infoText;// Center header content
 	private GRect healthBox; // Right header
-	private GButtonMD levelAlert;
-	private GLabel healthLabel;
-	private GImage btnAudio;
-	private GRect backingColor;
+	private GButtonMD levelAlert; // Pop-up that happens to let the player know what floor they're on before game-play
+	private GLabel healthLabel; // Label showing the health, updates correctly
+	private GRect backingColor; // Back background for theme and hiding stuff
+	private ArrayList<GObject> pauseElements = new ArrayList<GObject>(); // Elements seen on pause
+	private GButtonMD quitPauseBtn; // Button to return to the main menu when clicked
+	private GImage btnAudio; // Audio toggle in pause
 	private Room room;
 	private Player player;
 	private CollisionManager collisionManager;
 	private Timer t;
 	private int counter;
-	private ArrayList<GObject> pauseElements = new ArrayList<GObject>();
-	private GButtonMD quitPauseBtn;
 	private Entity killer;
 	private String floorMusicFile;
 	private String bossMusicFile;
