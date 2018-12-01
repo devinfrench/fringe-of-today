@@ -920,6 +920,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
                     program.add(o);
 
                 }
+                direction = null;
                 t.stop();
                 AudioPlayer.getInstance().pauseMusic();
             } else {
