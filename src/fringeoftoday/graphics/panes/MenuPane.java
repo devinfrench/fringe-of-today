@@ -115,6 +115,7 @@ public class MenuPane extends GraphicsPane {
         program.add(confirm);
         confirm.setVisible(false);
         scoreboard();
+        AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, "menumusic.mp3");
     }
 
     private void rightAudioimage() {
@@ -157,8 +158,7 @@ public class MenuPane extends GraphicsPane {
 				PlayerData.newFile();
 				PlayerData.readPlayerFile();
 				confirm.setVisible(false);
-				AudioPlayer audio = AudioPlayer.getInstance();
-				audio.playSound("sounds", "menumusic.mp3");
+				AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, "menumusic.mp3");
 				btnAudio.setImage("soundon.png");
 				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
 				PlayerData.updateMap("Sounds", 1);
@@ -173,12 +173,12 @@ public class MenuPane extends GraphicsPane {
 			int sounds;
 			sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
 			if (sounds == 1) {
-				audio.stopSound("sounds", "menumusic.mp3");
+				audio.pauseMusic();
 				btnAudio.setImage("soundoff.png");
 				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
 				PlayerData.updateMap("Sounds", 0);
 			} else {
-				audio.playSound("sounds", "menumusic.mp3");
+				audio.resumeMusic();
 				btnAudio.setImage("soundon.png");
 				btnAudio.setSize(BUTTON_HEIGHT, BUTTON_HEIGHT);
 				PlayerData.updateMap("Sounds", 1);

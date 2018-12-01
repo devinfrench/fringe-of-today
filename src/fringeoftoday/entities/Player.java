@@ -2,6 +2,7 @@ package fringeoftoday.entities;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
+import fringeoftoday.PlayerData;
 import fringeoftoday.audio.AudioPlayer;
 import fringeoftoday.graphics.Sprites;
 

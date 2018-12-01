@@ -406,6 +406,15 @@ public class GamePane extends GraphicsPane implements ActionListener {
           MainApplication.getWindowHeight() / 2, 200, 100, "green");
         pauseElements.add(quitPauseBtn);
 
+        btnAudio = new GImage("soundoff_white.png", MainApplication.WINDOW_WIDTH - 100, 0);
+        int sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
+        if (sounds == 0) {
+            btnAudio.setImage("soundoff_white.png");
+        } else {
+            btnAudio.setImage("soundon_white.png");
+        }
+        btnAudio.setSize(100, 100);
+        pauseElements.add(btnAudio);
     }
 
 
@@ -894,6 +903,19 @@ public class GamePane extends GraphicsPane implements ActionListener {
             PlayerData.updateMap("PreviousRun", level);
             level = 1;
             program.switchToMenu();
+        } else if (obj == btnAudio) {
+            int sounds = Integer.parseInt(PlayerData.getMap().get("Sounds"));
+            if (sounds == 1) {
+                btnAudio.setImage("soundoff_white.png");
+                btnAudio.setSize(100, 100);
+                PlayerData.updateMap("Sounds", 0);
+            } else {
+                AudioPlayer.getInstance().pauseMusic();
+                btnAudio.setImage("soundon_white.png");
+                btnAudio.setSize(100, 100);
+                PlayerData.updateMap("Sounds", 1);
+            }
+            PlayerData.writeFile();
         }
 
         if (t.isRunning()) {
@@ -928,7 +950,9 @@ public class GamePane extends GraphicsPane implements ActionListener {
                     program.remove(o);
                 }
                 t.start();
-                AudioPlayer.getInstance().resumeMusic();
+                if (Integer.parseInt(PlayerData.getMap().get("Sounds")) == 1) {
+                    AudioPlayer.getInstance().resumeMusic();
+                }
             }
         }
     }

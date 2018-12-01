@@ -21,8 +21,6 @@ public class MainApplication extends GraphicsApplication {
     public static final int BUTTON_WIDTH = 200;
     public static final int BUTTON_HEIGHT = 100;
 
-    public static final String MUSIC_FILE_MENU = "menumusic.mp3";
-
     private ShopPane shopPane;
     private MenuPane menu;
     private TutorialPane tutorial;
@@ -153,9 +151,6 @@ public class MainApplication extends GraphicsApplication {
     }
 
     public void switchToMenu() {
-        if (Integer.parseInt(PlayerData.getMap().get("Sounds")) == 1) {
-            AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, MUSIC_FILE_MENU);
-        }
         switchToScreen(menu);
     }
 
