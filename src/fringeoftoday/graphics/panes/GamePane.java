@@ -134,7 +134,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
         showEnemies();
         drawLevelAlert();
         initPausing();
-        AudioPlayer.getInstance().playMusic(AudioPlayer.MUSIC_FOLDER, "fireandflames.mp3", 0.05);
+        playMusic();
     }
 
     /**
