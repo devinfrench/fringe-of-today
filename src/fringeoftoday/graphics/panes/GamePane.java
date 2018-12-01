@@ -106,9 +106,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
         // Collision
         collisionManager = new CollisionManager(program.getEntityManager(), room);
 
-        // Music
-        generateMusic();
-
         // Timer
         t = new Timer(DELAY_MS, this);
         counter = 0;
@@ -134,6 +131,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
         showEnemies();
         drawLevelAlert();
         initPausing();
+        generateMusic();
         playMusic();
     }
 
