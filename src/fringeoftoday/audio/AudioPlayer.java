@@ -93,7 +93,9 @@ public final class AudioPlayer {
             mPlayer = createMediaPlayer(folder, filename);
         }
         mPlayer.setVolume(volume);
-        mPlayer.play();
+        if (Integer.parseInt(PlayerData.getMap().get("Sounds")) == 1) {
+            mPlayer.play();
+        }
         if (shouldLoop) {
             mPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }
@@ -189,8 +191,7 @@ public final class AudioPlayer {
     }
 
     public void playMusic(String folder, String filename, double volume) {
-        if ((!currentMusicFolder.equals(folder) || !currentMusicFile.equals(filename) || !isMusicPlaying)
-          && Integer.parseInt(PlayerData.getMap().get("Sounds")) == 1) {
+        if ((!currentMusicFolder.equals(folder) || !currentMusicFile.equals(filename) || !isMusicPlaying)) {
             stopSound(currentMusicFolder, currentMusicFile);
             playSound(folder, filename, true, volume);
             currentMusicFolder = folder;
