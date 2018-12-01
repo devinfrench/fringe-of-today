@@ -125,7 +125,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
      */
     @Override
     public void showContents() {
-        player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades")) + 3);
+        player.setMaxHealth(Integer.parseInt(PlayerData.getMap().get("HPUpgrades"))*2 + 3);
         initHealth();
         showHeader(); // Top bar
         createImageList();
@@ -266,8 +266,10 @@ public class GamePane extends GraphicsPane implements ActionListener {
             path = path + "SealedRuin/";
         else if (level >= 7 && level <= 9)
             path = path + "SteamCave/";
+        else if (level >= 10 && level <= 12)
+            path = path + "ZeroIsleEast/";
         else
-            path = path + "DarkCrater/";
+        	path = path + "DarkCrater/";
 
         return path;
     }
