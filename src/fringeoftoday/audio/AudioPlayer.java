@@ -11,6 +11,7 @@ package fringeoftoday.audio;
  * Questions can be sent to ojimenez@pacific.edu
  */
 
+import acm.util.RandomGenerator;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
@@ -24,10 +25,13 @@ import fringeoftoday.PlayerData;
 
 public final class AudioPlayer {
     public static final String MUSIC_FOLDER = "sounds";
+    private static final String[] FLOOR_MUSIC = {"stairwaytoheaven.mp3", "africa.mp3"};
+    private static final String[] BOSS_MUSIC = {"fireandflames.mp3", "byob.mp3"};
     private final Map<String, MediaPlayer> players;
     private String currentMusicFolder = "";
     private String currentMusicFile = "";
     private boolean isMusicPlaying;
+    private RandomGenerator rgen = new RandomGenerator();
 
     private AudioPlayer() {
         final JFXPanel fxPanel = new JFXPanel();
@@ -220,6 +224,14 @@ public final class AudioPlayer {
     public void stopMusic() {
         stopSound(currentMusicFolder, currentMusicFile);
         isMusicPlaying = false;
+    }
+
+    public String getBossMusic() {
+        return BOSS_MUSIC[rgen.nextInt(BOSS_MUSIC.length)];
+    }
+
+    public String getFloorMusic() {
+        return FLOOR_MUSIC[rgen.nextInt(FLOOR_MUSIC.length)];
     }
 
     private static class AudioPlayerInit {
