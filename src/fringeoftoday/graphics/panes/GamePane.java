@@ -363,9 +363,6 @@ public class GamePane extends GraphicsPane implements ActionListener {
      */
     private void infoDrawing() {
         backingColor = new GRect(0, 0, MainApplication.WINDOW_WIDTH, HEADER_HEIGHT);
-        // Off black color
-        //backingColor.setFillColor(new Color(0,1,11));
-        // Pure black, which I (Alex R) prefer
         backingColor.setFillColor(Color.BLACK);
         backingColor.setFilled(true);
         program.add(backingColor);

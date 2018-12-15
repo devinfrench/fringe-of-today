@@ -20,5 +20,10 @@ public enum RoomType {
     /**
      * Room the player spawns in (one per floor)
      */
-    SPAWN;
+    SPAWN,
+	
+	/**
+	 * Room for editing in the level creator
+	 */
+	DEFAULT;
 }

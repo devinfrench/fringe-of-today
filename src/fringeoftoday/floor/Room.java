@@ -11,6 +11,7 @@ public class Room {
     public static final int ROOM_ROWS = FloorManager.ROOM_ROWS;
     public static final int ROOM_COLS = FloorManager.ROOM_COLS;
 
+    private char charLayout[][];
     private Space roomLayout[][];
     private ArrayList<Exit> exits;
     private ArrayList<Direction> directions;
@@ -18,6 +19,7 @@ public class Room {
     private boolean cleared;
 
     public Room(RoomType type) {
+    	charLayout = new char[ROOM_ROWS][ROOM_COLS];
         roomLayout = new Space[ROOM_ROWS][ROOM_COLS];
         exits = new ArrayList<Exit>();
         cleared = false;
@@ -218,4 +220,12 @@ public class Room {
           && !(directions.contains(Direction.SOUTH) && directions.contains(Direction.EAST)))
             directions.remove(Direction.SOUTHEAST);
     }
+
+	public void setCharArray(char[][] layout) {
+		charLayout = layout;
+	}
+	
+	public char[][] getCharArray(){
+		return charLayout;
+	}
 }

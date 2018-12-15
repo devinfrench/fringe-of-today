@@ -22,6 +22,7 @@ public class FloorManager {
     private static Room spawnRoom;
     private static ArrayList<char[][]> floorLayouts = new ArrayList<char[][]>();
     private static ArrayList<Room> roomLayouts = new ArrayList<Room>();
+    private static Room defaultRoom;
     private static ArrayList<Room> bossRoomLayouts = new ArrayList<Room>();
     private static ArrayList<Exit> openExits = new ArrayList<Exit>();
     private static Floor currentFloor;
@@ -136,7 +137,7 @@ public class FloorManager {
      */
     public static Room generateRoom(char layout[][], RoomType type) {
         Room r = new Room(type);
-
+        r.setCharArray(layout);
         for (int i = 0; i < ROOM_ROWS; i++) {
             for (int j = 0; j < ROOM_COLS; j++) {
                 switch (layout[i][j]) {
@@ -257,4 +258,12 @@ public class FloorManager {
     public static void setSpawnRoom(char layout[][]) {
         spawnRoom = generateRoom(layout, RoomType.SPAWN);
     }
+
+	public static void setDefaultRoom(char layout[][]) {
+		defaultRoom = generateRoom(layout, RoomType.DEFAULT);
+	}
+
+	public Room getDefaultRoom() {
+        return defaultRoom;
+	}
 }

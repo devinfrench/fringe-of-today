@@ -46,12 +46,12 @@ public class PlayerData {
             fw.write("GOAT:0,");
             fw.write("Tutorial:0,");
             fw.write("Sounds:1,");
+            fw.write("Choice:1,");
             fw.close();
         } catch (IOException e2) {
             System.out.println("No write");
             e2.printStackTrace();
         }
-
     }
 
     /*
@@ -70,6 +70,7 @@ public class PlayerData {
             fw.write("GOAT:" + playerInfo.get("GOAT") + ",");
             fw.write("Tutorial:" + playerInfo.get("Tutorial") + ",");
             fw.write("Sounds:" + playerInfo.get("Sounds") + ",");
+            fw.write("Choice:" + playerInfo.get("Choice") + ",");
             fw.close();
         } catch (IOException e3) {
             System.out.println("No overwrite");

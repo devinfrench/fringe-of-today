@@ -19,6 +19,7 @@ public class MenuPane extends GraphicsPane {
     private GButtonMD btnPlay;
     private GButtonMD btnShop;
     private GButtonMD btnExit;
+    private GButtonMD btnLevelMaker;
     private GButtonMD btnTutorial;
     private GImage title;
     private GImage btnAudio;
@@ -44,20 +45,24 @@ public class MenuPane extends GraphicsPane {
           BUTTON_HEIGHT, "blue");
 
         // Confirm text, so the file won't be deleted the first time
-        confirm = new GLabel("Click again to PERMINATELY delete your player file", 0, 400 + BUTTON_HEIGHT * 1.33);
+        confirm = new GLabel("Click again to PERMANENTLY delete your player file", 0, 400 + BUTTON_HEIGHT * 1.20);
         confirm.setFont("Arial-24");
         confirm.move(MainApplication.WINDOW_WIDTH / 2 - confirm.getWidth() / 2, 0);
         confirm.setColor(Color.RED);
         confirm.setVisible(false);
 
         // Shop button
-        btnShop = new GButtonMD("Shop", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 550, BUTTON_WIDTH,
+        btnShop = new GButtonMD("Shop", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 525, BUTTON_WIDTH,
           BUTTON_HEIGHT, "green");
 
+        // Level Making button
+        btnLevelMaker = new GButtonMD("Level Maker",(MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 650, BUTTON_WIDTH,
+                BUTTON_HEIGHT, "green");
+        
         // Exit button
-        btnExit = new GButtonMD("Exit", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 700, BUTTON_WIDTH,
+        btnExit = new GButtonMD("Exit", (MainApplication.WINDOW_WIDTH - BUTTON_WIDTH) / 2, 775, BUTTON_WIDTH,
           BUTTON_HEIGHT, "green");
-
+        
         // Tutorial button
         btnTutorial = new GButtonMD("?", 0, 0, 100, 100);
         
@@ -110,6 +115,7 @@ public class MenuPane extends GraphicsPane {
         program.add(btnPlay);
         program.add(btnShop);
         program.add(btnExit);
+        program.add(btnLevelMaker);
         program.add(btnTutorial);
         program.add(btnNewFile);
         program.add(confirm);
@@ -140,6 +146,7 @@ public class MenuPane extends GraphicsPane {
         program.remove(bestRun);
         program.remove(btnNewFile);
         program.remove(confirm);
+        program.remove(btnLevelMaker);
     }
 
 	@Override
@@ -153,6 +160,9 @@ public class MenuPane extends GraphicsPane {
 			program.exitProgram();
 		} else if (obj == btnTutorial) {
 			program.switchToTutorial();
+		} else if (obj == btnLevelMaker) {
+			program.remove(backing);
+			program.switchToMaker();
 		} else if (obj == btnNewFile) {
 			if (confirm.isVisible()) {
 				PlayerData.newFile();

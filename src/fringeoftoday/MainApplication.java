@@ -7,6 +7,7 @@ import fringeoftoday.floor.FloorManager;
 import fringeoftoday.graphics.GraphicsApplication;
 import fringeoftoday.graphics.panes.DeathPane;
 import fringeoftoday.graphics.panes.GamePane;
+import fringeoftoday.graphics.panes.LevelMaker;
 import fringeoftoday.graphics.panes.MenuPane;
 import fringeoftoday.graphics.panes.ShopPane;
 import fringeoftoday.graphics.panes.TutorialPane;
@@ -26,6 +27,7 @@ public class MainApplication extends GraphicsApplication {
     private TutorialPane tutorial;
     private GamePane game;
     private DeathPane deathPane;
+    private LevelMaker makerPane;
     private FloorManager floorManager;
     private EntityManager entityManager;
 
@@ -42,6 +44,7 @@ public class MainApplication extends GraphicsApplication {
         importLayoutsByType(LayoutType.STANDARD);
         importLayoutsByType(LayoutType.BOSS);
         importLayoutsByType(LayoutType.SPAWN);
+        importLayoutsByType(LayoutType.DEFAULT);
     }
 
     public static void importer(String fileLocation, int numRows, int numCols) {
@@ -86,6 +89,8 @@ public class MainApplication extends GraphicsApplication {
             case ("rooms_boss"):
                 FloorManager.addBossRoomLayout(textArr);
                 break;
+            case ("default"):
+            	FloorManager.setDefaultRoom(textArr);
         }
 
     }
@@ -107,6 +112,10 @@ public class MainApplication extends GraphicsApplication {
             case SPAWN:
                 importer("rooms_spawn", FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS);
                 break;
+                
+            case DEFAULT:
+            	importer("default", FloorManager.ROOM_ROWS, FloorManager.ROOM_COLS);
+            	break;
         }
     }
 
@@ -125,6 +134,7 @@ public class MainApplication extends GraphicsApplication {
         menu = new MenuPane(this);
         game = new GamePane(this);
         deathPane = new DeathPane(this);
+        makerPane = new LevelMaker(this);
 
         switchToMenu();
     }
@@ -145,6 +155,10 @@ public class MainApplication extends GraphicsApplication {
         switchToScreen(shopPane);
     }
 
+    public void switchToMaker() {
+    	switchToScreen(makerPane);
+    }
+    
     public void switchToTutorial() {
         PlayerData.updateMap("Tutorial", Integer.parseInt(PlayerData.getMap().get("Tutorial")) + 100);
         switchToScreen(tutorial);
@@ -173,7 +187,7 @@ public class MainApplication extends GraphicsApplication {
         System.exit(0);
     }
 
-    private enum LayoutType {
-        FLOOR, STANDARD, BOSS, SPAWN
+    public enum LayoutType {
+        FLOOR, STANDARD, BOSS, SPAWN, DEFAULT
     }
 }
