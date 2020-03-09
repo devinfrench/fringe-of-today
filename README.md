@@ -1,5 +1,5 @@
 # Fringe of Today
-Fringe of Today is a top-down rogue-lite video game inspiried by the likes of Binding of Isaac and Enter the Gungeon. The player progresses through map levels by eliminating all enemies and earning points which allows them to purchase upgrades in the shop. The game endlessly scales with level and the goal is to try and achieve the highest level. 
+Fringe of Today is a top-down rogue-lite video game inspired by the likes of Binding of Isaac and Enter the Gungeon. The player progresses through map levels by eliminating all enemies and earning points which allows them to purchase upgrades in the shop. The game endlessly scales with level and the goal is to try and achieve the highest level. 
 
 
 ![main menu](https://i.imgur.com/UGJklqT.jpg)
